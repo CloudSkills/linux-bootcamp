@@ -1,3 +1,5 @@
 # linux-bootcamp
 Linux Cloud Engineer Bootcamp
-Repo finally cloned
+Repo finally done
+moving to next phase now
+
