@@ -202,3 +202,5 @@ Final Step: View the web server in action.
 > Here is a screenshot of the web server in action:
 
 ![nginx web server](images/nginxbash.png)
+
+Done.
