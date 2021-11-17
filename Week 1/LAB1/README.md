@@ -49,10 +49,30 @@ Using the Console, you can follow the following steps to create the Virtual Mach
 
 *Please note that this is also part of the subscription based plans on Azure, as you may be charged for creating Virtual Machines*
 
-1. Select the create VIrtual MAchine option from the console.
+1. Select the create Virtual Machine option from the console.
 2. Specify the image you want the Virtual Machine to run on, this can also be seen as the operating system of the Virtual box.
 3. Specify the port you want for inbound traffic
 4. Create your Public and private Key Pairs whuch you would use to access and configure your Virtual box
 5. Create your virtual box
 
+# 4. OPENING PORT 80 FOR WEB TRAFFIC.
+The virtual box comes with various ports which allow different kinds of connections.
 
+**Port 80** can be used for inbound traffic. This means that users on the internet can communicate with your compute instance via that port. 
+
+**Port 22**  can be used for ssh connections. This is to give remote access to your virtual box.
+
+*Kindly note that you can also specify the network protocols for each port. Usually by default, this is TCP*
+
+
+# 5. CONNECTING TO THE VIRTUAL MACHINE
+SSH was used to connect to the virtual machine. This is like a Secure Shell.
+
+The SSH protocol makes use of the key file, to connect you remotely to the virtual box environment. Once you are in you can perform other configurations on the machine, without baing on the Azure portal. You can do this locally via your local shell.
+
+# 6. INSTALLING A WEB SERVER ON THE VIRTUAL MACHINE
+The virtual machine does not autonal=tically come with a server installed. To install a web server on the platform, you can run the command: **sudo apt-get -y install nginx**
+
+This installs the latest version of NGINX server on your VM.
+
+![This is a screenshot of the server running](Week 1\LAB1\images\welcome_to_nginx.png"Image showing the running server")
