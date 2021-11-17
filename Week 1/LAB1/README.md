@@ -76,3 +76,6 @@ The virtual machine does not autonal=tically come with a server installed. To in
 This installs the latest version of NGINX server on your VM.
 
 ![This is a screenshot of the server running](./welcome_to_nginx.png "Image showing the running server")
+
+# 7. VIEWING THE WEBSERVER IN ACTION
+To do this, you just need to go to your VM instance and click on the external IP address. It would redirect you to a URL which you would use to view your laund NGINX web page.
