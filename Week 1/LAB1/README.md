@@ -75,4 +75,4 @@ The virtual machine does not autonal=tically come with a server installed. To in
 
 This installs the latest version of NGINX server on your VM.
 
-![This is a screenshot of the server running](Week 1\LAB1\images\welcome_to_nginx.png"Image showing the running server")
+![This is a screenshot of the server running](./welcome_to_nginx.png "Image showing the running server")
