@@ -1,6 +1,8 @@
 # Week 2: GCP
 
-## Compute Engine tutorials
+## Compute Engine
+
+### Tutorials
 
 [Quickstart using a Linux VM](https://cloud.google.com/compute/docs/quickstart-linux "Quickstart using a Linux VM")
 
@@ -23,7 +25,7 @@ gcloud + release level (optional) + component + entity + operation + positional 
 
 ```bash
 # Example gcloud command for creating a virtual machine instance.
-gcloud compute instances create <name> --zone=<zone>
+gcloud compute instances create <instance_name> --zone=<zone>
 ```
 
 ## Running commands
