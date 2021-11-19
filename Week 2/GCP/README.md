@@ -19,7 +19,7 @@
 ### Understanding commands
 
 ```bash
-# The gcloud format.
+# The gcloud command format.
 gcloud + release level (optional) + component + entity + operation + positional args + flags
 ```
 
@@ -66,7 +66,7 @@ gcloud beta billing projects link <project_id> --billing-account=<account_id>
 ```
 
 ```bash
-# List the available services and filter on the name 'compute'.
+# List the available services, filter on the name 'compute', and echo the result. 
 SERVICE=$(gcloud services list --available --filter="NAME ~ ^compute" --format="value(NAME)")
 echo $SERVICE
 ```
@@ -201,12 +201,12 @@ exit
 ```bash
 # Add the external IP from the instance to a variable, add the HTTP protocol, and echo the result.
 HTTP_ADDRESS=$(gcloud compute instances describe web-instance-01 --format="value(networkInterfaces[0].accessConfigs[0].natIP)")
-INSTANCE_EXTERNAL_IP="http://""HTTP_ADDRESS"
+HTTP_ADDRESS="http://""$HTTP_ADDRESS"
 echo $HTTP_ADDRESS
 ```
 
 ```bash
-# Verify if the instance is reachable.
+# Verify if the instance is reachable
 curl $HTTP_ADDRESS
 ```
 

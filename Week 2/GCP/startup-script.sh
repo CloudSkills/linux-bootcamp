@@ -13,11 +13,11 @@ TAGS=$(curl -H "Metadata-Flavor: Google" "http://metadata.google.internal/comput
 SERVICE_ACCOUNT=$(curl -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/email")
 ORGANIZATION=$(curl -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/attributes/organization")
 
-# Install the Apache HTTP server.
+# Install the Apache HTTP Server.
 apt update
 apt install -y apache2
 
-# Create the index.html file.
+# Create the custom index.html file.
 cat << EOF > /var/www/html/index.html
 <body style="font-family: monospace, monospace">
 <html>
