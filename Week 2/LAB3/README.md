@@ -1,4 +1,4 @@
-# Week 2: GCP
+# Lab 3: GCP
 
 ## Compute Engine
 
