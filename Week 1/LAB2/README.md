@@ -14,6 +14,11 @@ Quickstart: Create a Linux VM
 * https://docs.microsoft.com/en-us/azure/virtual-machines/linux/tutorial-manage-vm
 
 ### Step 1: Create a Resource Group.
+> Here is the input code for creating my resource group:
+
+```
+az group create --location eastus --name MyResourceGroupVM
+```
 > Here is the output code for creating a resource group:
 
 ```
@@ -29,6 +34,8 @@ Quickstart: Create a Linux VM
   "type": "Microsoft.Resources/resourceGroups"
 }
 ```
+
+
 ### Step 2: Create a VM
 Code input:
 ```
