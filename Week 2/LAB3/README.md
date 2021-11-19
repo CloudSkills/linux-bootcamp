@@ -175,7 +175,7 @@ gcloud compute instances create web-instance-01 \
   --service-account=$SERVICE_ACCOUNT \
   --tags=ssh,web \
   --metadata=organization="CloudSkills.io" \
-  --metadata-from-file=startup-script="$HOME/linux-bootcamp/Week 2/GCP/startup-script.sh"
+  --metadata-from-file=startup-script="$HOME/linux-bootcamp/Week 2/LAB3/startup-script.sh"
 ```
 
 ```bash
