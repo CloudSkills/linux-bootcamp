@@ -29,24 +29,25 @@ ssh-keygen -m PEM -t rsa -b 4096
 > Here is the output with the randomart image:
 
 ```
-Generating public/private rsa key pair.Enter file in which to save the key (/home/tega/.ssh/id_rsa):/home/tega/.ssh/id_rsa already exists.Overwrite (y/n)? y
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/tega/.ssh/id_rsa): tukeypair
 Enter passphrase (empty for no passphrase):
 Enter same passphrase again:
-Your identification has been saved in /home/tega/.ssh/id_rsa.
-Your public key has been saved in /home/tega/.ssh/id_rsa.pub.
+Your identification has been saved in tukeypair.
+Your public key has been saved in tukeypair.pub.
 The key fingerprint is:
-SHA256:JSvFVUB7QruIxwiR96mJ2VoxTAlQElMyHetR1eohZ8I tega@cc-34ddea6c-7d5fd997d6-8lj5c
+SHA256:n6agf9i9+nQuk7Z1SCIRGP90TVj2w9DrRxP4vVHirfk tega@cc-4224239c-6d77fcf57-kbmrg
 The key's randomart image is:
 +---[RSA 4096]----+
-|  B**+.o.o=o.    |
-|   =o++. o.o     |
-|    += .+o= .    |
-|   . oE=B= +     |
-|    .++@S..      |
-|    o =o.        |
-|     o           |
-|    .            |
-|                 |
+|      .o.    +*  |
+|      .. .  .=++.|
+|        o . ..o=*|
+|         + .  .==|
+|        S o . .++|
+|         o + .oo.|
+|      .o .=.+ ...|
+|     ...o+*+ .  E|
+|    ....o++=.    |
 +----[SHA256]-----+
 ```
 
@@ -55,13 +56,13 @@ Code input:
 
 To display my public key, I used the `cat` command.
 ```
-cat ~/.ssh/id_rsa.pub
+cat tukeypair.pub
 ```
 
 > Here is the output code for creating my virtual machine:
 
 ```
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCgBLmWmEN5klS7Nk42LJkP/3thk6Opu6M13mhNg1YjKH9vrPgPwvB/AnpMv28ovBcX1VqCwnjSnJoQ3aq9JvfO9fj3JCWCsiCwTesFNo7PqZH/IO9LR3QKZdg957+vsdFu1eZZihJqApx0CLW1zdKm9Xgcah2Dw8f+fwr4/lEwmtYPEz/excVg8ZBhq4jipUlZtQ6XABqpxOuCc7lnWTUeQ8IWSiS4c/ItrwAkklYkSCasCgJjxJPlmKhbLk0rgJz6rUr0WLxd9PhkeXNu4oEVsGfvK3AcmwnlTVQZooR+9uYHz6KqRno4/UAB8tF23WW2jH4LMtwEVfunX2Ioj3N/w3RL+/H3JzQGODqId3pyUdKM8KSl6OfekrpAg0j6KhaLcWgglblLNIH9O1/D+6bU7lOw9FIaRQJn7f7Ly9FQ9QAOCz9vUf/YQdp2cm6uTxADlm6BacEukoRDvtIXBlJ1AGZW9nJtLa2AJuFUodPuUKkqf7XeYjKrNmMKtIyvidzhNp1yDjrqPcZB+zDNMY3336herYhbty0Q9teG/uYD78EzSiqGhzi2Mw1KyBIgF5E8DXDhk2qKWmrH1U59lhJ99dwSnv+bFkNo7tltMVBG8P/Mu8SNLdJLyjiKeBdpqCE8qyCfqFKcdSw3pCJ3jZwy0FFrr29iWAkOkJ5p3bKlGw== tega@cc-34ddea6c-7d5fd997d6-8lj5c
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC5OnFcbE+0bNAz044SCVxuOqcXfywLV6lnY2IiJ3YE6KhHtLo4yB+7+1M9YXa2Yvl/nvphYwGVWkdwXHwnJUtVO1JUCq6kE0H/HAeGEHVqC9lJcLsRHnIKfB0EBxvBuNKZN5ibwPKUGy2pNpVLEh1xUQrso1QLB++pVILSF3ly5ji+qhb0Okk8bZ7e2JMEg22llrJ2ThuthtcuICan7UUDqJoV4Zhu3qZXEd/fbjdif1IoNVfAy/XqRgO37orydanuW4XdftnogvV+nVicxMH1mYvMoPnh14DfjmURvsq8wm1lDIY/3pjG7obPD/dDQ17Ycp+sTQyGX4E3DKqt/mJbgr0FwJo5mbUghxfNeYnBXax2ExcYMf0VI6lDEj8jjytOoGOqNQPMicwMYzBBQ72FIoroNJfpAvd/slQzYQ05R5YC9tt8K8j6Isq8G/tm42EQovvYLdOM7KLX8KAE5H2iUvIpEu5NVpjz0+ECFSfjdHELfJw0KU9I/FERjl0CgEbrln6HYE7xxh8q6uuZf+Tg6c8X/ObEGLTkvyjl/vbFwkOpkdnvq6n/czQ7ZShqVB7l/XHiBgA67v4tGJ4bjC7MPONYCS55ub9cHcPKD7DVOL/cUYoMyozCc4cO0cnkodfSaRgjY6sENViAQb6bOzL8BG7g+LfoClRsh45cKHDdQw== tega@cc-4224239c-6d77fcf57-kbmrg
 ```
 * To Provide the SSH public key when deploying a VM, provide the `--ssh-key-values` where the public key files is
 
@@ -69,11 +70,7 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCgBLmWmEN5klS7Nk42LJkP/3thk6Opu6M13mhNg1Yj
 
 ```
 az vm create  
---resource-group tegastutresource
---name tegasVM
---image UbuntuLTS
---admin-username tega
---ssh-key-values /home/tega/.ssh/id_rsa.pub
+--resource-group MyResourcegroupdisk --name tegasVM --image UbuntuLTS --admin-username tega --ssh-key-values tukeypair.pub
 ```
 
 > Here is the output code:
@@ -81,13 +78,13 @@ az vm create
 ```
 {
   "fqdns": "",
-  "id": "/subscriptions/b5549425-9749-48f8-8db1-e22c7d47472d/resourceGroups/tegastutresource/providers/Microsoft.Compute/virtualMachines/tegasVM",
+  "id": "/subscriptions/b5549425-9749-48f8-8db1-e22c7d47472d/resourceGroups/MyResourcegroupdisk/providers/Microsoft.Compute/virtualMachines/tegasVM",
   "location": "eastus",
-  "macAddress": "00-22-48-21-5B-9A",
+  "macAddress": "00-0D-3A-8B-D0-68",
   "powerState": "VM running",
   "privateIpAddress": "10.0.0.4",
-  "publicIpAddress": "20.120.80.158",
-  "resourceGroup": "tegastutresource",
+  "publicIpAddress": "20.124.99.169",
+  "resourceGroup": "MyResourcegroupdisk",
   "zones": ""
 }
 ```
@@ -98,7 +95,7 @@ Code input:
 
 SSH into my VM using the public IP Address.
 ```
-ssh tega@20.120.80.158
+ssh -i tukeypair tega@20.124.99.169
 ```
 
 > Here is the output code for creating my virtual machine:
@@ -135,6 +132,6 @@ applicable law.
 To run a command as administrator (user "root"), use "sudo <command>".
 See "man sudo_root" for details.
 ```
-> Here is a screenshot of the web server in action after opening port 80:
+> Here is a screenshot of the apache2 web server in action after opening port 80:
 
-![nginx web server](images/ipinaction.png)
+![apache2 web server](images/apache2.png)

@@ -127,7 +127,7 @@ UUID=ddb9676f-9912-41e4-a9a8-1eba765ca761 /datadrive  xfs defaults,nofail   1  2
 ```
 * Close connection
 ```
-existing
+exit
 ```
 
 ## Take a disk snapshot
