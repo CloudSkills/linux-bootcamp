@@ -12,3 +12,6 @@ Tutorial: Install a LAMP web server on the Amazon Linux AMI
 
 Tutorial: Host a WordPress blog on Amazon Linux 2
 * https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/hosting-wordpress.html
+
+Sample Gist
+* https://gist.github.com/mikepfeiffer/c079608703e604224e58a3d40d0fa043#file-lamp-linux-aws-sh
