@@ -22,10 +22,10 @@ Quickstart for Bash in Azure Cloud Shell
  
  ### Create VM
  az vm create \
->   --resource-group myResourceGroup \
->   --name myVM \
+>   --resource-group FirstResourceGroup \
+>   --name muyiwaVM \
 >   --image UbuntuLTS \
->   --admin-username azureuser \
+>   --admin-username muyiwa \
 >   --generate-ssh-keys
 
 ### Output
@@ -40,3 +40,17 @@ Quickstart for Bash in Azure Cloud Shell
   "resourceGroup": "FirstResourceGroup",
   "zones": ""
 }
+
+### Open port 80 for web traffic
+
+az vm open-port --port 80 --resource-group FirstResourceGroup --name muyiwaVM
+
+### Connect SSH to VM
+
+ssh muyiwa@20.106.133.238
+
+
+### Install Web Server
+
+sudo apt-get -y update
+sudo apt-get -y install nginx
