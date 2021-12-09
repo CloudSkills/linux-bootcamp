@@ -14,6 +14,12 @@ Quickstart: Create a Linux VM
 * https://docs.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-cli
 
 Step 1: Create a Resource Group.
+>Here is the input code for creating a resource group:
+```
+az group create --name myResourceGroup --location eastus
+
+```
+
 > Here is the output code for creating a resource group:
 
 ```
