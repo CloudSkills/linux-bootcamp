@@ -1,0 +1,1771 @@
+Create resource group
+
+leena@Azure:~$ az group create --name carolineVM --location eastus
+{
+  "id": "/subscriptions/c40f76f6-a340-40f3-930a-cdba85821538/resourceGroups/carolinevm",
+  "location": "eastus",
+  "managedBy": null,
+  "name": "carolinevm",
+  "properties": {
+    "provisioningState": "Succeeded"
+  },
+  "tags": null,
+  "type": "Microsoft.Resources/resourceGroups"
+}
+
+
+CREATE VIRTUAL MACHINE
+leena@Azure:~$ az vm create --resource-group carolinevm --name carolinevm --image UbuntuLTS --admin-username caroline --generate-ssh-keys
+It is recommended to use parameter "--public-ip-sku Standard" to create new VM with Standard public IP. Please note that the default public IP used for VM creation will bechanged from Basic to Standard in the future.
+{
+  "fqdns": "",
+  "id": "/subscriptions/c40f76f6-a340-40f3-930a-cdba85821538/resourceGroups/carolinevm/providers/Microsoft.Compute/virtualMachines/carolinevm",
+  "location": "eastus",
+  "macAddress": "00-0D-3A-1D-36-DB",
+  "powerState": "VM running",
+  "privateIpAddress": "10.0.0.4",
+  "publicIpAddress": "20.120.3.250",
+  "resourceGroup": "carolinevm",
+  "zones": ""
+
+
+  CONNECT TO VM
+
+leena@Azure:~$ ssh caroline@20.120.3.250
+Welcome to Ubuntu 18.04.6 LTS (GNU/Linux 5.4.0-1063-azure x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Fri Nov 19 13:31:15 UTC 2021
+
+  System load:  0.0               Processes:           108
+  Usage of /:   4.7% of 28.90GB   Users logged in:     0
+  Memory usage: 5%                IP address for eth0: 10.0.0.4
+  Swap usage:   0%
+
+
+0 updates can be applied immediately.
+
+New release '20.04.3 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+Last login: Fri Nov 19 12:53:26 2021 from 40.118.53.226
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+caroline@carolinevm:~$ exit
+logout
+Connection to 20.120.3.250 closed.
+
+
+
+UNDERSTAND VM IMAGES
+leena@Azure:~$ az vm image list --output table
+You are viewing an offline list of images, use --all to retrieve an up-to-date list
+Offer                         Publisher               Sku                 Urn                                                    UrnAlias             Version
+----------------------------  ----------------------  ------------------  --------------------------------------------------------------  -------------------  ---------
+CentOS                        OpenLogic               7.5                 OpenLogic:CentOS:7.5:latest                                     CentOS               latest
+debian-10                     Debian                  10                  Debian:debian-10:10:latest                                      Debian               latest
+flatcar-container-linux-free  kinvolk                 stable              kinvolk:flatcar-container-linux-free:stable:latest              Flatcar              latest
+openSUSE-Leap                 SUSE                    42.3                SUSE:openSUSE-Leap:42.3:latest                                  openSUSE-Leap        latest
+RHEL                          RedHat                  7-LVM               RedHat:RHEL:7-LVM:latest                                        RHEL                 latest
+SLES                          SUSE                    15                  SUSE:SLES:15:latest                                             SLES                 latest
+UbuntuServer                  Canonical               18.04-LTS           Canonical:UbuntuServer:18.04-LTS:latest                         UbuntuLTS            latest
+WindowsServer                 MicrosoftWindowsServer  2019-Datacenter     MicrosoftWindowsServer:WindowsServer:2019-Datacenter:latest     Win2019Datacenter    latest
+WindowsServer                 MicrosoftWindowsServer  2016-Datacenter     MicrosoftWindowsServer:WindowsServer:2016-Datacenter:latest     Win2016Datacenter    latest
+WindowsServer                 MicrosoftWindowsServer  2012-R2-Datacenter  MicrosoftWindowsServer:WindowsServer:2012-R2-Datacenter:latest  Win2012R2Datacenter  latest
+WindowsServer                 MicrosoftWindowsServer  2012-Datacenter     MicrosoftWindowsServer:WindowsServer:2012-Datacenter:latest     Win2012Datacenter    latestchrome_proxy.exe
+WindowsServer                 MicrosoftWindowsServer  2008-R2-SP1         MicrosoftWindowsServer:WindowsServer:2008-R2-SP1:latest         Win2008R2SP1         latest
+
+
+
+leena@Azure:~$ az vm image list --offer CentOS --all --output table
+CentOS                                           OpenLogic                           7.7                                              OpenLogic:CentOS:7.7:7.7.20190920                                 7.7.20190920
+CentOS                                           OpenLogic                           7.7                                              OpenLogic:CentOS:7.7:7.7.201912090                                 7.7.201912090
+CentOS                                           OpenLogic                           7.7                                              OpenLogic:CentOS:7.7:7.7.2020062400                                 7.7.2020062400
+CentOS                                           OpenLogic                           7.7                                              OpenLogic:CentOS:7.7:7.7.2020100800                                 7.7.2020100800
+CentOS                                           OpenLogic                           7.7                                              OpenLogic:CentOS:7.7:7.7.2020111300                                 7.7.2020111300
+CentOS                                           OpenLogic                           7.7                                              OpenLogic:CentOS:7.7:7.7.2021020400                                 7.7.2021020400
+php-with-centos-76                               cognosys                            php-with-centos-76                               cognosys:php-with-centos-76:php-with-centos-76:1.2019.1009                                 1.2019.1009
+CentOS                                           OpenLogic                           7_4                                              OpenLogic:CentOS:7_4:7.4.20200220                                 7.4.20200220
+CentOS                                           OpenLogic                           7_4-gen2                                         OpenLogic:CentOS:7_4-gen2:7.4.20200220                                 7.4.20200220
+php-with-centos-76-free                          cognosys                            php-with-centos-76-free                          cognosys:php-with-centos-76-free:php-with-centos-76-free:1.2019.1009                                 1.2019.1009
+CentOS                                           OpenLogic                           7_5-gen2                                         OpenLogic:CentOS:7_5-gen2:7.5.20200214                                 7.5.20200214
+CentOS                                           OpenLogic                           7_6-gen2                                         OpenLogic:CentOS:7_6-gen2:7.6.20200213                                 7.6.20200213
+php-with-centos-77                               cognosys                            php-with-centos-77                               cognosys:php-with-centos-77:php-with-centos-77:1.2019.1009                                 1.2019.1009
+CentOS                                           OpenLogic                           7_7-gen2                                         OpenLogic:CentOS:7_7-gen2:7.7.20200213                                 7.7.20200213
+CentOS                                           OpenLogic                           7_7-gen2                                         OpenLogic:CentOS:7_7-gen2:7.7.2020062401                                 7.7.2020062401
+CentOS                                           OpenLogic                           7_7-gen2                                         OpenLogic:CentOS:7_7-gen2:7.7.2020100801                                 7.7.2020100801
+CentOS                                           OpenLogic                           7_7-gen2                                         OpenLogic:CentOS:7_7-gen2:7.7.2020111301                                 7.7.2020111301
+CentOS                                           OpenLogic                           7_7-gen2                                         OpenLogic:CentOS:7_7-gen2:7.7.2021020401                                 7.7.2021020401
+CentOS                                           OpenLogic                           7_8                                              OpenLogic:CentOS:7_8:7.8.2020051900                                 7.8.2020051900
+CentOS                                           OpenLogic                           7_8                                              OpenLogic:CentOS:7_8:7.8.2020062400                                 7.8.2020062400
+CentOS                                           OpenLogic                           7_8                                              OpenLogic:CentOS:7_8:7.8.2020100700                                 7.8.2020100700
+CentOS                                           OpenLogic                           7_8                                              OpenLogic:CentOS:7_8:7.8.2020111300                                 7.8.2020111300
+CentOS                                           OpenLogic                           7_8                                              OpenLogic:CentOS:7_8:7.8.2021020400                                 7.8.2021020400
+php-with-centos-77-free                          cognosys                            php-with-centos-77-free                          cognosys:php-with-centos-77-free:php-with-centos-77-free:1.2019.1009                                 1.2019.1009
+CentOS                                           OpenLogic                           7_8-gen2                                         OpenLogic:CentOS:7_8-gen2:7.8.2020051901                                 7.8.2020051901
+CentOS                                           OpenLogic                           7_8-gen2                                         OpenLogic:CentOS:7_8-gen2:7.8.2020062401                                 7.8.2020062401
+CentOS                                           OpenLogic                           7_8-gen2                                         OpenLogic:CentOS:7_8-gen2:7.8.2020100701                                 7.8.2020100701
+CentOS                                           OpenLogic                           7_8-gen2                                         OpenLogic:CentOS:7_8-gen2:7.8.2020111301                                 7.8.2020111301
+CentOS                                           OpenLogic                           7_8-gen2                                         OpenLogic:CentOS:7_8-gen2:7.8.2021020401                                 7.8.2021020401
+CentOS                                           OpenLogic                           7_9                                              OpenLogic:CentOS:7_9:7.9.2020111900                                 7.9.2020111900
+CentOS                                           OpenLogic                           7_9                                              OpenLogic:CentOS:7_9:7.9.2021020400                                 7.9.2021020400
+CentOS                                           OpenLogic                           7_9                                              OpenLogic:CentOS:7_9:7.9.2021071900                                 7.9.2021071900
+postgresql-with-centos-7-8                       cognosys                            postgresql-with-centos-7-8                       cognosys:postgresql-with-centos-7-8:postgresql-with-centos-7-8:1.2019.1009                                 1.2019.1009
+CentOS                                           OpenLogic                           7_9-gen2                                         OpenLogic:CentOS:7_9-gen2:7.9.2020111901                                 7.9.2020111901
+CentOS                                           OpenLogic                           7_9-gen2                                         OpenLogic:CentOS:7_9-gen2:7.9.2021020401                                 7.9.2021020401
+CentOS                                           OpenLogic                           7_9-gen2                                         OpenLogic:CentOS:7_9-gen2:7.9.2021071901                                 7.9.2021071901
+centos7                                          perforce                            7                                                perforce:centos7:7:7.9.2021061600                                 7.9.2021061600
+centos7                                          perforce                            7                                                perforce:centos7:7:7.9.2021111000                                 7.9.2021111000
+CentOS                                           OpenLogic                           8.0                                              OpenLogic:CentOS:8.0:8.0.20191030                                 8.0.20191030
+CentOS                                           OpenLogic                           8.0                                              OpenLogic:CentOS:8.0:8.0.201912060                                 8.0.201912060
+postgresql-with-centos-7-9                       cognosys                            postgresql-with-centos-7-9                       cognosys:postgresql-with-centos-7-9:postgresql-with-centos-7-9:1.2019.1009                                 1.2019.1009
+CentOS                                           OpenLogic                           8_0-gen2                                         OpenLogic:CentOS:8_0-gen2:8.0.2019120600                                 8.0.2019120600
+centos8                                          perforce                            8                                                perforce:centos8:8:8.4.2021062400                                 8.4.2021062400
+centos8                                          perforce                            8                                                perforce:centos8:8:8.4.2021111000                                 8.4.2021111000
+CentOS                                           OpenLogic                           8_1                                              OpenLogic:CentOS:8_1:8.1.2020022700                                 8.1.2020022700
+CentOS                                           OpenLogic                           8_1                                              OpenLogic:CentOS:8_1:8.1.2020042900                                 8.1.2020042900
+CentOS                                           OpenLogic                           8_1                                              OpenLogic:CentOS:8_1:8.1.2020062400                                 8.1.2020062400
+CentOS                                           OpenLogic                           8_1                                              OpenLogic:CentOS:8_1:8.1.2020100800                                 8.1.2020100800
+CentOS                                           OpenLogic                           8_1                                              OpenLogic:CentOS:8_1:8.1.2020111900                                 8.1.2020111900
+postgresql-with-centos-75                        cognosys                            postgresql-with-centos-75                        cognosys:postgresql-with-centos-75:postgresql-with-centos-75:21.09.24                                 21.09.24
+CentOS                                           OpenLogic                           8_1-gen2                                         OpenLogic:CentOS:8_1-gen2:8.1.2020022701                                 8.1.2020022701
+CentOS                                           OpenLogic                           8_1-gen2                                         OpenLogic:CentOS:8_1-gen2:8.1.2020042901                                 8.1.2020042901
+CentOS                                           OpenLogic                           8_1-gen2                                         OpenLogic:CentOS:8_1-gen2:8.1.2020062401                                 8.1.2020062401
+CentOS                                           OpenLogic                           8_1-gen2                                         OpenLogic:CentOS:8_1-gen2:8.1.2020100801                                 8.1.2020100801
+CentOS                                           OpenLogic                           8_1-gen2                                         OpenLogic:CentOS:8_1-gen2:8.1.2020111901                                 8.1.2020111901
+centos8commercialsupport                         perforce                            8                                                perforce:centos8commercialsupport:8:8.4.2021062400                                 8.4.2021062400
+postgresql-with-centos-75-free                   cognosys                            postgresql-with-centos-75-free                   cognosys:postgresql-with-centos-75-free:postgresql-with-centos-75-free:21.09.24                                 21.09.24
+CentOS                                           OpenLogic                           8_2                                              OpenLogic:CentOS:8_2:8.2.2020062400                                 8.2.2020062400
+CentOS                                           OpenLogic                           8_2                                              OpenLogic:CentOS:8_2:8.2.2020100600                                 8.2.2020100600
+CentOS                                           OpenLogic                           8_2                                              OpenLogic:CentOS:8_2:8.2.2020111800                                 8.2.2020111800
+zendphp-centos-8-apache                          perforce                            zendphp-centos-8-apache-byol                     perforce:zendphp-centos-8-apache:zendphp-centos-8-apache-byol:1.0.2                                 1.0.2
+CentOS                                           OpenLogic                           8_2-gen2                                         OpenLogic:CentOS:8_2-gen2:8.2.2020062401                                 8.2.2020062401
+CentOS                                           OpenLogic                           8_2-gen2                                         OpenLogic:CentOS:8_2-gen2:8.2.2020100601                                 8.2.2020100601
+CentOS                                           OpenLogic                           8_2-gen2                                         OpenLogic:CentOS:8_2-gen2:8.2.2020111801                                 8.2.2020111801
+postgresql-with-centos-76                        cognosys                            postgresql-with-centos-76                        cognosys:postgresql-with-centos-76:postgresql-with-centos-76:1.2019.1009                                 1.2019.1009
+zendphp-centos-8-apache                          perforce                            zendphp-centos-8-apache-periodic                 perforce:zendphp-centos-8-apache:zendphp-centos-8-apache-periodic:1.0.2                                 1.0.2
+CentOS                                           OpenLogic                           8_3                                              OpenLogic:CentOS:8_3:8.3.2020120900                                 8.3.2020120900
+CentOS                                           OpenLogic                           8_3                                              OpenLogic:CentOS:8_3:8.3.2021020400                                 8.3.2021020400
+CentOS                                           OpenLogic                           8_3-gen2                                         OpenLogic:CentOS:8_3-gen2:8.3.2020120901                                 8.3.2020120901
+CentOS                                           OpenLogic                           8_3-gen2                                         OpenLogic:CentOS:8_3-gen2:8.3.2021020401                                 8.3.2021020401
+postgresql-with-centos-76-free                   cognosys                            postgresql-with-centos-76-free                   cognosys:postgresql-with-centos-76-free:postgresql-with-centos-76-free:1.2019.1009                                 1.2019.1009
+zendphp-centos-8-nginx                           perforce                            zendphp-centos-8-nginx-byol                      perforce:zendphp-centos-8-nginx:zendphp-centos-8-nginx-byol:1.0.2                                 1.0.2
+CentOS                                           OpenLogic                           8_4                                              OpenLogic:CentOS:8_4:8.4.2021071900                                 8.4.2021071900
+centos-7                                         procomputers                        centos-7                                         procomputers:centos-7:centos-7:7.9.20201116                                 7.9.20201116
+centos-7                                         procomputers                        centos-7                                         procomputers:centos-7:centos-7:7.9.20201215                                 7.9.20201215
+centos-7                                         procomputers                        centos-7                                         procomputers:centos-7:centos-7:7.9.20210122                                 7.9.20210122
+centos-7                                         procomputers                        centos-7                                         procomputers:centos-7:centos-7:7.9.20210303                                 7.9.20210303
+centos-7                                         procomputers                        centos-7                                         procomputers:centos-7:centos-7:7.9.20210514                                 7.9.20210514
+centos-7                                         procomputers                        centos-7                                         procomputers:centos-7:centos-7:7.9.20210624                                 7.9.20210624
+centos-7                                         procomputers                        centos-7                                         procomputers:centos-7:centos-7:7.9.20210918                                 7.9.20210918
+zendphp-centos-8-nginx                           perforce                            zendphp-centos-8-nginx-periodic                  perforce:zendphp-centos-8-nginx:zendphp-centos-8-nginx-periodic:1.0.2                                 1.0.2
+CentOS                                           OpenLogic                           8_4-gen2                                         OpenLogic:CentOS:8_4-gen2:8.4.2021071901                                 8.4.2021071901
+postgresql-with-centos-77                        cognosys                            postgresql-with-centos-77                        cognosys:postgresql-with-centos-77:postgresql-with-centos-77:1.2019.1009                                 1.2019.1009
+centos-7-5                                       procomputers                        centos-7-5                                       procomputers:centos-7-5:centos-7-5:7.5.20180503                                 7.5.20180503
+centos-7-5                                       procomputers                        centos-7-5                                       procomputers:centos-7-5:centos-7-5:7.5.20181029                                 7.5.20181029
+CentOS-CI                                        OpenLogic                           7-CI                                             OpenLogic:CentOS-CI:7-CI:7.4.20210921                                 7.4.20210921
+CentOS-CI                                        OpenLogic                           7-CI                                             OpenLogic:CentOS-CI:7-CI:7.6.20190306                                 7.6.20190306
+CentOS-CI                                        OpenLogic                           7-CI                                             OpenLogic:CentOS-CI:7-CI:7.6.20190426                                 7.6.20190426
+CentOS-CI                                        OpenLogic                           7-CI                                             OpenLogic:CentOS-CI:7-CI:7.7.20190920                                 7.7.20190920
+CentOS-CI                                        OpenLogic                           7-CI                                             OpenLogic:CentOS-CI:7-CI:7.7.20191209                                 7.7.20191209
+postgresql-with-centos-77-free                   cognosys                            postgresql-with-centos-77-free                   cognosys:postgresql-with-centos-77-free:postgresql-with-centos-77-free:1.2020.2401                                 1.2020.2401
+centos-7-6                                       procomputers                        centos-7-6                                       procomputers:centos-7-6:centos-7-6:7.6.20181125                                 7.6.20181125
+centos-7-6                                       procomputers                        centos-7-6                                       procomputers:centos-7-6:centos-7-6:7.6.20190731                                 7.6.20190731
+centos-7-6                                       procomputers                        centos-7-6                                       procomputers:centos-7-6:centos-7-6:7.6.20190810                                 7.6.20190810
+postgresql-with-centos-8-1                       cognosys                            postgresql-with-centos-8-1                       cognosys:postgresql-with-centos-8-1:postgresql-with-centos-8-1:1.2019.1009                                 1.2019.1009
+centos-7-7                                       procomputers                        centos-7-7                                       procomputers:centos-7-7:centos-7-7:7.7.20190909                                 7.7.20190909
+centos-7-7                                       procomputers                        centos-7-7                                       procomputers:centos-7-7:centos-7-7:7.7.20200406                                 7.7.20200406
+CentOS-HPC                                       OpenLogic                           6.5                                              OpenLogic:CentOS-HPC:6.5:6.5.201803010                                 6.5.201803010
+CentOS-HPC                                       OpenLogic                           6.8                                              OpenLogic:CentOS-HPC:6.8:6.8.201803010                                 6.8.201803010
+postgresql-with-centos-8-2                       cognosys                            postgresql-with-centos-8-2                       cognosys:postgresql-with-centos-8-2:postgresql-with-centos-8-2:1.2019.1009                                 1.2019.1009
+centos-7-8                                       procomputers                        centos-7-8                                       procomputers:centos-7-8:centos-7-8:7.8.20200421                                 7.8.20200421
+centos-7-8                                       procomputers                        centos-7-8                                       procomputers:centos-7-8:centos-7-8:7.8.20200914                                 7.8.20200914
+CentOS-HPC                                       OpenLogic                           7.1                                              OpenLogic:CentOS-HPC:7.1:7.1.201803010                                 7.1.201803010
+CentOS-HPC                                       OpenLogic                           7.1                                              OpenLogic:CentOS-HPC:7.1:7.1.2020101500                                 7.1.2020101500
+CentOS-HPC                                       OpenLogic                           7.3                                              OpenLogic:CentOS-HPC:7.3:7.3.201803010                                 7.3.201803010
+CentOS-HPC                                       OpenLogic                           7.3                                              OpenLogic:CentOS-HPC:7.3:7.3.2020101500                                 7.3.2020101500
+postgresql-with-centos-8-stream                  cognosys                            postgresql-with-centos-8-stream                  cognosys:postgresql-with-centos-8-stream:postgresql-with-centos-8-stream:1.2019.1009                                 1.2019.1009
+centos-7-9                                       procomputers                        centos-7-9                                       procomputers:centos-7-9:centos-7-9:7.9.20201116                                 7.9.20201116
+centos-7-9                                       procomputers                        centos-7-9                                       procomputers:centos-7-9:centos-7-9:7.9.20201215                                 7.9.20201215
+centos-7-9                                       procomputers                        centos-7-9                                       procomputers:centos-7-9:centos-7-9:7.9.20210122                                 7.9.20210122
+centos-7-9                                       procomputers                        centos-7-9                                       procomputers:centos-7-9:centos-7-9:7.9.20210303                                 7.9.20210303
+centos-7-9                                       procomputers                        centos-7-9                                       procomputers:centos-7-9:centos-7-9:7.9.20210514                                 7.9.20210514
+centos-7-9                                       procomputers                        centos-7-9                                       procomputers:centos-7-9:centos-7-9:7.9.20210624                                 7.9.20210624
+centos-7-9                                       procomputers                        centos-7-9                                       procomputers:centos-7-9:centos-7-9:7.9.20210918                                 7.9.20210918
+CentOS-HPC                                       OpenLogic                           7.4                                              OpenLogic:CentOS-HPC:7.4:7.4.201807190                                 7.4.201807190
+CentOS-HPC                                       OpenLogic                           7.4                                              OpenLogic:CentOS-HPC:7.4:7.4.2020101200                                 7.4.2020101200
+CentOS-HPC                                       OpenLogic                           7.6                                              OpenLogic:CentOS-HPC:7.6:7.6.20190327                                 7.6.20190327
+CentOS-HPC                                       OpenLogic                           7.6                                              OpenLogic:CentOS-HPC:7.6:7.6.20190529                                 7.6.20190529
+CentOS-HPC                                       OpenLogic                           7.6                                              OpenLogic:CentOS-HPC:7.6:7.6.20190721                                 7.6.20190721
+CentOS-HPC                                       OpenLogic                           7.6                                              OpenLogic:CentOS-HPC:7.6:7.6.201910250                                 7.6.201910250
+CentOS-HPC                                       OpenLogic                           7.6                                              OpenLogic:CentOS-HPC:7.6:7.6.2020030200                                 7.6.2020030200
+CentOS-HPC                                       OpenLogic                           7.6                                              OpenLogic:CentOS-HPC:7.6:7.6.2020031000                                 7.6.2020031000
+CentOS-HPC                                       OpenLogic                           7.6                                              OpenLogic:CentOS-HPC:7.6:7.6.2020042000                                 7.6.2020042000
+CentOS-HPC                                       OpenLogic                           7.6                                              OpenLogic:CentOS-HPC:7.6:7.6.2020062900                                 7.6.2020062900
+CentOS-HPC                                       OpenLogic                           7.6                                              OpenLogic:CentOS-HPC:7.6:7.6.2020100800                                 7.6.2020100800
+CentOS-HPC                                       OpenLogic                           7.6                                              OpenLogic:CentOS-HPC:7.6:7.6.2021022200                                 7.6.2021022200
+CentOS-HPC                                       OpenLogic                           7.6                                              OpenLogic:CentOS-HPC:7.6:7.6.2021041900                                 7.6.2021041900
+python-2-7-with-centos-7-5                       cognosys                            python-2-7-with-centos-7-5                       cognosys:python-2-7-with-centos-7-5:python-2-7-with-centos-7-5:1.2020.1010                                 1.2020.1010
+CentOS-HPC                                       OpenLogic                           7.7                                              OpenLogic:CentOS-HPC:7.7:7.7.201910230                                 7.7.201910230
+CentOS-HPC                                       OpenLogic                           7.7                                              OpenLogic:CentOS-HPC:7.7:7.7.2020031800                                 7.7.2020031800
+CentOS-HPC                                       OpenLogic                           7.7                                              OpenLogic:CentOS-HPC:7.7:7.7.2020042000                                 7.7.2020042000
+CentOS-HPC                                       OpenLogic                           7.7                                              OpenLogic:CentOS-HPC:7.7:7.7.2020043000                                 7.7.2020043000
+CentOS-HPC                                       OpenLogic                           7.7                                              OpenLogic:CentOS-HPC:7.7:7.7.2020062600                                 7.7.2020062600
+CentOS-HPC                                       OpenLogic                           7.7                                              OpenLogic:CentOS-HPC:7.7:7.7.2020100700                                 7.7.2020100700
+CentOS-HPC                                       OpenLogic                           7.7                                              OpenLogic:CentOS-HPC:7.7:7.7.2021022400                                 7.7.2021022400
+CentOS-HPC                                       OpenLogic                           7.7                                              OpenLogic:CentOS-HPC:7.7:7.7.2021041900                                 7.7.2021041900
+centos-7-latest                                  procomputers                        centos-7-latest                                  procomputers:centos-7-latest:centos-7-latest:7.9.20201116                                 7.9.20201116
+centos-7-latest                                  procomputers                        centos-7-latest                                  procomputers:centos-7-latest:centos-7-latest:7.9.20201215                                 7.9.20201215
+centos-7-latest                                  procomputers                        centos-7-latest                                  procomputers:centos-7-latest:centos-7-latest:7.9.20210122                                 7.9.20210122
+centos-7-latest                                  procomputers                        centos-7-latest                                  procomputers:centos-7-latest:centos-7-latest:7.9.20210311                                 7.9.20210311
+centos-7-latest                                  procomputers                        centos-7-latest                                  procomputers:centos-7-latest:centos-7-latest:7.9.20210514                                 7.9.20210514
+centos-7-latest                                  procomputers                        centos-7-latest                                  procomputers:centos-7-latest:centos-7-latest:7.9.20210624                                 7.9.20210624
+centos-7-latest                                  procomputers                        centos-7-latest                                  procomputers:centos-7-latest:centos-7-latest:7.9.20210918                                 7.9.20210918
+python-2-7-with-centos-7-6                       cognosys                            python-2-7-with-centos-7-6                       cognosys:python-2-7-with-centos-7-6:python-2-7-with-centos-7-6:1.2020.1010                                 1.2020.1010
+CentOS-HPC                                       OpenLogic                           7_6gen2                                          OpenLogic:CentOS-HPC:7_6gen2:7.6.20200302                                 7.6.20200302
+CentOS-HPC                                       OpenLogic                           7_6gen2                                          OpenLogic:CentOS-HPC:7_6gen2:7.6.2020042001                                 7.6.2020042001
+CentOS-HPC                                       OpenLogic                           7_6gen2                                          OpenLogic:CentOS-HPC:7_6gen2:7.6.2020062901                                 7.6.2020062901
+CentOS-HPC                                       OpenLogic                           7_6gen2                                          OpenLogic:CentOS-HPC:7_6gen2:7.6.2020100801                                 7.6.2020100801
+CentOS-HPC                                       OpenLogic                           7_6gen2                                          OpenLogic:CentOS-HPC:7_6gen2:7.6.2021022201                                 7.6.2021022201
+CentOS-HPC                                       OpenLogic                           7_6gen2                                          OpenLogic:CentOS-HPC:7_6gen2:7.6.2021041901                                 7.6.2021041901
+CentOS-HPC                                       OpenLogic                           7_7-gen2                                         OpenLogic:CentOS-HPC:7_7-gen2:7.7.2020031801                                 7.7.2020031801
+CentOS-HPC                                       OpenLogic                           7_7-gen2                                         OpenLogic:CentOS-HPC:7_7-gen2:7.7.2020042001                                 7.7.2020042001
+CentOS-HPC                                       OpenLogic                           7_7-gen2                                         OpenLogic:CentOS-HPC:7_7-gen2:7.7.2020043001                                 7.7.2020043001
+CentOS-HPC                                       OpenLogic                           7_7-gen2                                         OpenLogic:CentOS-HPC:7_7-gen2:7.7.2020062601                                 7.7.2020062601
+CentOS-HPC                                       OpenLogic                           7_7-gen2                                         OpenLogic:CentOS-HPC:7_7-gen2:7.7.2020100701                                 7.7.2020100701
+CentOS-HPC                                       OpenLogic                           7_7-gen2                                         OpenLogic:CentOS-HPC:7_7-gen2:7.7.2021022401                                 7.7.2021022401
+CentOS-HPC                                       OpenLogic                           7_7-gen2                                         OpenLogic:CentOS-HPC:7_7-gen2:7.7.2021041901                                 7.7.2021041901
+centos-7-lvm                                     procomputers                        centos-7-lvm                                     procomputers:centos-7-lvm:centos-7-lvm:7.9.20201116                                 7.9.20201116
+centos-7-lvm                                     procomputers                        centos-7-lvm                                     procomputers:centos-7-lvm:centos-7-lvm:7.9.20201215                                 7.9.20201215
+centos-7-lvm                                     procomputers                        centos-7-lvm                                     procomputers:centos-7-lvm:centos-7-lvm:7.9.20210122                                 7.9.20210122
+centos-7-lvm                                     procomputers                        centos-7-lvm                                     procomputers:centos-7-lvm:centos-7-lvm:7.9.20210510                                 7.9.20210510
+centos-7-lvm                                     procomputers                        centos-7-lvm                                     procomputers:centos-7-lvm:centos-7-lvm:7.9.20210919                                 7.9.20210919
+python-2-7-with-centos-7-7                       cognosys                            python-2-7-with-centos-7-7                       cognosys:python-2-7-with-centos-7-7:python-2-7-with-centos-7-7:1.2020.1010                                 1.2020.1010
+CentOS-HPC                                       OpenLogic                           7_8                                              OpenLogic:CentOS-HPC:7_8:7.8.2020121000                                 7.8.2020121000
+CentOS-HPC                                       OpenLogic                           7_8                                              OpenLogic:CentOS-HPC:7_8:7.8.2021020400                                 7.8.2021020400
+CentOS-HPC                                       OpenLogic                           7_8                                              OpenLogic:CentOS-HPC:7_8:7.8.2021041900                                 7.8.2021041900
+CentOS-HPC                                       OpenLogic                           7_8-gen2                                         OpenLogic:CentOS-HPC:7_8-gen2:7.8.2020121001                                 7.8.2020121001
+CentOS-HPC                                       OpenLogic                           7_8-gen2                                         OpenLogic:CentOS-HPC:7_8-gen2:7.8.2021020401                                 7.8.2021020401
+CentOS-HPC                                       OpenLogic                           7_8-gen2                                         OpenLogic:CentOS-HPC:7_8-gen2:7.8.2021041901                                 7.8.2021041901
+centos-7-minimal                                 procomputers                        centos-7-minimal                                 procomputers:centos-7-minimal:centos-7-minimal:7.9.20201116                                 7.9.20201116
+centos-7-minimal                                 procomputers                        centos-7-minimal                                 procomputers:centos-7-minimal:centos-7-minimal:7.9.20201215                                 7.9.20201215
+centos-7-minimal                                 procomputers                        centos-7-minimal                                 procomputers:centos-7-minimal:centos-7-minimal:7.9.20210122                                 7.9.20210122
+centos-7-minimal                                 procomputers                        centos-7-minimal                                 procomputers:centos-7-minimal:centos-7-minimal:7.9.20210303                                 7.9.20210303
+centos-7-minimal                                 procomputers                        centos-7-minimal                                 procomputers:centos-7-minimal:centos-7-minimal:7.9.20210514                                 7.9.20210514
+centos-7-minimal                                 procomputers                        centos-7-minimal                                 procomputers:centos-7-minimal:centos-7-minimal:7.9.20210624                                 7.9.20210624
+centos-7-minimal                                 procomputers                        centos-7-minimal                                 procomputers:centos-7-minimal:centos-7-minimal:7.9.20210918                                 7.9.20210918
+python-2-with-centos-7-8                         cognosys                            python-2-with-centos-7-8                         cognosys:python-2-with-centos-7-8:python-2-with-centos-7-8:1.2019.1008                                 1.2019.1008
+CentOS-HPC                                       OpenLogic                           7_9                                              OpenLogic:CentOS-HPC:7_9:7.9.2021052400                                 7.9.2021052400
+CentOS-HPC                                       OpenLogic                           7_9-gen2                                         OpenLogic:CentOS-HPC:7_9-gen2:7.9.2021052401                                 7.9.2021052401
+centos-8                                         procomputers                        centos-8                                         procomputers:centos-8:centos-8:8.2.20200804                                 8.2.20200804
+centos-8                                         procomputers                        centos-8                                         procomputers:centos-8:centos-8:8.2.20201206                                 8.2.20201206
+centos-8                                         procomputers                        centos-8                                         procomputers:centos-8:centos-8:8.3.20201208                                 8.3.20201208
+centos-8                                         procomputers                        centos-8                                         procomputers:centos-8:centos-8:8.3.20210124                                 8.3.20210124
+centos-8                                         procomputers                        centos-8                                         procomputers:centos-8:centos-8:8.3.20210320                                 8.3.20210320
+centos-8                                         procomputers                        centos-8                                         procomputers:centos-8:centos-8:8.4.20210607                                 8.4.20210607
+centos-8                                         procomputers                        centos-8                                         procomputers:centos-8:centos-8:8.4.20210712                                 8.4.20210712
+centos-8                                         procomputers                        centos-8                                         procomputers:centos-8:centos-8:8.4.20211027                                 8.4.20211027
+centos-8                                         procomputers                        centos-8                                         procomputers:centos-8:centos-8:8.4.20211109                                 8.4.20211109
+centos-8                                         procomputers                        centos-8                                         procomputers:centos-8:centos-8:8.5.20211117                                 8.5.20211117
+python-2-with-centos-7-9                         cognosys                            python-2-with-centos-7-9                         cognosys:python-2-with-centos-7-9:python-2-with-centos-7-9:1.2019.1008                                 1.2019.1008
+CentOS-HPC                                       OpenLogic                           8_1                                              OpenLogic:CentOS-HPC:8_1:8.1.2020041300                                 8.1.2020041300
+CentOS-HPC                                       OpenLogic                           8_1                                              OpenLogic:CentOS-HPC:8_1:8.1.2020043000                                 8.1.2020043000
+CentOS-HPC                                       OpenLogic                           8_1                                              OpenLogic:CentOS-HPC:8_1:8.1.2020062400                                 8.1.2020062400
+CentOS-HPC                                       OpenLogic                           8_1                                              OpenLogic:CentOS-HPC:8_1:8.1.2020121000                                 8.1.2020121000
+CentOS-HPC                                       OpenLogic                           8_1                                              OpenLogic:CentOS-HPC:8_1:8.1.2021020400                                 8.1.2021020400
+CentOS-HPC                                       OpenLogic                           8_1                                              OpenLogic:CentOS-HPC:8_1:8.1.2021042000                                 8.1.2021042000
+CentOS-HPC                                       OpenLogic                           8_1-gen2                                         OpenLogic:CentOS-HPC:8_1-gen2:8.1.2020041301                                 8.1.2020041301
+CentOS-HPC                                       OpenLogic                           8_1-gen2                                         OpenLogic:CentOS-HPC:8_1-gen2:8.1.2020043001                                 8.1.2020043001
+CentOS-HPC                                       OpenLogic                           8_1-gen2                                         OpenLogic:CentOS-HPC:8_1-gen2:8.1.2020062401                                 8.1.2020062401
+CentOS-HPC                                       OpenLogic                           8_1-gen2                                         OpenLogic:CentOS-HPC:8_1-gen2:8.1.2020121001                                 8.1.2020121001
+CentOS-HPC                                       OpenLogic                           8_1-gen2                                         OpenLogic:CentOS-HPC:8_1-gen2:8.1.2021020401                                 8.1.2021020401
+CentOS-HPC                                       OpenLogic                           8_1-gen2                                         OpenLogic:CentOS-HPC:8_1-gen2:8.1.2021042001                                 8.1.2021042001
+centos-8-1                                       procomputers                        centos-8-1                                       procomputers:centos-8-1:centos-8-1:8.1.20200103                                 8.1.20200103
+centos-8-1                                       procomputers                        centos-8-1                                       procomputers:centos-8-1:centos-8-1:8.1.20200422                                 8.1.20200422
+python-3-6-with-centos-7-5                       cognosys                            python-3-6-with-centos-7-5                       cognosys:python-3-6-with-centos-7-5:python-3-6-with-centos-7-5:1.2019.1008                                 1.2019.1008
+CentOS-LVM                                       OpenLogic                           7-LVM                                            OpenLogic:CentOS-LVM:7-LVM:7.6.20190130                                 7.6.20190130
+CentOS-LVM                                       OpenLogic                           7-LVM                                            OpenLogic:CentOS-LVM:7-LVM:7.6.20190721                                 7.6.20190721
+CentOS-LVM                                       OpenLogic                           7-LVM                                            OpenLogic:CentOS-LVM:7-LVM:7.7.20190920                                 7.7.20190920
+CentOS-LVM                                       OpenLogic                           7-LVM                                            OpenLogic:CentOS-LVM:7-LVM:7.7.201912090                                 7.7.201912090
+CentOS-LVM                                       OpenLogic                           7-LVM                                            OpenLogic:CentOS-LVM:7-LVM:7.7.2020042700                                 7.7.2020042700
+CentOS-LVM                                       OpenLogic                           7-LVM                                            OpenLogic:CentOS-LVM:7-LVM:7.8.2020062400                                 7.8.2020062400
+CentOS-LVM                                       OpenLogic                           7-LVM                                            OpenLogic:CentOS-LVM:7-LVM:7.8.2020100700                                 7.8.2020100700
+CentOS-LVM                                       OpenLogic                           7-LVM                                            OpenLogic:CentOS-LVM:7-LVM:7.8.2020111100                                 7.8.2020111100
+CentOS-LVM                                       OpenLogic                           7-LVM                                            OpenLogic:CentOS-LVM:7-LVM:7.9.2020111900                                 7.9.2020111900
+CentOS-LVM                                       OpenLogic                           7-LVM                                            OpenLogic:CentOS-LVM:7-LVM:7.9.2021020400                                 7.9.2021020400
+CentOS-LVM                                       OpenLogic                           7-LVM                                            OpenLogic:CentOS-LVM:7-LVM:7.9.2021072000                                 7.9.2021072000
+centos-8-2                                       procomputers                        centos-8-2                                       procomputers:centos-8-2:centos-8-2:8.2.20200608                                 8.2.20200608
+centos-8-2                                       procomputers                        centos-8-2                                       procomputers:centos-8-2:centos-8-2:8.2.20201030                                 8.2.20201030
+python-3-6-with-centos-7-6                       cognosys                            python-3-6-with-centos-7-6                       cognosys:python-3-6-with-centos-7-6:python-3-6-with-centos-7-6:1.2019.1008                                 1.2019.1008
+CentOS-LVM                                       OpenLogic                           7-lvm-gen2                                       OpenLogic:CentOS-LVM:7-lvm-gen2:7.7.20200220                                 7.7.20200220
+CentOS-LVM                                       OpenLogic                           7-lvm-gen2                                       OpenLogic:CentOS-LVM:7-lvm-gen2:7.7.2020042701                                 7.7.2020042701
+CentOS-LVM                                       OpenLogic                           7-lvm-gen2                                       OpenLogic:CentOS-LVM:7-lvm-gen2:7.8.2020062401                                 7.8.2020062401
+CentOS-LVM                                       OpenLogic                           7-lvm-gen2                                       OpenLogic:CentOS-LVM:7-lvm-gen2:7.8.2020100701                                 7.8.2020100701
+CentOS-LVM                                       OpenLogic                           7-lvm-gen2                                       OpenLogic:CentOS-LVM:7-lvm-gen2:7.8.2020111101                                 7.8.2020111101
+CentOS-LVM                                       OpenLogic                           7-lvm-gen2                                       OpenLogic:CentOS-LVM:7-lvm-gen2:7.9.2020111901                                 7.9.2020111901
+CentOS-LVM                                       OpenLogic                           7-lvm-gen2                                       OpenLogic:CentOS-LVM:7-lvm-gen2:7.9.2021020401                                 7.9.2021020401
+CentOS-LVM                                       OpenLogic                           7-lvm-gen2                                       OpenLogic:CentOS-LVM:7-lvm-gen2:7.9.2021072001                                 7.9.2021072001
+CentOS-LVM                                       OpenLogic                           8-lvm                                            OpenLogic:CentOS-LVM:8-lvm:8.0.20200102                                 8.0.20200102
+CentOS-LVM                                       OpenLogic                           8-lvm                                            OpenLogic:CentOS-LVM:8-lvm:8.1.2020042700                                 8.1.2020042700
+CentOS-LVM                                       OpenLogic                           8-lvm                                            OpenLogic:CentOS-LVM:8-lvm:8.2.2020062400                                 8.2.2020062400
+CentOS-LVM                                       OpenLogic                           8-lvm                                            OpenLogic:CentOS-LVM:8-lvm:8.2.2020100700                                 8.2.2020100700
+CentOS-LVM                                       OpenLogic                           8-lvm                                            OpenLogic:CentOS-LVM:8-lvm:8.2.2020111800                                 8.2.2020111800
+CentOS-LVM                                       OpenLogic                           8-lvm                                            OpenLogic:CentOS-LVM:8-lvm:8.3.2020120900                                 8.3.2020120900
+CentOS-LVM                                       OpenLogic                           8-lvm                                            OpenLogic:CentOS-LVM:8-lvm:8.3.2021020400                                 8.3.2021020400
+CentOS-LVM                                       OpenLogic                           8-lvm                                            OpenLogic:CentOS-LVM:8-lvm:8.4.2021071900                                 8.4.2021071900
+centos-8-3                                       procomputers                        centos-8-3                                       procomputers:centos-8-3:centos-8-3:8.3.20201208                                 8.3.20201208
+centos-8-3                                       procomputers                        centos-8-3                                       procomputers:centos-8-3:centos-8-3:8.3.20210124                                 8.3.20210124
+centos-8-3                                       procomputers                        centos-8-3                                       procomputers:centos-8-3:centos-8-3:8.3.20210320                                 8.3.20210320
+python-3-6-with-centos-7-7                       cognosys                            python-3-6-with-centos-7-7                       cognosys:python-3-6-with-centos-7-7:python-3-6-with-centos-7-7:1.2019.1008                                 1.2019.1008
+CentOS-LVM                                       OpenLogic                           8-lvm-gen2                                       OpenLogic:CentOS-LVM:8-lvm-gen2:8.0.202001020                                 8.0.202001020
+CentOS-LVM                                       OpenLogic                           8-lvm-gen2                                       OpenLogic:CentOS-LVM:8-lvm-gen2:8.1.2020042701                                 8.1.2020042701
+CentOS-LVM                                       OpenLogic                           8-lvm-gen2                                       OpenLogic:CentOS-LVM:8-lvm-gen2:8.2.2020062401                                 8.2.2020062401
+CentOS-LVM                                       OpenLogic                           8-lvm-gen2                                       OpenLogic:CentOS-LVM:8-lvm-gen2:8.2.2020100701                                 8.2.2020100701
+CentOS-LVM                                       OpenLogic                           8-lvm-gen2                                       OpenLogic:CentOS-LVM:8-lvm-gen2:8.2.2020111801                                 8.2.2020111801
+CentOS-LVM                                       OpenLogic                           8-lvm-gen2                                       OpenLogic:CentOS-LVM:8-lvm-gen2:8.3.2020120901                                 8.3.2020120901
+CentOS-LVM                                       OpenLogic                           8-lvm-gen2                                       OpenLogic:CentOS-LVM:8-lvm-gen2:8.3.2021020401                                 8.3.2021020401
+CentOS-LVM                                       OpenLogic                           8-lvm-gen2                                       OpenLogic:CentOS-LVM:8-lvm-gen2:8.4.2021071901                                 8.4.2021071901
+centos-8-4                                       procomputers                        centos-8-4                                       procomputers:centos-8-4:centos-8-4:8.4.20210607                                 8.4.20210607
+centos-8-4                                       procomputers                        centos-8-4                                       procomputers:centos-8-4:centos-8-4:8.4.20210712                                 8.4.20210712
+centos-8-4                                       procomputers                        centos-8-4                                       procomputers:centos-8-4:centos-8-4:8.4.20211027                                 8.4.20211027
+centos-8-4                                       procomputers                        centos-8-4                                       procomputers:centos-8-4:centos-8-4:8.4.20211109                                 8.4.20211109
+python-3-7-with-centos-7-5                       cognosys                            python-3-7-with-centos-7-5                       cognosys:python-3-7-with-centos-7-5:python-3-7-with-centos-7-5:1.2019.1008                                 1.2019.1008
+centos-8-5                                       procomputers                        centos-8-5                                       procomputers:centos-8-5:centos-8-5:8.5.20211117                                 8.5.20211117
+python-3-7-with-centos-7-6                       cognosys                            python-3-7-with-centos-7-6                       cognosys:python-3-7-with-centos-7-6:python-3-7-with-centos-7-6:1.2019.1008                                 1.2019.1008
+centos-8-latest                                  procomputers                        centos-8-latest                                  procomputers:centos-8-latest:centos-8-latest:8.2.20200804                                 8.2.20200804
+centos-8-latest                                  procomputers                        centos-8-latest                                  procomputers:centos-8-latest:centos-8-latest:8.2.20201206                                 8.2.20201206
+centos-8-latest                                  procomputers                        centos-8-latest                                  procomputers:centos-8-latest:centos-8-latest:8.3.20201208                                 8.3.20201208
+centos-8-latest                                  procomputers                        centos-8-latest                                  procomputers:centos-8-latest:centos-8-latest:8.3.20210124                                 8.3.20210124
+centos-8-latest                                  procomputers                        centos-8-latest                                  procomputers:centos-8-latest:centos-8-latest:8.3.20210320                                 8.3.20210320
+centos-8-latest                                  procomputers                        centos-8-latest                                  procomputers:centos-8-latest:centos-8-latest:8.4.20210607                                 8.4.20210607
+centos-8-latest                                  procomputers                        centos-8-latest                                  procomputers:centos-8-latest:centos-8-latest:8.4.20211110                                 8.4.20211110
+centos_corevm_test-200408                        OpenLogic                           8_1-200408-gen2                                  OpenLogic:centos_corevm_test-200408:8_1-200408-gen2:8.1.2020022749                                 8.1.2020022749
+python-3-7-with-centos-7-7                       cognosys                            python-3-7-with-centos-7-7                       cognosys:python-3-7-with-centos-7-7:python-3-7-with-centos-7-7:1.2019.1008                                 1.2019.1008
+centos-8-lvm                                     procomputers                        centos-8-lvm                                     procomputers:centos-8-lvm:centos-8-lvm:8.3.20210125                                 8.3.20210125
+centos-8-lvm                                     procomputers                        centos-8-lvm                                     procomputers:centos-8-lvm:centos-8-lvm:8.3.20210322                                 8.3.20210322
+centos-8-lvm                                     procomputers                        centos-8-lvm                                     procomputers:centos-8-lvm:centos-8-lvm:8.4.20211110                                 8.4.20211110
+python-3-8-with-centos-7-5                       cognosys                            python-3-8-with-centos-7-5                       cognosys:python-3-8-with-centos-7-5:python-3-8-with-centos-7-5:1.2019.1008                                 1.2019.1008
+centos-8-minimal                                 procomputers                        centos-8-minimal                                 procomputers:centos-8-minimal:centos-8-minimal:8.2.20200804                                 8.2.20200804
+centos-8-minimal                                 procomputers                        centos-8-minimal                                 procomputers:centos-8-minimal:centos-8-minimal:8.2.20201206                                 8.2.20201206
+centos-8-minimal                                 procomputers                        centos-8-minimal                                 procomputers:centos-8-minimal:centos-8-minimal:8.3.20201208                                 8.3.20201208
+centos-8-minimal                                 procomputers                        centos-8-minimal                                 procomputers:centos-8-minimal:centos-8-minimal:8.3.20210124                                 8.3.20210124
+centos-8-minimal                                 procomputers                        centos-8-minimal                                 procomputers:centos-8-minimal:centos-8-minimal:8.3.20210320                                 8.3.20210320
+centos-8-minimal                                 procomputers                        centos-8-minimal                                 procomputers:centos-8-minimal:centos-8-minimal:8.4.20210607                                 8.4.20210607
+centos-8-minimal                                 procomputers                        centos-8-minimal                                 procomputers:centos-8-minimal:centos-8-minimal:8.4.20210712                                 8.4.20210712
+centos-8-minimal                                 procomputers                        centos-8-minimal                                 procomputers:centos-8-minimal:centos-8-minimal:8.4.20211027                                 8.4.20211027
+centos-8-minimal                                 procomputers                        centos-8-minimal                                 procomputers:centos-8-minimal:centos-8-minimal:8.4.20211109                                 8.4.20211109
+centos-8-minimal                                 procomputers                        centos-8-minimal                                 procomputers:centos-8-minimal:centos-8-minimal:8.5.20211117                                 8.5.20211117
+python-3-8-with-centos-7-6                       cognosys                            python-3-8-with-centos-7-6                       cognosys:python-3-8-with-centos-7-6:python-3-8-with-centos-7-6:1.2019.1008                                 1.2019.1008
+centos-8-stream                                  procomputers                        centos-8-stream                                  procomputers:centos-8-stream:centos-8-stream:8.2021.0526                                 8.2021.0526
+centos-8-stream                                  procomputers                        centos-8-stream                                  procomputers:centos-8-stream:centos-8-stream:8.2021.0611                                 8.2021.0611
+centos-8-stream                                  procomputers                        centos-8-stream                                  procomputers:centos-8-stream:centos-8-stream:8.2021.0626                                 8.2021.0626
+centos-8-stream                                  procomputers                        centos-8-stream                                  procomputers:centos-8-stream:centos-8-stream:8.2021.0714                                 8.2021.0714
+centos-8-stream                                  procomputers                        centos-8-stream                                  procomputers:centos-8-stream:centos-8-stream:8.2021.0725                                 8.2021.0725
+centos-8-stream                                  procomputers                        centos-8-stream                                  procomputers:centos-8-stream:centos-8-stream:8.2021.0828                                 8.2021.0828
+centos-8-stream                                  procomputers                        centos-8-stream                                  procomputers:centos-8-stream:centos-8-stream:8.2021.0921                                 8.2021.0921
+centos-8-stream                                  procomputers                        centos-8-stream                                  procomputers:centos-8-stream:centos-8-stream:8.2021.1025                                 8.2021.1025
+python-3-8-with-centos-7-7                       cognosys                            python-3-8-with-centos-7-7                       cognosys:python-3-8-with-centos-7-7:python-3-8-with-centos-7-7:1.2019.1008                                 1.2019.1008
+centos-stream                                    procomputers                        centos-stream                                    procomputers:centos-stream:centos-stream:8.2021.0714                                 8.2021.0714
+centos-stream                                    procomputers                        centos-stream                                    procomputers:centos-stream:centos-stream:8.2021.0725                                 8.2021.0725
+centos-stream                                    procomputers                        centos-stream                                    procomputers:centos-stream:centos-stream:8.2021.0828                                 8.2021.0828
+centos-stream                                    procomputers                        centos-stream                                    procomputers:centos-stream:centos-stream:8.2021.0921                                 8.2021.0921
+centos-stream                                    procomputers                        centos-stream                                    procomputers:centos-stream:centos-stream:8.2021.1025                                 8.2021.1025
+python-3-with-centos-7-8                         cognosys                            python-3-with-centos-7-8                         cognosys:python-3-with-centos-7-8:python-3-with-centos-7-8:1.2019.1008                                 1.2019.1008
+centos-stream-latest                             procomputers                        centos-stream-latest                             procomputers:centos-stream-latest:centos-stream-latest:8.2021.0613                                 8.2021.0613
+centos-stream-latest                             procomputers                        centos-stream-latest                             procomputers:centos-stream-latest:centos-stream-latest:8.2021.0627                                 8.2021.0627
+centos-stream-latest                             procomputers                        centos-stream-latest                             procomputers:centos-stream-latest:centos-stream-latest:8.2021.0714                                 8.2021.0714
+centos-stream-latest                             procomputers                        centos-stream-latest                             procomputers:centos-stream-latest:centos-stream-latest:8.2021.0725                                 8.2021.0725
+centos-stream-latest                             procomputers                        centos-stream-latest                             procomputers:centos-stream-latest:centos-stream-latest:8.2021.0829                                 8.2021.0829
+centos-stream-latest                             procomputers                        centos-stream-latest                             procomputers:centos-stream-latest:centos-stream-latest:8.2021.0921                                 8.2021.0921
+centos-stream-latest                             procomputers                        centos-stream-latest                             procomputers:centos-stream-latest:centos-stream-latest:8.2021.1025                                 8.2021.1025
+python-3-with-centos-7-9                         cognosys                            python-3-with-centos-7-9                         cognosys:python-3-with-centos-7-9:python-3-with-centos-7-9:1.2019.1008                                 1.2019.1008
+centos-stream-lvm                                procomputers                        centos-stream-lvm                                procomputers:centos-stream-lvm:centos-stream-lvm:8.2021.0730                                 8.2021.0730
+centos-stream-lvm                                procomputers                        centos-stream-lvm                                procomputers:centos-stream-lvm:centos-stream-lvm:8.2021.0829                                 8.2021.0829
+centos-stream-lvm                                procomputers                        centos-stream-lvm                                procomputers:centos-stream-lvm:centos-stream-lvm:8.2021.0922                                 8.2021.0922
+centos-stream-lvm                                procomputers                        centos-stream-lvm                                procomputers:centos-stream-lvm:centos-stream-lvm:8.2021.1025                                 8.2021.1025
+centos65saltstackenterprise                      saltstack                           sse-01                                           saltstack:centos65saltstackenterprise:sse-01:1.0.0                                 1.0.0
+redis-with-centos-7-8                            cognosys                            redis-with-centos-7-8                            cognosys:redis-with-centos-7-8:redis-with-centos-7-8:1.2019.1008                                 1.2019.1008
+centos-stream-minimal                            procomputers                        centos-stream-minimal                            procomputers:centos-stream-minimal:centos-stream-minimal:8.2021.0714                                 8.2021.0714
+centos-stream-minimal                            procomputers                        centos-stream-minimal                            procomputers:centos-stream-minimal:centos-stream-minimal:8.2021.0725                                 8.2021.0725
+centos-stream-minimal                            procomputers                        centos-stream-minimal                            procomputers:centos-stream-minimal:centos-stream-minimal:8.2021.0828                                 8.2021.0828
+centos-stream-minimal                            procomputers                        centos-stream-minimal                            procomputers:centos-stream-minimal:centos-stream-minimal:8.2021.0921                                 8.2021.0921
+centos-stream-minimal                            procomputers                        centos-stream-minimal                            procomputers:centos-stream-minimal:centos-stream-minimal:8.2021.1025                                 8.2021.1025
+redis-with-centos-7-9                            cognosys                            redis-with-centos-7-9                            cognosys:redis-with-centos-7-9:redis-with-centos-7-9:1.2019.1008                                 1.2019.1008
+redis-with-centos-75                             cognosys                            redis-with-centos-75                             cognosys:redis-with-centos-75:redis-with-centos-75:1.2019.1008                                 1.2019.1008
+centos                                           scalegrid                           free                                             scalegrid:centos:free:3.0.0                                 3.0.0
+centos                                           scalegrid                           free                                             scalegrid:centos:free:3.2.0                                 3.2.0
+centos                                           scalegrid                           free                                             scalegrid:centos:free:3.4.0                                 3.4.0
+centos                                           scalegrid                           free                                             scalegrid:centos:free:3.5.0                                 3.5.0
+centos                                           scalegrid                           free                                             scalegrid:centos:free:3.6.0                                 3.6.0
+redis-with-centos-75-free                        cognosys                            redis-with-centos-75-free                        cognosys:redis-with-centos-75-free:redis-with-centos-75-free:21.09.24                                 21.09.24
+redis-with-centos-76                             cognosys                            redis-with-centos-76                             cognosys:redis-with-centos-76:redis-with-centos-76:1.2019.1008                                 1.2019.1008
+redis-with-centos-76-free                        cognosys                            redis-with-centos-76-free                        cognosys:redis-with-centos-76-free:redis-with-centos-76-free:1.2019.1008                                 1.2019.1008
+redis-with-centos-77                             cognosys                            redis-with-centos-77                             cognosys:redis-with-centos-77:redis-with-centos-77:1.2019.1008                                 1.2019.1008
+redis-with-centos-77-free                        cognosys                            redis-with-centos-77-free                        cognosys:redis-with-centos-77-free:redis-with-centos-77-free:1.2019.1008                                 1.2019.1008
+redis-with-centos-8-2                            cognosys                            redis-with-centos-8-2                            cognosys:redis-with-centos-8-2:redis-with-centos-8-2:1.2019.1008                                 1.2019.1008
+apache-web-server-with-centos-7-7                skylarkcloud                        apache-web-server-with-centos-7-7                skylarkcloud:apache-web-server-with-centos-7-7:apache-web-server-with-centos-7-7:1.0.0                                 1.0.0
+secured-abantecart-on-centos                     cognosys                            secured-abantecart-on-centos                     cognosys:secured-abantecart-on-centos:secured-abantecart-on-centos:1.2.0                                 1.2.0
+centos-7-5                                       skylarkcloud                        centos-7-5                                       skylarkcloud:centos-7-5:centos-7-5:1.0.1                                 1.0.1
+secured-acquia-drupal-on-centos                  cognosys                            secured-acquia-drupal-on-centos                  cognosys:secured-acquia-drupal-on-centos:secured-acquia-drupal-on-centos:1.2.0                                 1.2.0
+centos-7-6                                       skylarkcloud                        centos-7-6                                       skylarkcloud:centos-7-6:centos-7-6:1.0.2                                 1.0.2
+secured-apachesolr-on-centos                     cognosys                            new-secured-apachesolr-on-centos-7-3             cognosys:secured-apachesolr-on-centos:new-secured-apachesolr-on-centos-7-3:1.0.2                                 1.0.2
+centos-7-7                                       skylarkcloud                        centos-7-7                                       skylarkcloud:centos-7-7:centos-7-7:1.0.1                                 1.0.1
+secured-arartifactory-on-centos                  cognosys                            secured-arartifactory-on-centos                  cognosys:secured-arartifactory-on-centos:secured-arartifactory-on-centos:1.1.0                                 1.1.0
+centos-7-8                                       skylarkcloud                        centos-7-8                                       skylarkcloud:centos-7-8:centos-7-8:1.0.0                                 1.0.0
+secured-cakephp-on-centos                        cognosys                            secured-cakephp-on-centos                        cognosys:secured-cakephp-on-centos:secured-cakephp-on-centos:1.2.0                                 1.2.0
+centos-7-9                                       skylarkcloud                        centos-7-9                                       skylarkcloud:centos-7-9:centos-7-9:1.0.0                                 1.0.0
+secured-cms-made-simple-on-centos                cognosys                            secured-cms-made-simple-on-centos                cognosys:secured-cms-made-simple-on-centos:secured-cms-made-simple-on-centos:1.1.0                                 1.1.0
+centos-8-0                                       skylarkcloud                        centos-8-0                                       skylarkcloud:centos-8-0:centos-8-0:1.0.0                                 1.0.0
+secured-codiad-on-centos                         cognosys                            secured-codiad-on-centos                         cognosys:secured-codiad-on-centos:secured-codiad-on-centos:1.0.0                                 1.0.0
+centos-8-1                                       skylarkcloud                        centos-8-1                                       skylarkcloud:centos-8-1:centos-8-1:1.0.0                                 1.0.0
+secured-cogdam-on-centos                         cognosys                            secured-cogdam-on-centos-basic-lic               cognosys:secured-cogdam-on-centos:secured-cogdam-on-centos-basic-lic:1.0.0                                 1.0.0
+centos-8-2                                       skylarkcloud                        centos-8-2                                       skylarkcloud:centos-8-2:centos-8-2:1.0.0                                 1.0.0
+secured-concrete5-on-centos                      cognosys                            secured-concrete5-on-centos                      cognosys:secured-concrete5-on-centos:secured-concrete5-on-centos:1.0.0                                 1.0.0
+docker-ce-with-centos-7-7                        skylarkcloud                        docker-ce-with-centos-7-7                        skylarkcloud:docker-ce-with-centos-7-7:docker-ce-with-centos-7-7:1.0.0                                 1.0.0
+docker-ce-with-centos-8-0                        skylarkcloud                        docker-ce-with-centos-8-0                        skylarkcloud:docker-ce-with-centos-8-0:docker-ce-with-centos-8-0:1.0.0                                 1.0.0
+secured-coppermine-on-centos                     cognosys                            secured-coppermine-on-centos                     cognosys:secured-coppermine-on-centos:secured-coppermine-on-centos:1.1.0                                 1.1.0
+nginx-with-centos-7-7                            skylarkcloud                        nginx-with-centos-7-7                            skylarkcloud:nginx-with-centos-7-7:nginx-with-centos-7-7:1.0.0                                 1.0.0
+secured-crushftp-on-centos                       cognosys                            new-secured-crushftp-on-centos-7-3               cognosys:secured-crushftp-on-centos:new-secured-crushftp-on-centos-7-3:1.2.0                                 1.2.0
+openjdk-8-with-centos-7-7                        skylarkcloud                        openjdk-8-with-centos-7-7                        skylarkcloud:openjdk-8-with-centos-7-7:openjdk-8-with-centos-7-7:1.0.0                                 1.0.0
+secured-django-on-centos                         cognosys                            new-secured-django-on-centos-7-3-basic           cognosys:secured-django-on-centos:new-secured-django-on-centos-7-3-basic:1.2.0                                 1.2.0
+php-7-3-with-centos7-7                           skylarkcloud                        php-7-3-with-centos-7-7                          skylarkcloud:php-7-3-with-centos7-7:php-7-3-with-centos-7-7:1.0.0                                 1.0.0
+secured-dokuwiki-on-centos                       cognosys                            secured-dokuwiki-on-centos                       cognosys:secured-dokuwiki-on-centos:secured-dokuwiki-on-centos:1.0.0                                 1.0.0
+secured-dolibarr-on-centos                       cognosys                            secured-dolibarr-on-centos                       cognosys:secured-dolibarr-on-centos:secured-dolibarr-on-centos:1.0.0                                 1.0.0
+secured-drupal-on-centos                         cognosys                            secured-drupal-on-centos                         cognosys:secured-drupal-on-centos:secured-drupal-on-centos:1.2.0                                 1.2.0
+secured-elasticsearch-on-centos                  cognosys                            secured-elasticsearch-on-centos                  cognosys:secured-elasticsearch-on-centos:secured-elasticsearch-on-centos:1.0.0                                 1.0.0
+desktop-linux-centos                             techlatest                          desktop-linux-centos                             techlatest:desktop-linux-centos:desktop-linux-centos:1.1.1                                 1.1.1
+secured-espocrm-on-centos                        cognosys                            secured-espocrm-on-centos                        cognosys:secured-espocrm-on-centos:secured-espocrm-on-centos:1.0.0                                 1.0.0
+secured-exoplatform-on-centos                    cognosys                            secured-exoplatform-on-centos                    cognosys:secured-exoplatform-on-centos:secured-exoplatform-on-centos:1.0.0                                 1.0.0
+secured-exoplatform-on-centos                    cognosys                            secured-exoplatform-on-centos                    cognosys:secured-exoplatform-on-centos:secured-exoplatform-on-centos:1.1.0                                 1.1.0
+secured-ghost-on-centos                          cognosys                            new-secured-ghost-on-centos-7-3                  cognosys:secured-ghost-on-centos:new-secured-ghost-on-centos-7-3:1.2.0                                 1.2.0
+secured-gradle-on-centos                         cognosys                            secured-gradle-on-centos                         cognosys:secured-gradle-on-centos:secured-gradle-on-centos:1.1.0                                 1.1.0
+secured-haproxy-on-centos                        cognosys                            new-secured-haproxy-on-centos-basic-lic          cognosys:secured-haproxy-on-centos:new-secured-haproxy-on-centos-basic-lic:1.2.0                                 1.2.0
+secured-invoice-ninja-on-centos                  cognosys                            secured-invoice-ninja-on-centos                  cognosys:secured-invoice-ninja-on-centos:secured-invoice-ninja-on-centos:1.1.0                                 1.1.0
+secured-invoice-ninja-on-centos                  cognosys                            secured-invoice-ninja-on-centos                  cognosys:secured-invoice-ninja-on-centos:secured-invoice-ninja-on-centos:1.1.1                                 1.1.1
+secured-invoice-ninja-on-centos                  cognosys                            secured-invoice-ninja-on-centos                  cognosys:secured-invoice-ninja-on-centos:secured-invoice-ninja-on-centos:1.2.0                                 1.2.0
+bugzilla-manage-software-centos                  tidalmediainc                       bugzilla-manage-centos-7                         tidalmediainc:bugzilla-manage-software-centos:bugzilla-manage-centos-7:1.0.3                                 1.0.3
+secured-jboss-as-on-centos                       cognosys                            secured-jboss-as-on-centos                       cognosys:secured-jboss-as-on-centos:secured-jboss-as-on-centos:1.1.1                                 1.1.1
+centos-7-8-minimal                               tidalmediainc                       centos-7-minimal                                 tidalmediainc:centos-7-8-minimal:centos-7-minimal:1.0.1                                 1.0.1
+secured-jenkins-on-centos                        cognosys                            new-secured-jenkins-on-centos                    cognosys:secured-jenkins-on-centos:new-secured-jenkins-on-centos:1.2.0                                 1.2.0
+secured-jenkins-on-centos                        cognosys                            new-secured-jenkins-on-centos                    cognosys:secured-jenkins-on-centos:new-secured-jenkins-on-centos:1.2.1                                 1.2.1
+centos-7-minimal                                 tidalmediainc                       centos-minimal-7                                 tidalmediainc:centos-7-minimal:centos-minimal-7:1.0.1                                 1.0.1
+secured-lamp-on-centos                           cognosys                            secured-lamp-on-centos                           cognosys:secured-lamp-on-centos:secured-lamp-on-centos:1.0.0                                 1.0.0
+secured-lamp-on-centos                           cognosys                            secured-lamp-on-centos                           cognosys:secured-lamp-on-centos:secured-lamp-on-centos:1.1.1                                 1.1.1
+secured-lamp-on-centos                           cognosys                            secured-lamp-on-centos                           cognosys:secured-lamp-on-centos:secured-lamp-on-centos:1.2.0                                 1.2.0
+secured-lamp-on-centos                           cognosys                            secured-lamp-on-centos                           cognosys:secured-lamp-on-centos:secured-lamp-on-centos:1.2.1                                 1.2.1
+secured-lamp-on-centos                           cognosys                            secured-lamp-on-centos                           cognosys:secured-lamp-on-centos:secured-lamp-on-centos:1.2.2                                 1.2.2
+centos-8-2-minimal                               tidalmediainc                       centos-8-minimal                                 tidalmediainc:centos-8-2-minimal:centos-8-minimal:1.0.1                                 1.0.1
+secured-lamp-on-centos-m10                       cognosys                            secured-lamp-on-centos-mariadb10                 cognosys:secured-lamp-on-centos-m10:secured-lamp-on-centos-mariadb10:1.0.0                                 1.0.0
+secured-lapp-on-centos                           cognosys                            secured-lapp-on-centos                           cognosys:secured-lapp-on-centos:secured-lapp-on-centos:1.0.0                                 1.0.0
+secured-lapp-on-centos                           cognosys                            secured-lapp-on-centos                           cognosys:secured-lapp-on-centos:secured-lapp-on-centos:1.1.1                                 1.1.1
+centos-8-4-basic                                 tidalmediainc                       centos-8-4-basic                                 tidalmediainc:centos-8-4-basic:centos-8-4-basic:1.0.0                                 1.0.0
+centos70-min                                     tunnelbiz                           centos7-min                                      tunnelbiz:centos70-min:centos7-min:0.1.6                                 0.1.6
+centos-8-4-minimal                               tidalmediainc                       centos-8-4-minimal                               tidalmediainc:centos-8-4-minimal:centos-8-4-minimal:1.0.0                                 1.0.0
+secured-lime-survey-on-centos                    cognosys                            secured-lime-survey-on-centos                    cognosys:secured-lime-survey-on-centos:secured-lime-survey-on-centos:1.1.0                                 1.1.0
+secured-lime-survey-on-centos                    cognosys                            secured-lime-survey-on-centos                    cognosys:secured-lime-survey-on-centos:secured-lime-survey-on-centos:1.2.0                                 1.2.0
+centos7phpoptimizing                             tunnelbiz                           centos7withphp7optimizwebserverv2                tunnelbiz:centos7phpoptimizing:centos7withphp7optimizwebserverv2:1.0.6                                 1.0.6
+centos-8-4-optimized                             tidalmediainc                       centos-8-4-optimized                             tidalmediainc:centos-8-4-optimized:centos-8-4-optimized:1.0.0                                 1.0.0
+secured-live-helper-chat-on-centos               cognosys                            secured-live-helper-chat-on-centos               cognosys:secured-live-helper-chat-on-centos:secured-live-helper-chat-on-centos:1.1.0                                 1.1.0
+secured-live-helper-chat-on-centos               cognosys                            secured-live-helper-chat-on-centos               cognosys:secured-live-helper-chat-on-centos:secured-live-helper-chat-on-centos:1.1.1                                 1.1.1
+centos7phpoptimizwlaravel                        tunnelbiz                           centos7phpwlaravel                               tunnelbiz:centos7phpoptimizwlaravel:centos7phpwlaravel:2020.08.08                                 2020.08.08
+centos7phpoptimizwlaravel                        tunnelbiz                           centos7phpwlaravel                               tunnelbiz:centos7phpoptimizwlaravel:centos7phpwlaravel:2020.12.16                                 2020.12.16
+secured-magento-on-centos                        cognosys                            secured-magento-on-centos                        cognosys:secured-magento-on-centos:secured-magento-on-centos:1.1.0                                 1.1.0
+secured-magento-on-centos                        cognosys                            secured-magento-on-centos                        cognosys:secured-magento-on-centos:secured-magento-on-centos:1.2.1                                 1.2.1
+secured-magento-on-centos                        cognosys                            secured-magento-on-centos                        cognosys:secured-magento-on-centos:secured-magento-on-centos:1.2.2                                 1.2.2
+secured-magento-on-centos                        cognosys                            secured-magento-on-centos                        cognosys:secured-magento-on-centos:secured-magento-on-centos:1.2.3                                 1.2.3
+centos7phpoptimizwlaravel                        tunnelbiz                           ubuntuwithlaravel                                tunnelbiz:centos7phpoptimizwlaravel:ubuntuwithlaravel:2020.08.08                                 2020.08.08
+dns-server-linux-centos                          tidalmediainc                       dns-server-centos-8                              tidalmediainc:dns-server-linux-centos:dns-server-centos-8:1.0.1                                 1.0.1
+secured-mahara-on-centos                         cognosys                            new-secured-mahara-on-centos-7-3                 cognosys:secured-mahara-on-centos:new-secured-mahara-on-centos-7-3:1.0.2                                 1.0.2
+centos8                                          tunnelbiz                           centos8minimal                                   tunnelbiz:centos8:centos8minimal:1.9.10                                 1.9.10
+centos8                                          tunnelbiz                           centos8minimal                                   tunnelbiz:centos8:centos8minimal:1.9.11                                 1.9.11
+centos8                                          tunnelbiz                           centos8minimal                                   tunnelbiz:centos8:centos8minimal:8.4.0                                 8.4.0
+dns-server-linux-centos-7-8                      tidalmediainc                       dns-server-centos-7                              tidalmediainc:dns-server-linux-centos-7-8:dns-server-centos-7:1.0.2                                 1.0.2
+centos8                                          tunnelbiz                           centos8streamminimal                             tunnelbiz:centos8:centos8streamminimal:1.0.2                                 1.0.2
+secured-mantis-on-centos                         cognosys                            secured-mantis-on-centos                         cognosys:secured-mantis-on-centos:secured-mantis-on-centos:1.0.0                                 1.0.0
+secured-mantis-on-centos                         cognosys                            secured-mantis-on-centos                         cognosys:secured-mantis-on-centos:secured-mantis-on-centos:1.1.1                                 1.1.1
+docker-community-edition-centos                  tidalmediainc                       docker-community-edition-centos-8                tidalmediainc:docker-community-edition-centos:docker-community-edition-centos-8:1.0.2                                 1.0.2
+centos8lamp                                      tunnelbiz                           centos8lamp                                      tunnelbiz:centos8lamp:centos8lamp:0.0.2                                 0.0.2
+secured-mautic-on-centos                         cognosys                            secured-mautic-on-centos                         cognosys:secured-mautic-on-centos:secured-mautic-on-centos:1.0.3                                 1.0.3
+secured-mautic-on-centos                         cognosys                            secured-mautic-on-centos                         cognosys:secured-mautic-on-centos:secured-mautic-on-centos:1.1.0                                 1.1.0
+docker-community-edition-centos7                 tidalmediainc                       docker-community-edition-7                       tidalmediainc:docker-community-edition-centos7:docker-community-edition-7:1.0.2                                 1.0.2
+centos8optimize                                  tunnelbiz                           centos8optimize                                  tunnelbiz:centos8optimize:centos8optimize:2020.08.05                                 2020.08.05
+secured-media-wiki-on-centos                     cognosys                            new-secured-media-wiki-on-centos-7-3-basic-lic   cognosys:secured-media-wiki-on-centos:new-secured-media-wiki-on-centos-7-3-basic-lic:1.2.0                                 1.2.0
+centos8optimize                                  tunnelbiz                           centos8optimizedev                               tunnelbiz:centos8optimize:centos8optimizedev:2020.08.05                                 2020.08.05
+minecraft-bedrock-centos-8                       tidalmediainc                       minecraft-bedrock-centos-8                       tidalmediainc:minecraft-bedrock-centos-8:minecraft-bedrock-centos-8:1.0.0                                 1.0.0
+secured-modx-on-centos                           cognosys                            secured-modx-on-centos                           cognosys:secured-modx-on-centos:secured-modx-on-centos:1.0.0                                 1.0.0
+secured-modx-on-centos                           cognosys                            secured-modx-on-centos                           cognosys:secured-modx-on-centos:secured-modx-on-centos:1.1.1                                 1.1.1
+secured-modx-on-centos                           cognosys                            secured-modx-on-centos                           cognosys:secured-modx-on-centos:secured-modx-on-centos:1.2.0                                 1.2.0
+centos8withdotnet                                tunnelbiz                           aspnetcoreruntime                                tunnelbiz:centos8withdotnet:aspnetcoreruntime:0.1.2                                 0.1.2
+centos8withdotnet                                tunnelbiz                           aspnetcoreruntime                                tunnelbiz:centos8withdotnet:aspnetcoreruntime:0.1.3                                 0.1.3
+minecraft-bedrock-centos-8-minimal               tidalmediainc                       minecraft-bedrock-centos-8-minimal               tidalmediainc:minecraft-bedrock-centos-8-minimal:minecraft-bedrock-centos-8-minimal:1.0.0                                 1.0.0
+secured-ngnix-on-centos-7-3                      cognosys                            secured-ngnix-on-centos-7-3                      cognosys:secured-ngnix-on-centos-7-3:secured-ngnix-on-centos-7-3:1.0.2                                 1.0.2
+minecraft-java-centos-7                          tidalmediainc                       minecraft-java-server-centos-7                   tidalmediainc:minecraft-java-centos-7:minecraft-java-server-centos-7:1.0.1                                 1.0.1
+secured-noalyss-on-centos                        cognosys                            secured-noalyss-on-centos                        cognosys:secured-noalyss-on-centos:secured-noalyss-on-centos:1.0.0                                 1.0.0
+secured-noalyss-on-centos                        cognosys                            secured-noalyss-on-centos                        cognosys:secured-noalyss-on-centos:secured-noalyss-on-centos:1.1.1                                 1.1.1
+minecraft-java-centos-7-minimal                  tidalmediainc                       minecraft-java-centos-7-minimal                  tidalmediainc:minecraft-java-centos-7-minimal:minecraft-java-centos-7-minimal:1.0.0                                 1.0.0
+secured-nodejs-on-centos                         cognosys                            new-secured-node-js-ent-lic                      cognosys:secured-nodejs-on-centos:new-secured-node-js-ent-lic:1.2.0                                 1.2.0
+secured-nodejs-on-centos                         cognosys                            new-secured-node-js-ent-lic                      cognosys:secured-nodejs-on-centos:new-secured-node-js-ent-lic:1.2.1                                 1.2.1
+minecraft-java-centos-8-minimal                  tidalmediainc                       minecraft-java-centos-8-minimal                  tidalmediainc:minecraft-java-centos-8-minimal:minecraft-java-centos-8-minimal:1.0.0                                 1.0.0
+secured-open-cart-on-centos                      cognosys                            secured-open-cart-on-centos                      cognosys:secured-open-cart-on-centos:secured-open-cart-on-centos:1.0.0                                 1.0.0
+secured-open-cart-on-centos                      cognosys                            secured-open-cart-on-centos                      cognosys:secured-open-cart-on-centos:secured-open-cart-on-centos:1.1.1                                 1.1.1
+minecraft-java-linux-centos-8                    tidalmediainc                       minecraft-java-centos-8                          tidalmediainc:minecraft-java-linux-centos-8:minecraft-java-centos-8:1.0.1                                 1.0.1
+secured-orangehrm-on-centos                      cognosys                            secured-orangehrm-on-centos                      cognosys:secured-orangehrm-on-centos:secured-orangehrm-on-centos:1.0.0                                 1.0.0
+secured-orangehrm-on-centos                      cognosys                            secured-orangehrm-on-centos                      cognosys:secured-orangehrm-on-centos:secured-orangehrm-on-centos:1.1.1                                 1.1.1
+secured-orangehrm-on-centos                      cognosys                            secured-orangehrm-on-centos                      cognosys:secured-orangehrm-on-centos:secured-orangehrm-on-centos:1.3.1                                 1.3.1
+centos-8-minimal-edition                         virtualpulsesro1607008728942        centos-8-minimal-edition                         virtualpulsesro1607008728942:centos-8-minimal-edition:centos-8-minimal-edition:1.0.0                                 1.0.0
+mongo-db-linux-centos-8                          tidalmediainc                       mongo-db-linux-centos-8                          tidalmediainc:mongo-db-linux-centos-8:mongo-db-linux-centos-8:1.0.1                                 1.0.1
+secured-osclass-on-centos                        cognosys                            secured-osclass-on-centos                        cognosys:secured-osclass-on-centos:secured-osclass-on-centos:1.0.0                                 1.0.0
+secured-osclass-on-centos                        cognosys                            secured-osclass-on-centos                        cognosys:secured-osclass-on-centos:secured-osclass-on-centos:1.1.1                                 1.1.1
+centos_7_docker_c_e                              virtualpulsesro1607008728942        centos_7_docker_c_e                              virtualpulsesro1607008728942:centos_7_docker_c_e:centos_7_docker_c_e:1.0.0                                 1.0.0
+mongodb_centos                                   tidalmediainc                       mongo-db-centos-7                                tidalmediainc:mongodb_centos:mongo-db-centos-7:1.0.5                                 1.0.5
+secured-owncloud-on-centos                       cognosys                            new-secured-owncloud-on-centos-basic-lic         cognosys:secured-owncloud-on-centos:new-secured-owncloud-on-centos-basic-lic:1.2.0                                 1.2.0
+centos_7_minimal_edition                         virtualpulsesro1607008728942        centos_7_minimal_edition                         virtualpulsesro1607008728942:centos_7_minimal_edition:centos_7_minimal_edition:1.0.1                                 1.0.1
+moodle-tm-lms-centos-8                           tidalmediainc                       moodle-system-centos-8                           tidalmediainc:moodle-tm-lms-centos-8:moodle-system-centos-8:1.0.2                                 1.0.2
+secured-oxid-eshop-on-centos                     cognosys                            secured-oxid-eshop-on-centos                     cognosys:secured-oxid-eshop-on-centos:secured-oxid-eshop-on-centos:1.0.0                                 1.0.0
+secured-oxid-eshop-on-centos                     cognosys                            secured-oxid-eshop-on-centos                     cognosys:secured-oxid-eshop-on-centos:secured-oxid-eshop-on-centos:1.1.1                                 1.1.1
+centos_7_pure_ftpd_server                        virtualpulsesro1607008728942        centos_7_pure_ftpd_server                        virtualpulsesro1607008728942:centos_7_pure_ftpd_server:centos_7_pure_ftpd_server:1.0.0                                 1.0.0
+proftp-server-centos                             tidalmediainc                       proftp-server-centos-7                           tidalmediainc:proftp-server-centos:proftp-server-centos-7:1.0.3                                 1.0.3
+secured-passenger-nginx-on-centos                cognosys                            secured-passenger-nginx-on-centos                cognosys:secured-passenger-nginx-on-centos:secured-passenger-nginx-on-centos:1.0.0                                 1.0.0
+secured-passenger-nginx-on-centos                cognosys                            secured-passenger-nginx-on-centos                cognosys:secured-passenger-nginx-on-centos:secured-passenger-nginx-on-centos:1.1.1                                 1.1.1
+centos_8_docker_c_e                              virtualpulsesro1607008728942        centos_8_docker_c_e                              virtualpulsesro1607008728942:centos_8_docker_c_e:centos_8_docker_c_e:1.0.1                                 1.0.1
+squid-easy-centos-7                              tidalmediainc                       squid-easy-centos-7                              tidalmediainc:squid-easy-centos-7:squid-easy-centos-7:1.0.0                                 1.0.0
+secured-piwigo-gallery-on-centos                 cognosys                            secured-piwigo-gallery-on-centos                 cognosys:secured-piwigo-gallery-on-centos:secured-piwigo-gallery-on-centos:1.0.0                                 1.0.0
+secured-piwigo-gallery-on-centos                 cognosys                            secured-piwigo-gallery-on-centos                 cognosys:secured-piwigo-gallery-on-centos:secured-piwigo-gallery-on-centos:1.1.1                                 1.1.1
+secured-piwigo-gallery-on-centos                 cognosys                            secured-piwigo-gallery-on-centos                 cognosys:secured-piwigo-gallery-on-centos:secured-piwigo-gallery-on-centos:1.2.0                                 1.2.0
+centos_8_pure_ftpd_server                        virtualpulsesro1607008728942        centos_8_pure_ftpd_server                        virtualpulsesro1607008728942:centos_8_pure_ftpd_server:centos_8_pure_ftpd_server:1.0.0                                 1.0.0
+squid-easy-centos-8                              tidalmediainc                       squid-easy-centos-8                              tidalmediainc:squid-easy-centos-8:squid-easy-centos-8:1.0.0                                 1.0.0
+secured-plone-on-centos                          cognosys                            new-secured-plone-on-centos-basic                cognosys:secured-plone-on-centos:new-secured-plone-on-centos-basic:1.2.0                                 1.2.0
+sftp-open-ssh-centos-7-8                         virtualpulsesro1607008728942        sftp-open-ssh-centos-7-8                         virtualpulsesro1607008728942:sftp-open-ssh-centos-7-8:sftp-open-ssh-centos-7-8:1.0.0                                 1.0.0
+squid-easy-server-centos-8-minimal               tidalmediainc                       squid-easy-server-centos-8-minimal               tidalmediainc:squid-easy-server-centos-8-minimal:squid-easy-server-centos-8-minimal:1.0.0                                 1.0.0
+sftp_open_ssh_centos_8                           virtualpulsesro1607008728942        sftp_open_ssh_centos_8                           virtualpulsesro1607008728942:sftp_open_ssh_centos_8:sftp_open_ssh_centos_8:1.0.0                                 1.0.0
+squid-easy-server-webmin-centos-7                tidalmediainc                       squid-easy-server-webmin-centos-7                tidalmediainc:squid-easy-server-webmin-centos-7:squid-easy-server-webmin-centos-7:1.0.0                                 1.0.0
+secured-prestashop-on-centos                     cognosys                            new-secured-prestashop-on-centos                 cognosys:secured-prestashop-on-centos:new-secured-prestashop-on-centos:1.2.0                                 1.2.0
+squid-easy-server-webmin-centos-8                tidalmediainc                       squid-easy-server-webmin-centos-8                tidalmediainc:squid-easy-server-webmin-centos-8:squid-easy-server-webmin-centos-8:1.0.0                                 1.0.0
+secured-redis-on-centos                          cognosys                            new-secured-redis-on-centos                      cognosys:secured-redis-on-centos:new-secured-redis-on-centos:1.2.0                                 1.2.0
+nimble-streamer-centos                           wmspanel                            nimble-streamer                                  wmspanel:nimble-streamer-centos:nimble-streamer:1.0.0                                 1.0.0
+nimble-streamer-centos                           wmspanel                            nimble-streamer                                  wmspanel:nimble-streamer-centos:nimble-streamer:1.1.0                                 1.1.0
+nimble-streamer-centos                           wmspanel                            nimble-streamer                                  wmspanel:nimble-streamer-centos:nimble-streamer:1.2.0                                 1.2.0
+squid-protected-webmin-centos                    tidalmediainc                       squid-protected-webmin-centos                    tidalmediainc:squid-protected-webmin-centos:squid-protected-webmin-centos:1.0.0                                 1.0.0
+secured-redmine-on-centos                        cognosys                            secured-redmine-on-centos                        cognosys:secured-redmine-on-centos:secured-redmine-on-centos:1.1.3                                 1.1.3
+tinyproxy-easy-centos-8                          tidalmediainc                       tinyproxy-easy-centos-8                          tidalmediainc:tinyproxy-easy-centos-8:tinyproxy-easy-centos-8:1.0.0                                 1.0.0
+secured-report-server-on-centos                  cognosys                            secured-report-server-on-centos                  cognosys:secured-report-server-on-centos:secured-report-server-on-centos:1.0.0                                 1.0.0
+secured-report-server-on-centos                  cognosys                            secured-report-server-on-centos                  cognosys:secured-report-server-on-centos:secured-report-server-on-centos:1.1.1                                 1.1.1
+xilinx_alveo_u250_deployment_vm_centos78_032321  xilinx                              xilinx_alveo_u250_deployment_vm_centos78_032321  xilinx:xilinx_alveo_u250_deployment_vm_centos78_032321:xilinx_alveo_u250_deployment_vm_centos78_032321:4.0.0                4.0.0
+tinyproxy-server-centos-8                        tidalmediainc                       tinyproxy-server-centos-8                        tidalmediainc:tinyproxy-server-centos-8:tinyproxy-server-centos-8:1.0.0                                 1.0.0
+secured-resource-space-on-centos                 cognosys                            secured-resource-space-on-centos                 cognosys:secured-resource-space-on-centos:secured-resource-space-on-centos:1.0.0                                 1.0.0
+secured-resource-space-on-centos                 cognosys                            secured-resource-space-on-centos                 cognosys:secured-resource-space-on-centos:secured-resource-space-on-centos:1.1.1                                 1.1.1
+xilinx_vitis_2020_2_centos78_development_vm      xilinx                              vitis2020_2_1118_1232_centos78                   xilinx:xilinx_vitis_2020_2_centos78_development_vm:vitis2020_2_1118_1232_centos78:2.0.0                                 2.0.0
+secured-round-cube-on-centos                     cognosys                            secured-round-cube-on-centos                     cognosys:secured-round-cube-on-centos:secured-round-cube-on-centos:1.1.1                                 1.1.1
+secured-ruby-on-centos                           cognosys                            secured-ruby-on-centos                           cognosys:secured-ruby-on-centos:secured-ruby-on-centos:1.0.0                                 1.0.0
+secured-ruby-on-centos                           cognosys                            secured-ruby-on-centos                           cognosys:secured-ruby-on-centos:secured-ruby-on-centos:1.1.1                                 1.1.1
+secured-seopanel-on-centos                       cognosys                            secured-seopanel-on-centos                       cognosys:secured-seopanel-on-centos:secured-seopanel-on-centos:1.2.0                                 1.2.0
+secured-silverstripe-on-centos                   cognosys                            secured-silverstripe-on-centos                   cognosys:secured-silverstripe-on-centos:secured-silverstripe-on-centos:1.0.0                                 1.0.0
+secured-silverstripe-on-centos                   cognosys                            secured-silverstripe-on-centos                   cognosys:secured-silverstripe-on-centos:secured-silverstripe-on-centos:1.1.1                                 1.1.1
+secured-simple-invoice-on-centos                 cognosys                            secured-simple-invoice-on-centos                 cognosys:secured-simple-invoice-on-centos:secured-simple-invoice-on-centos:1.0.0                                 1.0.0
+secured-simple-invoice-on-centos                 cognosys                            secured-simple-invoice-on-centos                 cognosys:secured-simple-invoice-on-centos:secured-simple-invoice-on-centos:1.1.1                                 1.1.1
+secured-simple-machines-on-centos                cognosys                            secured-simple-machines-on-centos                cognosys:secured-simple-machines-on-centos:secured-simple-machines-on-centos:1.0.0                                 1.0.0
+secured-simple-machines-on-centos                cognosys                            secured-simple-machines-on-centos                cognosys:secured-simple-machines-on-centos:secured-simple-machines-on-centos:1.1.1                                 1.1.1
+secured-simple-machines-on-centos                cognosys                            secured-simple-machines-on-centos                cognosys:secured-simple-machines-on-centos:secured-simple-machines-on-centos:1.2.0                                 1.2.0
+secured-subversion-on-centos                     cognosys                            new-secured-subversion-on-centos                 cognosys:secured-subversion-on-centos:new-secured-subversion-on-centos:1.2.1                                 1.2.1
+secured-suitecrm-on-centos                       cognosys                            secured-suitecrm-on-centos                       cognosys:secured-suitecrm-on-centos:secured-suitecrm-on-centos:1.1.1                                 1.1.1
+secured-test-link-on-centos                      cognosys                            secured-test-link-on-centos                      cognosys:secured-test-link-on-centos:secured-test-link-on-centos:1.1.1                                 1.1.1
+secured-thinkup-on-centos                        cognosys                            secured-thinkup-on-centos                        cognosys:secured-thinkup-on-centos:secured-thinkup-on-centos:1.1.1                                 1.1.1
+secured-tikiwikicms-on-centos                    cognosys                            secured-tikiwikicms-on-centos                    cognosys:secured-tikiwikicms-on-centos:secured-tikiwikicms-on-centos:1.1.1                                 1.1.1
+secured-tiny-tiny-rss-on-centos                  cognosys                            secured-tiny-tiny-rss-on-centos                  cognosys:secured-tiny-tiny-rss-on-centos:secured-tiny-tiny-rss-on-centos:1.1.1                                 1.1.1
+secured-tomcat-on-centos                         cognosys                            secured-tomcat-8-on-centos                       cognosys:secured-tomcat-on-centos:secured-tomcat-8-on-centos:1.0.2                                 1.0.2
+secured-tomcat-on-centos                         cognosys                            secured-tomcat-8-on-centos                       cognosys:secured-tomcat-on-centos:secured-tomcat-8-on-centos:21.09.24                                 21.09.24
+secured-trac-on-centos                           cognosys                            secured-trac-on-centos                           cognosys:secured-trac-on-centos:secured-trac-on-centos:1.1.1                                 1.1.1
+secured-varnish-on-centos                        cognosys                            hardened-varnish-on-centos-7-3                   cognosys:secured-varnish-on-centos:hardened-varnish-on-centos-7-3:1.0.0                                 1.0.0
+secured-varnish-on-centos                        cognosys                            hardened-varnish-on-centos-7-3                   cognosys:secured-varnish-on-centos:hardened-varnish-on-centos-7-3:1.0.1                                 1.0.1
+secured-wildfly-on-centos                        cognosys                            secured-wildfly-on-centos                        cognosys:secured-wildfly-on-centos:secured-wildfly-on-centos:1.1.1                                 1.1.1
+secured-wordpress-on-centos-7-3                  cognosys                            new-secured-wordpress-on-centos-7-3              cognosys:secured-wordpress-on-centos-7-3:new-secured-wordpress-on-centos-7-3:1.0.1                                 1.0.1
+secured-xoops-on-centos                          cognosys                            secured-xoops-on-centos                          cognosys:secured-xoops-on-centos:secured-xoops-on-centos:1.1.1                                 1.1.1
+secured-zurmo-on-centos                          cognosys                            secured-zurmo-on-centos                          cognosys:secured-zurmo-on-centos:secured-zurmo-on-centos:1.1.1                                 1.1.1
+wordpress-with-centos-7-8                        cognosys                            wordpress-with-centos-7-8                        cognosys:wordpress-with-centos-7-8:wordpress-with-centos-7-8:1.2019.1009                                 1.2019.1009
+wordpress-with-centos-7-9                        cognosys                            wordpress-with-centos-7-9                        cognosys:wordpress-with-centos-7-9:wordpress-with-centos-7-9:1.2019.1009                                 1.2019.1009
+wordpress-with-centos-75                         cognosys                            wordpress-with-centos-75                         cognosys:wordpress-with-centos-75:wordpress-with-centos-75:21.09.24                                 21.09.24
+wordpress-with-centos-75-free                    cognosys                            wordpress-with-centos-75-free                    cognosys:wordpress-with-centos-75-free:wordpress-with-centos-75-free:1.2019.1008                                 1.2019.1008
+wordpress-with-centos-76                         cognosys                            wordpress-with-centos-76                         cognosys:wordpress-with-centos-76:wordpress-with-centos-76:1.2019.1008                                 1.2019.1008
+wordpress-with-centos-76-free                    cognosys                            wordpress-with-centos-76-free                    cognosys:wordpress-with-centos-76-free:wordpress-with-centos-76-free:1.2019.1008                                 1.2019.1008
+wordpress-with-centos-77                         cognosys                            wordpress-with-centos-77                         cognosys:wordpress-with-centos-77:wordpress-with-centos-77:1.2019.1008                                 1.2019.1008
+wordpress-with-centos-77-free                    cognosys                            wordpress-with-centos-77-free                    cognosys:wordpress-with-centos-77-free:wordpress-with-centos-77-free:1.2019.1008                                 1.2019.1008
+wordpress-with-centos-8-2                        cognosys                            wordpress-with-centos-8-2                        cognosys:wordpress-with-centos-8-2:wordpress-with-centos-8-2:1.2019.1011                                 1.2019.1011
+wordpress-with-centos-8-2                        cognosys                            wordpress-with-centos-8-2                        cognosys:wordpress-with-centos-8-2:wordpress-with-centos-8-2:1.2019.1012                                 1.2019.1012
+wordpress-with-centos-8-3                        cognosys                            wordpress-with-centos-8-3                        cognosys:wordpress-with-centos-8-3:wordpress-with-centos-8-3:1.2019.1011                                 1.2019.1011
+wordpress-with-centos-8-stream                   cognosys                            wordpress-with-centos-8-stream                   cognosys:wordpress-with-centos-8-stream:wordpress-with-centos-8-stream:1.2019.1011                                 1.2019.1011
+
+
+leena@Azure:~$ az vm create --resource-group carolineVM --name carolineVM2 --image OpenLogic:CentOS:7.5:latest  --generate-ssh-keys
+It is recommended to use parameter "--public-ip-sku Standard" to create new VM with Standard public IP. Please note that the default public IP used for VM creation will be changed from Basic to Standard in the future.
+{
+  "fqdns": "",
+  "id": "/subscriptions/c40f76f6-a340-40f3-930a-cdba85821538/resourceGroups/carolineVM/providers/Microsoft.Compute/virtualMachines/carolineVM2",
+  "location": "eastus",
+  "macAddress": "00-0D-3A-9A-06-13",
+  "powerState": "VM running",
+  "privateIpAddress": "10.0.0.5",
+  "publicIpAddress": "104.41.135.66",
+  "resourceGroup": "carolineVM",
+  "zones": ""
+
+
+
+  UNDERSTAND VM SIZES
+  FIND AVAILABLE VM SIZES
+
+
+leena@Azure:~$ az vm list-sizes --location eastus --output table
+MaxDataDiskCount    MemoryInMb    Name                    NumberOfCores    OsDiskSizeInMb    ResourceDiskSizeInMb
+------------------  ------------  ----------------------  ---------------  ----------------  ----------------------
+2                   512           Standard_B1ls           1                1047552           4096
+2                   2048          Standard_B1ms           1                1047552           4096
+2                   1024          Standard_B1s            1                1047552           4096
+4                   8192          Standard_B2ms           2                1047552           16384
+4                   4096          Standard_B2s            2                1047552           8192
+8                   16384         Standard_B4ms           4                1047552           32768
+16                  32768         Standard_B8ms           8                1047552           65536
+16                  49152         Standard_B12ms          12               1047552           98304
+32                  65536         Standard_B16ms          16               1047552           131072
+32                  81920         Standard_B20ms          20               1047552           163840
+4                   3584          Standard_DS1_v2         1                1047552           7168
+8                   7168          Standard_DS2_v2         2                1047552           14336
+16                  14336         Standard_DS3_v2         4                1047552           28672
+32                  28672         Standard_DS4_v2         8                1047552           57344
+64                  57344         Standard_DS5_v2         16               1047552           114688
+8                   14336         Standard_DS11-1_v2      2                1047552           28672
+8                   14336         Standard_DS11_v2        2                1047552           28672
+16                  28672         Standard_DS12-1_v2      4                1047552           57344
+16                  28672         Standard_DS12-2_v2      4                1047552           57344
+16                  28672         Standard_DS12_v2        4                1047552           57344
+32                  57344         Standard_DS13-2_v2      8                1047552           114688
+32                  57344         Standard_DS13-4_v2      8                1047552           114688
+32                  57344         Standard_DS13_v2        8                1047552           114688
+64                  114688        Standard_DS14-4_v2      16               1047552           229376
+64                  114688        Standard_DS14-8_v2      16               1047552           229376
+64                  114688        Standard_DS14_v2        16               1047552           229376
+64                  143360        Standard_DS15_v2        20               1047552           286720
+8                   7168          Standard_DS2_v2_Promo   2                1047552           14336
+16                  14336         Standard_DS3_v2_Promo   4                1047552           28672
+32                  28672         Standard_DS4_v2_Promo   8                1047552           57344
+64                  57344         Standard_DS5_v2_Promo   16               1047552           114688
+8                   14336         Standard_DS11_v2_Promo  2                1047552           28672
+16                  28672         Standard_DS12_v2_Promo  4                1047552           57344
+32                  57344         Standard_DS13_v2_Promo  8                1047552           114688
+64                  114688        Standard_DS14_v2_Promo  16               1047552           229376
+4                   2048          Standard_F1s            1                1047552           4096
+8                   4096          Standard_F2s            2                1047552           8192
+16                  8192          Standard_F4s            4                1047552           16384
+32                  16384         Standard_F8s            8                1047552           32768
+64                  32768         Standard_F16s           16               1047552           65536
+4                   8192          Standard_D2s_v3         2                1047552           16384
+8                   16384         Standard_D4s_v3         4                1047552           32768
+16                  32768         Standard_D8s_v3         8                1047552           65536
+32                  65536         Standard_D16s_v3        16               1047552           131072
+32                  131072        Standard_D32s_v3        32               1047552           262144
+4                   8192          Standard_D2a_v4         2                1047552           51200
+8                   16384         Standard_D4a_v4         4                1047552           102400
+16                  32768         Standard_D8a_v4         8                1047552           204800
+32                  65536         Standard_D16a_v4        16               1047552           409600
+32                  131072        Standard_D32a_v4        32               1047552           819200
+32                  196608        Standard_D48a_v4        48               1047552           1228800
+32                  262144        Standard_D64a_v4        64               1047552           1638400
+32                  393216        Standard_D96a_v4        96               1047552           2457600
+4                   8192          Standard_D2as_v4        2                1047552           16384
+8                   16384         Standard_D4as_v4        4                1047552           32768
+16                  32768         Standard_D8as_v4        8                1047552           65536
+32                  65536         Standard_D16as_v4       16               1047552           131072
+32                  131072        Standard_D32as_v4       32               1047552           262144
+32                  196608        Standard_D48as_v4       48               1047552           393216
+32                  262144        Standard_D64as_v4       64               1047552           524288
+32                  393216        Standard_D96as_v4       96               1047552           786432
+4                   16384         Standard_E2a_v4         2                1047552           51200
+8                   32768         Standard_E4a_v4         4                1047552           102400
+16                  65536         Standard_E8a_v4         8                1047552           204800
+32                  131072        Standard_E16a_v4        16               1047552           409600
+32                  163840        Standard_E20a_v4        20               1047552           512000
+32                  262144        Standard_E32a_v4        32               1047552           819200
+32                  393216        Standard_E48a_v4        48               1047552           1228800
+32                  524288        Standard_E64a_v4        64               1047552           1638400
+32                  688128        Standard_E96a_v4        96               1047552           2457600
+4                   16384         Standard_E2as_v4        2                1047552           32768
+8                   32768         Standard_E4-2as_v4      4                1047552           65536
+8                   32768         Standard_E4as_v4        4                1047552           65536
+16                  65536         Standard_E8-2as_v4      8                1047552           131072
+16                  65536         Standard_E8-4as_v4      8                1047552           131072
+16                  65536         Standard_E8as_v4        8                1047552           131072
+32                  131072        Standard_E16-4as_v4     16               1047552           262144
+32                  131072        Standard_E16-8as_v4     16               1047552           262144
+32                  131072        Standard_E16as_v4       16               1047552           262144
+32                  163840        Standard_E20as_v4       20               1047552           327680
+32                  262144        Standard_E32-8as_v4     32               1047552           524288
+32                  262144        Standard_E32-16as_v4    32               1047552           524288
+32                  262144        Standard_E32as_v4       32               1047552           524288
+32                  393216        Standard_E48as_v4       48               1047552           786432
+32                  524288        Standard_E64-16as_v4    64               1047552           884736
+32                  524288        Standard_E64-32as_v4    64               1047552           884736
+32                  524288        Standard_E64as_v4       64               1047552           884736
+32                  688128        Standard_E96-24as_v4    96               1047552           1376256
+32                  688128        Standard_E96-48as_v4    96               1047552           1376256
+32                  688128        Standard_E96as_v4       96               1047552           1376256
+4                   3584          Standard_D1_v2          1                1047552           51200
+8                   7168          Standard_D2_v2          2                1047552           102400
+16                  14336         Standard_D3_v2          4                1047552           204800
+32                  28672         Standard_D4_v2          8                1047552           409600
+64                  57344         Standard_D5_v2          16               1047552           819200
+8                   14336         Standard_D11_v2         2                1047552           102400
+16                  28672         Standard_D12_v2         4                1047552           204800
+32                  57344         Standard_D13_v2         8                1047552           409600
+64                  114688        Standard_D14_v2         16               1047552           819200
+64                  143360        Standard_D15_v2         20               1047552           1024000
+8                   7168          Standard_D2_v2_Promo    2                1047552           102400
+16                  14336         Standard_D3_v2_Promo    4                1047552           204800
+32                  28672         Standard_D4_v2_Promo    8                1047552           409600
+64                  57344         Standard_D5_v2_Promo    16               1047552           819200
+8                   14336         Standard_D11_v2_Promo   2                1047552           102400
+16                  28672         Standard_D12_v2_Promo   4                1047552           204800
+32                  57344         Standard_D13_v2_Promo   8                1047552           409600
+64                  114688        Standard_D14_v2_Promo   16               1047552           819200
+4                   2048          Standard_F1             1                1047552           16384
+8                   4096          Standard_F2             2                1047552           32768
+16                  8192          Standard_F4             4                1047552           65536
+32                  16384         Standard_F8             8                1047552           131072
+64                  32768         Standard_F16            16               1047552           262144
+2                   2048          Standard_A1_v2          1                1047552           10240
+4                   16384         Standard_A2m_v2         2                1047552           20480
+4                   4096          Standard_A2_v2          2                1047552           20480
+8                   32768         Standard_A4m_v2         4                1047552           40960
+8                   8192          Standard_A4_v2          4                1047552           40960
+16                  65536         Standard_A8m_v2         8                1047552           81920
+16                  16384         Standard_A8_v2          8                1047552           81920
+4                   8192          Standard_D2_v3          2                1047552           51200
+8                   16384         Standard_D4_v3          4                1047552           102400
+16                  32768         Standard_D8_v3          8                1047552           204800
+32                  65536         Standard_D16_v3         16               1047552           409600
+32                  131072        Standard_D32_v3         32               1047552           819200
+32                  196608        Standard_D48_v3         48               1047552           1228800
+32                  262144        Standard_D64_v3         64               1047552           1638400
+32                  196608        Standard_D48s_v3        48               1047552           393216
+32                  262144        Standard_D64s_v3        64               1047552           524288
+4                   16384         Standard_E2_v3          2                1047552           51200
+8                   32768         Standard_E4_v3          4                1047552           102400
+16                  65536         Standard_E8_v3          8                1047552           204800
+32                  131072        Standard_E16_v3         16               1047552           409600
+32                  163840        Standard_E20_v3         20               1047552           512000
+32                  262144        Standard_E32_v3         32               1047552           819200
+32                  393216        Standard_E48_v3         48               1047552           1228800
+32                  442368        Standard_E64_v3         64               1047552           1638400
+4                   16384         Standard_E2s_v3         2                1047552           32768
+8                   32768         Standard_E4-2s_v3       4                1047552           65536
+8                   32768         Standard_E4s_v3         4                1047552           65536
+16                  65536         Standard_E8-2s_v3       8                1047552           131072
+16                  65536         Standard_E8-4s_v3       8                1047552           131072
+16                  65536         Standard_E8s_v3         8                1047552           131072
+32                  131072        Standard_E16-4s_v3      16               1047552           262144
+32                  131072        Standard_E16-8s_v3      16               1047552           262144
+32                  131072        Standard_E16s_v3        16               1047552           262144
+32                  163840        Standard_E20s_v3        20               1047552           327680
+32                  262144        Standard_E32-8s_v3      32               1047552           524288
+32                  262144        Standard_E32-16s_v3     32               1047552           524288
+32                  262144        Standard_E32s_v3        32               1047552           524288
+32                  393216        Standard_E48s_v3        48               1047552           786432
+32                  442368        Standard_E64-16s_v3     64               1047552           884736
+32                  442368        Standard_E64-32s_v3     64               1047552           884736
+32                  442368        Standard_E64s_v3        64               1047552           884736
+1                   768           Standard_A0             1                1047552           20480
+2                   1792          Standard_A1             1                1047552           71680
+4                   3584          Standard_A2             2                1047552           138240
+8                   7168          Standard_A3             4                1047552           291840
+4                   14336         Standard_A5             2                1047552           138240
+16                  14336         Standard_A4             8                1047552           619520
+8                   28672         Standard_A6             4                1047552           291840
+16                  57344         Standard_A7             8                1047552           619520
+1                   768           Basic_A0                1                1047552           20480
+2                   1792          Basic_A1                1                1047552           40960
+4                   3584          Basic_A2                2                1047552           61440
+8                   7168          Basic_A3                4                1047552           122880
+16                  14336         Basic_A4                8                1047552           245760
+32                  442368        Standard_E64i_v3        64               1047552           1638400
+32                  442368        Standard_E64is_v3       64               1047552           884736
+64                  5836800       Standard_M208ms_v2      208              1047552           4194304
+64                  2918400       Standard_M208s_v2       208              1047552           4194304
+64                  5836800       Standard_M416-208s_v2   416              1047552           8388608
+64                  5836800       Standard_M416s_v2       416              1047552           8388608
+64                  11673600      Standard_M416-208ms_v2  416              1047552           8388608
+64                  11673600      Standard_M416ms_v2      416              1047552           8388608
+32                  57344         Standard_H8             8                1047552           1024000
+32                  57344         Standard_H8_Promo       8                1047552           1024000
+64                  114688        Standard_H16            16               1047552           2048000
+64                  114688        Standard_H16_Promo      16               1047552           2048000
+32                  114688        Standard_H8m            8                1047552           1024000
+32                  114688        Standard_H8m_Promo      8                1047552           1024000
+64                  229376        Standard_H16m           16               1047552           2048000
+64                  229376        Standard_H16m_Promo     16               1047552           2048000
+64                  114688        Standard_H16r           16               1047552           2048000
+64                  114688        Standard_H16r_Promo     16               1047552           2048000
+64                  229376        Standard_H16mr          16               1047552           2048000
+64                  229376        Standard_H16mr_Promo    16               1047552           2048000
+4                   3584          Standard_D1             1                1047552           51200
+8                   7168          Standard_D2             2                1047552           102400
+16                  14336         Standard_D3             4                1047552           204800
+32                  28672         Standard_D4             8                1047552           409600
+8                   14336         Standard_D11            2                1047552           102400
+16                  28672         Standard_D12            4                1047552           204800
+32                  57344         Standard_D13            8                1047552           409600
+64                  114688        Standard_D14            16               1047552           819200
+24                  57344         Standard_NV6            6                1047552           389120
+48                  114688        Standard_NV12           12               1047552           696320
+64                  229376        Standard_NV24           24               1047552           1474560
+24                  57344         Standard_NV6_Promo      6                1047552           389120
+48                  114688        Standard_NV12_Promo     12               1047552           696320
+64                  229376        Standard_NV24_Promo     24               1047552           1474560
+8                   28672         Standard_NC4as_T4_v3    4                1047552           180224
+16                  57344         Standard_NC8as_T4_v3    8                1047552           360448
+32                  112640        Standard_NC16as_T4_v3   16               1047552           360448
+32                  450560        Standard_NC64as_T4_v3   64               1047552           2883584
+12                  114688        Standard_NV6s_v2        6                1047552           344064
+24                  229376        Standard_NV12s_v2       12               1047552           688128
+32                  458752        Standard_NV24s_v2       24               1047552           1376256
+12                  114688        Standard_NV12s_v3       12               1047552           344064
+24                  229376        Standard_NV24s_v3       24               1047552           688128
+32                  458752        Standard_NV48s_v3       48               1047552           1376256
+8                   466944        Standard_HB120rs_v2     120              1047552           491520
+4                   8192          Standard_D2ds_v4        2                1047552           76800
+8                   16384         Standard_D4ds_v4        4                1047552           153600
+16                  32768         Standard_D8ds_v4        8                1047552           307200
+32                  65536         Standard_D16ds_v4       16               1047552           614400
+32                  131072        Standard_D32ds_v4       32               1047552           1228800
+32                  196608        Standard_D48ds_v4       48               1047552           1843200
+32                  262144        Standard_D64ds_v4       64               1047552           2457600
+4                   8192          Standard_D2ds_v5        2                1047552           76800
+8                   16384         Standard_D4ds_v5        4                1047552           153600
+16                  32768         Standard_D8ds_v5        8                1047552           307200
+32                  65536         Standard_D16ds_v5       16               1047552           614400
+32                  131072        Standard_D32ds_v5       32               1047552           1228800
+32                  196608        Standard_D48ds_v5       48               1047552           1843200
+32                  262144        Standard_D64ds_v5       64               1047552           2457600
+32                  393216        Standard_D96ds_v5       96               1047552           2457600
+4                   8192          Standard_D2d_v4         2                1047552           76800
+8                   16384         Standard_D4d_v4         4                1047552           153600
+16                  32768         Standard_D8d_v4         8                1047552           307200
+32                  65536         Standard_D16d_v4        16               1047552           614400
+32                  131072        Standard_D32d_v4        32               1047552           1228800
+32                  196608        Standard_D48d_v4        48               1047552           1843200
+32                  262144        Standard_D64d_v4        64               1047552           2457600
+4                   8192          Standard_D2d_v5         2                1047552           76800
+8                   16384         Standard_D4d_v5         4                1047552           153600
+16                  32768         Standard_D8d_v5         8                1047552           307200
+32                  65536         Standard_D16d_v5        16               1047552           614400
+32                  131072        Standard_D32d_v5        32               1047552           1228800
+32                  196608        Standard_D48d_v5        48               1047552           1843200
+32                  262144        Standard_D64d_v5        64               1047552           2457600
+32                  393216        Standard_D96d_v5        96               1047552           2457600
+4                   8192          Standard_D2s_v4         2                1047552           0
+8                   16384         Standard_D4s_v4         4                1047552           0
+16                  32768         Standard_D8s_v4         8                1047552           0
+32                  65536         Standard_D16s_v4        16               1047552           0
+32                  131072        Standard_D32s_v4        32               1047552           0
+32                  196608        Standard_D48s_v4        48               1047552           0
+32                  262144        Standard_D64s_v4        64               1047552           0
+4                   8192          Standard_D2s_v5         2                1047552           0
+8                   16384         Standard_D4s_v5         4                1047552           0
+16                  32768         Standard_D8s_v5         8                1047552           0
+32                  65536         Standard_D16s_v5        16               1047552           0
+32                  131072        Standard_D32s_v5        32               1047552           0
+32                  196608        Standard_D48s_v5        48               1047552           0
+32                  262144        Standard_D64s_v5        64               1047552           0
+32                  393216        Standard_D96s_v5        96               1047552           0
+4                   8192          Standard_D2_v4          2                1047552           0
+8                   16384         Standard_D4_v4          4                1047552           0
+16                  32768         Standard_D8_v4          8                1047552           0
+32                  65536         Standard_D16_v4         16               1047552           0
+32                  131072        Standard_D32_v4         32               1047552           0
+32                  196608        Standard_D48_v4         48               1047552           0
+32                  262144        Standard_D64_v4         64               1047552           0
+4                   8192          Standard_D2_v5          2                1047552           0
+8                   16384         Standard_D4_v5          4                1047552           0
+16                  32768         Standard_D8_v5          8                1047552           0
+32                  65536         Standard_D16_v5         16               1047552           0
+32                  131072        Standard_D32_v5         32               1047552           0
+32                  196608        Standard_D48_v5         48               1047552           0
+32                  262144        Standard_D64_v5         64               1047552           0
+32                  393216        Standard_D96_v5         96               1047552           0
+4                   16384         Standard_E2ds_v4        2                1047552           76800
+8                   32768         Standard_E4-2ds_v4      4                1047552           153600
+8                   32768         Standard_E4ds_v4        4                1047552           153600
+16                  65536         Standard_E8-2ds_v4      8                1047552           307200
+16                  65536         Standard_E8-4ds_v4      8                1047552           307200
+16                  65536         Standard_E8ds_v4        8                1047552           307200
+32                  131072        Standard_E16-4ds_v4     16               1047552           614400
+32                  131072        Standard_E16-8ds_v4     16               1047552           614400
+32                  131072        Standard_E16ds_v4       16               1047552           614400
+32                  163840        Standard_E20ds_v4       20               1047552           768000
+32                  262144        Standard_E32-8ds_v4     32               1047552           1228800
+32                  262144        Standard_E32-16ds_v4    32               1047552           1228800
+32                  262144        Standard_E32ds_v4       32               1047552           1228800
+32                  393216        Standard_E48ds_v4       48               1047552           1843200
+32                  516096        Standard_E64-16ds_v4    64               1047552           2457600
+32                  516096        Standard_E64-32ds_v4    64               1047552           2457600
+32                  516096        Standard_E64ds_v4       64               1047552           2457600
+64                  516096        Standard_E80ids_v4      80               1047552           4362240
+4                   16384         Standard_E2ds_v5        2                1047552           76800
+8                   32768         Standard_E4-2ds_v5      4                1047552           153600
+8                   32768         Standard_E4ds_v5        4                1047552           153600
+16                  65536         Standard_E8-2ds_v5      8                1047552           307200
+32                  65536         Standard_E8-4ds_v5      8                1047552           307200
+16                  65536         Standard_E8ds_v5        8                1047552           307200
+32                  131072        Standard_E16-4ds_v5     16               1047552           614400
+32                  131072        Standard_E16-8ds_v5     16               1047552           614400
+32                  131072        Standard_E16ds_v5       16               1047552           614400
+32                  163840        Standard_E20ds_v5       20               1047552           768000
+32                  262144        Standard_E32-8ds_v5     32               1047552           1228800
+32                  262144        Standard_E32-16ds_v5    32               1047552           1228800
+32                  262144        Standard_E32ds_v5       32               1047552           1228800
+32                  393216        Standard_E48ds_v5       48               1047552           1843200
+32                  524288        Standard_E64-16ds_v5    64               1047552           2457600
+32                  524288        Standard_E64-32ds_v5    64               1047552           2457600
+32                  524288        Standard_E64ds_v5       64               1047552           2457600
+32                  688128        Standard_E96-24ds_v5    96               1047552           2457600
+32                  688128        Standard_E96-48ds_v5    96               1047552           2457600
+32                  688128        Standard_E96ds_v5       96               1047552           2457600
+64                  688128        Standard_E104ids_v5     104              1047552           2457600
+4                   16384         Standard_E2d_v4         2                1047552           76800
+8                   32768         Standard_E4d_v4         4                1047552           153600
+16                  65536         Standard_E8d_v4         8                1047552           307200
+32                  131072        Standard_E16d_v4        16               1047552           614400
+32                  163840        Standard_E20d_v4        20               1047552           768000
+32                  262144        Standard_E32d_v4        32               1047552           1228800
+32                  393216        Standard_E48d_v4        48               1047552           1843200
+32                  516096        Standard_E64d_v4        64               1047552           2457600
+4                   16384         Standard_E2d_v5         2                1047552           76800
+8                   32768         Standard_E4d_v5         4                1047552           153600
+16                  65536         Standard_E8d_v5         8                1047552           307200
+32                  131072        Standard_E16d_v5        16               1047552           614400
+32                  163840        Standard_E20d_v5        20               1047552           768000
+32                  262144        Standard_E32d_v5        32               1047552           1228800
+32                  393216        Standard_E48d_v5        48               1047552           1843200
+32                  524288        Standard_E64d_v5        64               1047552           2457600
+32                  688128        Standard_E96d_v5        96               1047552           2457600
+64                  688128        Standard_E104id_v5      104              1047552           2457600
+4                   16384         Standard_E2s_v4         2                1047552           0
+8                   32768         Standard_E4-2s_v4       4                1047552           0
+8                   32768         Standard_E4s_v4         4                1047552           0
+16                  65536         Standard_E8-2s_v4       8                1047552           0
+16                  65536         Standard_E8-4s_v4       8                1047552           0
+16                  65536         Standard_E8s_v4         8                1047552           0
+32                  131072        Standard_E16-4s_v4      16               1047552           0
+32                  131072        Standard_E16-8s_v4      16               1047552           0
+32                  131072        Standard_E16s_v4        16               1047552           0
+32                  163840        Standard_E20s_v4        20               1047552           0
+32                  262144        Standard_E32-8s_v4      32               1047552           0
+32                  262144        Standard_E32-16s_v4     32               1047552           0
+32                  262144        Standard_E32s_v4        32               1047552           0
+32                  393216        Standard_E48s_v4        48               1047552           0
+32                  516096        Standard_E64-16s_v4     64               1047552           0
+32                  516096        Standard_E64-32s_v4     64               1047552           0
+32                  516096        Standard_E64s_v4        64               1047552           0
+64                  516096        Standard_E80is_v4       80               1047552           0
+4                   16384         Standard_E2s_v5         2                1047552           0
+8                   32768         Standard_E4-2s_v5       4                1047552           0
+8                   32768         Standard_E4s_v5         4                1047552           0
+16                  65536         Standard_E8-2s_v5       8                1047552           0
+32                  65536         Standard_E8-4s_v5       8                1047552           0
+16                  65536         Standard_E8s_v5         8                1047552           0
+32                  131072        Standard_E16-4s_v5      16               1047552           0
+32                  131072        Standard_E16-8s_v5      16               1047552           0
+32                  131072        Standard_E16s_v5        16               1047552           0
+32                  163840        Standard_E20s_v5        20               1047552           0
+32                  262144        Standard_E32-8s_v5      32               1047552           0
+32                  262144        Standard_E32-16s_v5     32               1047552           0
+32                  262144        Standard_E32s_v5        32               1047552           0
+32                  393216        Standard_E48s_v5        48               1047552           0
+32                  524288        Standard_E64-16s_v5     64               1047552           0
+32                  524288        Standard_E64-32s_v5     64               1047552           0
+32                  524288        Standard_E64s_v5        64               1047552           0
+32                  688128        Standard_E96-24s_v5     96               1047552           0
+32                  688128        Standard_E96-48s_v5     96               1047552           0
+32                  688128        Standard_E96s_v5        96               1047552           0
+64                  688128        Standard_E104is_v5      104              1047552           0
+4                   16384         Standard_E2_v4          2                1047552           0
+8                   32768         Standard_E4_v4          4                1047552           0
+16                  65536         Standard_E8_v4          8                1047552           0
+32                  131072        Standard_E16_v4         16               1047552           0
+32                  163840        Standard_E20_v4         20               1047552           0
+32                  262144        Standard_E32_v4         32               1047552           0
+32                  393216        Standard_E48_v4         48               1047552           0
+32                  516096        Standard_E64_v4         64               1047552           0
+4                   16384         Standard_E2_v5          2                1047552           0
+8                   32768         Standard_E4_v5          4                1047552           0
+16                  65536         Standard_E8_v5          8                1047552           0
+32                  131072        Standard_E16_v5         16               1047552           0
+32                  163840        Standard_E20_v5         20               1047552           0
+32                  262144        Standard_E32_v5         32               1047552           0
+32                  393216        Standard_E48_v5         48               1047552           0
+32                  524288        Standard_E64_v5         64               1047552           0
+32                  688128        Standard_E96_v5         96               1047552           0
+64                  688128        Standard_E104i_v5       104              1047552           0
+4                   4096          Standard_F2s_v2         2                1047552           16384
+8                   8192          Standard_F4s_v2         4                1047552           32768
+16                  16384         Standard_F8s_v2         8                1047552           65536
+32                  32768         Standard_F16s_v2        16               1047552           131072
+32                  65536         Standard_F32s_v2        32               1047552           262144
+32                  98304         Standard_F48s_v2        48               1047552           393216
+32                  131072        Standard_F64s_v2        64               1047552           524288
+32                  147456        Standard_F72s_v2        72               1047552           589824
+12                  114688        Standard_NC6s_v2        6                1047552           344064
+24                  229376        Standard_NC12s_v2       12               1047552           688128
+32                  458752        Standard_NC24rs_v2      24               1047552           1376256
+32                  458752        Standard_NC24s_v2       24               1047552           1376256
+24                  57344         Standard_NC6            6                1047552           389120
+48                  114688        Standard_NC12           12               1047552           696320
+64                  229376        Standard_NC24           24               1047552           1474560
+64                  229376        Standard_NC24r          24               1047552           1474560
+24                  57344         Standard_NC6_Promo      6                1047552           389120
+48                  114688        Standard_NC12_Promo     12               1047552           696320
+64                  229376        Standard_NC24_Promo     24               1047552           1474560
+64                  229376        Standard_NC24r_Promo    24               1047552           1474560
+4                   3584          Standard_DS1            1                1047552           7168
+8                   7168          Standard_DS2            2                1047552           14336
+16                  14336         Standard_DS3            4                1047552           28672
+32                  28672         Standard_DS4            8                1047552           57344
+8                   14336         Standard_DS11           2                1047552           28672
+16                  28672         Standard_DS12           4                1047552           57344
+32                  57344         Standard_DS13           8                1047552           114688
+64                  114688        Standard_DS14           16               1047552           229376
+16                  65536         Standard_L8s_v2         8                1047552           81920
+32                  131072        Standard_L16s_v2        16               1047552           163840
+32                  262144        Standard_L32s_v2        32               1047552           327680
+32                  393216        Standard_L48s_v2        48               1047552           491520
+32                  524288        Standard_L64s_v2        64               1047552           655360
+32                  655360        Standard_L80s_v2        80               1047552           819200
+64                  1024000       Standard_M64            64               1047552           8192000
+64                  1792000       Standard_M64m           64               1047552           8192000
+64                  2048000       Standard_M128           128              1047552           16384000
+64                  3891200       Standard_M128m          128              1047552           16384000
+8                   224000        Standard_M8-2ms         8                1047552           256000
+8                   224000        Standard_M8-4ms         8                1047552           256000
+8                   224000        Standard_M8ms           8                1047552           256000
+16                  448000        Standard_M16-4ms        16               1047552           512000
+16                  448000        Standard_M16-8ms        16               1047552           512000
+16                  448000        Standard_M16ms          16               1047552           512000
+32                  896000        Standard_M32-8ms        32               1047552           1024000
+32                  896000        Standard_M32-16ms       32               1047552           1024000
+32                  262144        Standard_M32ls          32               1047552           1024000
+32                  896000        Standard_M32ms          32               1047552           1024000
+32                  196608        Standard_M32ts          32               1047552           1024000
+64                  1792000       Standard_M64-16ms       64               1047552           2048000
+64                  1792000       Standard_M64-32ms       64               1047552           2048000
+64                  524288        Standard_M64ls          64               1047552           2048000
+64                  1792000       Standard_M64ms          64               1047552           2048000
+64                  1024000       Standard_M64s           64               1047552           2048000
+64                  3891200       Standard_M128-32ms      128              1047552           4096000
+64                  3891200       Standard_M128-64ms      128              1047552           4096000
+64                  3891200       Standard_M128ms         128              1047552           4096000
+64                  2048000       Standard_M128s          128              1047552           4096000
+32                  896000        Standard_M32ms_v2       32               1047552           0
+64                  1835008       Standard_M64ms_v2       64               1047552           0
+64                  1048576       Standard_M64s_v2        64               1047552           0
+64                  3985408       Standard_M128ms_v2      128              1047552           0
+64                  2097152       Standard_M128s_v2       128              1047552           0
+64                  4194304       Standard_M192ims_v2     192              1047552           0
+64                  2097152       Standard_M192is_v2      192              1047552           0
+32                  896000        Standard_M32dms_v2      32               1047552           1048576
+64                  1835008       Standard_M64dms_v2      64               1047552           2097152
+64                  1048576       Standard_M64ds_v2       64               1047552           2097152
+64                  3985408       Standard_M128dms_v2     128              1047552           4194304
+64                  2097152       Standard_M128ds_v2      128              1047552           4194304
+64                  4194304       Standard_M192idms_v2    192              1047552           4194304
+64                  2097152       Standard_M192ids_v2     192              1047552           4194304
+8                   32768         Standard_DC8_v2         8                1047552           409600
+1                   4096          Standard_DC1s_v2        1                1047552           51200
+2                   8192          Standard_DC2s_v2        2                1047552           102400
+4                   16384         Standard_DC4s_v2        4                1047552           204800
+8                   688128        Standard_ND40rs_v2      40               1047552           2969600
+8                   86016         Standard_FX4mds         4                1047552           172032
+24                  258048        Standard_FX12mds        12               1047552           516096
+32                  516096        Standard_FX24mds        24               1047552           1032192
+32                  774144        Standard_FX36mds        36               1047552           1548288
+32                  1032192       Standard_FX48mds        48               1047552           2064384
+8                   172032        Standard_NP10s          10               1047552           753664
+16                  344064        Standard_NP20s          20               1047552           1509376
+32                  688128        Standard_NP40s          40               1047552           3018752
+4                   8192          Standard_D2as_v5        2                1047552           0
+8                   16384         Standard_D4as_v5        4                1047552           0
+16                  32768         Standard_D8as_v5        8                1047552           0
+32                  65536         Standard_D16as_v5       16               1047552           0
+32                  131072        Standard_D32as_v5       32               1047552           0
+32                  196608        Standard_D48as_v5       48               1047552           0
+32                  262144        Standard_D64as_v5       64               1047552           0
+32                  393216        Standard_D96as_v5       96               1047552           0
+4                   16384         Standard_E2as_v5        2                1047552           0
+8                   32768         Standard_E4-2as_v5      4                1047552           0
+8                   32768         Standard_E4as_v5        4                1047552           0
+16                  65536         Standard_E8-2as_v5      8                1047552           0
+16                  65536         Standard_E8-4as_v5      8                1047552           0
+16                  65536         Standard_E8as_v5        8                1047552           0
+32                  131072        Standard_E16-4as_v5     16               1047552           0
+32                  131072        Standard_E16-8as_v5     16               1047552           0
+32                  131072        Standard_E16as_v5       16               1047552           0
+32                  163840        Standard_E20as_v5       20               1047552           0
+32                  262144        Standard_E32-8as_v5     32               1047552           0
+32                  262144        Standard_E32-16as_v5    32               1047552           0
+32                  262144        Standard_E32as_v5       32               1047552           0
+32                  393216        Standard_E48as_v5       48               1047552           0
+32                  524288        Standard_E64-16as_v5    64               1047552           0
+32                  524288        Standard_E64-32as_v5    64               1047552           0
+32                  524288        Standard_E64as_v5       64               1047552           0
+32                  688128        Standard_E96-24as_v5    96               1047552           0
+32                  688128        Standard_E96-48as_v5    96               1047552           0
+32                  688128        Standard_E96as_v5       96               1047552           0
+4                   8192          Standard_D2ads_v5       2                1047552           76800
+8                   16384         Standard_D4ads_v5       4                1047552           153600
+16                  32768         Standard_D8ads_v5       8                1047552           307200
+32                  65536         Standard_D16ads_v5      16               1047552           614400
+32                  131072        Standard_D32ads_v5      32               1047552           1228800
+32                  196608        Standard_D48ads_v5      48               1047552           1843200
+32                  262144        Standard_D64ads_v5      64               1047552           2457600
+32                  393216        Standard_D96ads_v5      96               1047552           2457600
+4                   16384         Standard_E2ads_v5       2                1047552           76800
+8                   32768         Standard_E4-2ads_v5     4                1047552           153600
+8                   32768         Standard_E4ads_v5       4                1047552           153600
+16                  65536         Standard_E8-2ads_v5     8                1047552           307200
+16                  65536         Standard_E8-4ads_v5     8                1047552           307200
+16                  65536         Standard_E8ads_v5       8                1047552           307200
+32                  131072        Standard_E16-4ads_v5    16               1047552           614400
+32                  131072        Standard_E16-8ads_v5    16               1047552           614400
+32                  131072        Standard_E16ads_v5      16               1047552           614400
+32                  163840        Standard_E20ads_v5      20               1047552           768000
+32                  262144        Standard_E32-8ads_v5    32               1047552           1228800
+32                  262144        Standard_E32-16ads_v5   32               1047552           1228800
+32                  262144        Standard_E32ads_v5      32               1047552           1228800
+32                  393216        Standard_E48ads_v5      48               1047552           1843200
+32                  524288        Standard_E64-16ads_v5   64               1047552           2457600
+32                  524288        Standard_E64-32ads_v5   64               1047552           2457600
+32                  524288        Standard_E64ads_v5      64               1047552           2457600
+32                  688128        Standard_E96-24ads_v5   96               1047552           2457600
+32                  688128        Standard_E96-48ads_v5   96               1047552           2457600
+32                  688128        Standard_E96ads_v5      96               1047552           2457600
+4                   360448        Standard_HC44rs         44               1047552           716800
+12                  114688        Standard_ND6s           6                1047552           344064
+24                  229376        Standard_ND12s          12               1047552           688128
+32                  458752        Standard_ND24rs         24               1047552           1376256
+32                  458752        Standard_ND24s          24               1047552           1376256
+2                   8192          Standard_DC2s           2                1047552           102400
+4                   16384         Standard_DC4s           4                1047552           204800
+32                  458752        Standard_HB120-16rs_v3  120              1047552           491520
+32                  458752        Standard_HB120-32rs_v3  120              1047552           491520
+32                  458752        Standard_HB120-64rs_v3  120              1047552           491520
+32                  458752        Standard_HB120-96rs_v3  120              1047552           491520
+32                  458752        Standard_HB120rs_v3     120              1047552           491520
+8                   14336         Standard_NV4as_v4       4                1047552           90112
+16                  28672         Standard_NV8as_v4       8                1047552           180224
+32                  57344         Standard_NV16as_v4      16               1047552           360448
+32                  114688        Standard_NV32as_v4      32               1047552           720896
+12                  114688        Standard_NC6s_v3        6                1047552           344064
+24                  229376        Standard_NC12s_v3       12               1047552           688128
+32                  458752        Standard_NC24rs_v3      24               1047552           1376256
+32                  458752        Standard_NC24s_v3       24               1047552           1376256
+12                  114688        Standard_PB6s           6                1047552           344064
+4                   233472        Standard_HB60rs         60               1047552           716800
+16                  921600        Standard_ND96asr_v4     96               1047552           2969600
+32                  688128        Standard_ND40s_v3       40               1047552           39630000
+
+
+CREATE VM WITH SPECIFIC SIZE
+leena@Azure:~$ az vm create     --resource-group carolineVM     --name carolineVM3 --image UbuntuLTS     --size Standard_F4s --generate-ssh-keys
+It is recommended to use parameter "--public-ip-sku Standard" to create new VM with Standard public IP. Please note that the default public IP used for VM creation will bechanged from Basic to Standard in the future.
+{
+  "fqdns": "",
+  "id": "/subscriptions/c40f76f6-a340-40f3-930a-cdba85821538/resourceGroups/carolineVM/providers/Microsoft.Compute/virtualMachines/carolineVM3",
+  "location": "eastus",
+  "macAddress": "00-22-48-2E-40-47",
+  "powerState": "VM running",
+  "privateIpAddress": "10.0.0.6",
+  "publicIpAddress": "13.90.136.19",
+  "resourceGroup": "carolineVM",
+  "zones": ""
+	
+	
+	RESIZE A VM
+	leena@Azure:~$ az vm show --resource-group carolineVM --name carolineVM --query hardwareProfile.vmSize
+"Standard_DS1_v2"
+
+leena@Azure:~$ az vm list-vm-resize-options --resource-group carolineVM --name carolineVM --query [].name
+[
+  "Standard_B1ls",
+  "Standard_B1ms",
+  "Standard_B1s",
+  "Standard_B2ms",
+  "Standard_B2s",
+  "Standard_B4ms",
+  "Standard_B8ms",
+  "Standard_B12ms",
+  "Standard_B16ms",
+  "Standard_B20ms",
+  "Standard_DS1_v2",
+  "Standard_DS2_v2",
+  "Standard_DS3_v2",
+  "Standard_DS4_v2",
+  "Standard_DS5_v2",
+  "Standard_DS11-1_v2",
+  "Standard_DS11_v2",
+  "Standard_DS12-1_v2",
+  "Standard_DS12-2_v2",
+  "Standard_DS12_v2",
+  "Standard_DS13-2_v2",
+  "Standard_DS13-4_v2",
+  "Standard_DS13_v2",
+  "Standard_DS14-4_v2",
+  "Standard_DS14-8_v2",
+  "Standard_DS14_v2",
+  "Standard_DS15_v2",
+  "Standard_DS2_v2_Promo",
+  "Standard_DS3_v2_Promo",
+  "Standard_DS4_v2_Promo",
+  "Standard_DS5_v2_Promo",
+  "Standard_DS11_v2_Promo",
+  "Standard_DS12_v2_Promo",
+  "Standard_DS13_v2_Promo",
+  "Standard_DS14_v2_Promo",
+  "Standard_F1s",
+  "Standard_F2s",
+  "Standard_F4s",
+  "Standard_F8s",
+  "Standard_F16s",
+  "Standard_D2s_v3",
+  "Standard_D4s_v3",
+  "Standard_D8s_v3",
+  "Standard_D16s_v3",
+  "Standard_D32s_v3",
+  "Standard_D2a_v4",
+  "Standard_D4a_v4",
+  "Standard_D8a_v4",
+  "Standard_D16a_v4",
+  "Standard_D32a_v4",
+  "Standard_D48a_v4",
+  "Standard_D64a_v4",
+  "Standard_D96a_v4",
+  "Standard_D2as_v4",
+  "Standard_D4as_v4",
+  "Standard_D8as_v4",
+  "Standard_D16as_v4",
+  "Standard_D32as_v4",
+  "Standard_D48as_v4",
+  "Standard_D64as_v4",
+  "Standard_D96as_v4",
+  "Standard_E2a_v4",
+  "Standard_E4a_v4",
+  "Standard_E8a_v4",
+  "Standard_E16a_v4",
+  "Standard_E20a_v4",
+  "Standard_E32a_v4",
+  "Standard_E48a_v4",
+  "Standard_E64a_v4",
+  "Standard_E96a_v4",
+  "Standard_E2as_v4",
+  "Standard_E4-2as_v4",
+  "Standard_E4as_v4",
+  "Standard_E8-2as_v4",
+  "Standard_E8-4as_v4",
+  "Standard_E8as_v4",
+  "Standard_E16-4as_v4",
+  "Standard_E16-8as_v4",
+  "Standard_E16as_v4",
+  "Standard_E20as_v4",
+  "Standard_E32-8as_v4",
+  "Standard_E32-16as_v4",
+  "Standard_E32as_v4",
+  "Standard_E48as_v4",
+  "Standard_E64-16as_v4",
+  "Standard_E64-32as_v4",
+  "Standard_E64as_v4",
+  "Standard_E96-24as_v4",
+  "Standard_E96-48as_v4",
+  "Standard_E96as_v4",
+  "Standard_D1_v2",
+  "Standard_D2_v2",
+  "Standard_D3_v2",
+  "Standard_D4_v2",
+  "Standard_D5_v2",
+  "Standard_D11_v2",
+  "Standard_D12_v2",
+  "Standard_D13_v2",
+  "Standard_D14_v2",
+  "Standard_D15_v2",
+  "Standard_D2_v2_Promo",
+  "Standard_D3_v2_Promo",
+  "Standard_D4_v2_Promo",
+  "Standard_D5_v2_Promo",
+  "Standard_D11_v2_Promo",
+  "Standard_D12_v2_Promo",
+  "Standard_D13_v2_Promo",
+  "Standard_D14_v2_Promo",
+  "Standard_F1",
+  "Standard_F2",
+  "Standard_F4",
+  "Standard_F8",
+  "Standard_F16",
+  "Standard_A1_v2",
+  "Standard_A2m_v2",
+  "Standard_A2_v2",
+  "Standard_A4m_v2",
+  "Standard_A4_v2",
+  "Standard_A8m_v2",
+  "Standard_A8_v2",
+  "Standard_D2_v3",
+  "Standard_D4_v3",
+  "Standard_D8_v3",
+  "Standard_D16_v3",
+  "Standard_D32_v3",
+  "Standard_D48_v3",
+  "Standard_D64_v3",
+  "Standard_D48s_v3",
+  "Standard_D64s_v3",
+  "Standard_E2_v3",
+  "Standard_E4_v3",
+  "Standard_E8_v3",
+  "Standard_E16_v3",
+  "Standard_E20_v3",
+  "Standard_E32_v3",
+  "Standard_E48_v3",
+  "Standard_E64_v3",
+  "Standard_E2s_v3",
+  "Standard_E4-2s_v3",
+  "Standard_E4s_v3",
+  "Standard_E8-2s_v3",
+  "Standard_E8-4s_v3",
+  "Standard_E8s_v3",
+  "Standard_E16-4s_v3",
+  "Standard_E16-8s_v3",
+  "Standard_E16s_v3",
+  "Standard_E20s_v3",
+  "Standard_E32-8s_v3",
+  "Standard_E32-16s_v3",
+  "Standard_E32s_v3",
+  "Standard_E48s_v3",
+  "Standard_E64-16s_v3",
+  "Standard_E64-32s_v3",
+  "Standard_E64s_v3",
+  "Standard_A0",
+  "Standard_A1",
+  "Standard_A2",
+  "Standard_A3",
+  "Standard_A5",
+  "Standard_A4",
+  "Standard_A6",
+  "Standard_A7",
+  "Basic_A0",
+  "Basic_A1",
+  "Basic_A2",
+  "Basic_A3",
+  "Basic_A4",
+  "Standard_E64i_v3",
+  "Standard_E64is_v3",
+  "Standard_M208ms_v2",
+  "Standard_M208s_v2",
+  "Standard_M416-208s_v2",
+  "Standard_M416s_v2",
+  "Standard_M416-208ms_v2",
+  "Standard_M416ms_v2",
+  "Standard_H8",
+  "Standard_H8_Promo",
+  "Standard_H16",
+  "Standard_H16_Promo",
+  "Standard_H8m",
+  "Standard_H8m_Promo",
+  "Standard_H16m",
+  "Standard_H16m_Promo",
+  "Standard_H16r",
+  "Standard_H16r_Promo",
+  "Standard_H16mr",
+  "Standard_H16mr_Promo",
+  "Standard_D1",
+  "Standard_D2",
+  "Standard_D3",
+  "Standard_D4",
+  "Standard_D11",
+  "Standard_D12",
+  "Standard_D13",
+  "Standard_D14",
+  "Standard_NV6",
+  "Standard_NV12",
+  "Standard_NV24",
+  "Standard_NV6_Promo",
+  "Standard_NV12_Promo",
+  "Standard_NV24_Promo",
+  "Standard_NC4as_T4_v3",
+  "Standard_NC8as_T4_v3",
+  "Standard_NC16as_T4_v3",
+  "Standard_NC64as_T4_v3",
+  "Standard_NV6s_v2",
+  "Standard_NV12s_v2",
+  "Standard_NV24s_v2",
+  "Standard_NV12s_v3",
+  "Standard_NV24s_v3",
+  "Standard_NV48s_v3",
+  "Standard_HB120rs_v2",
+  "Standard_D2ds_v4",
+  "Standard_D4ds_v4",
+  "Standard_D8ds_v4",
+  "Standard_D16ds_v4",
+  "Standard_D32ds_v4",
+  "Standard_D48ds_v4",
+  "Standard_D64ds_v4",
+  "Standard_D2ds_v5",
+  "Standard_D4ds_v5",
+  "Standard_D8ds_v5",
+  "Standard_D16ds_v5",
+  "Standard_D32ds_v5",
+  "Standard_D48ds_v5",
+  "Standard_D64ds_v5",
+  "Standard_D96ds_v5",
+  "Standard_D2d_v4",
+  "Standard_D4d_v4",
+  "Standard_D8d_v4",
+  "Standard_D16d_v4",
+  "Standard_D32d_v4",
+  "Standard_D48d_v4",
+  "Standard_D64d_v4",
+  "Standard_D2d_v5",
+  "Standard_D4d_v5",
+  "Standard_D8d_v5",
+  "Standard_D16d_v5",
+  "Standard_D32d_v5",
+  "Standard_D48d_v5",
+  "Standard_D64d_v5",
+  "Standard_D96d_v5",
+  "Standard_E2ds_v4",
+  "Standard_E4-2ds_v4",
+  "Standard_E4ds_v4",
+  "Standard_E8-2ds_v4",
+  "Standard_E8-4ds_v4",
+  "Standard_E8ds_v4",
+  "Standard_E16-4ds_v4",
+  "Standard_E16-8ds_v4",
+  "Standard_E16ds_v4",
+  "Standard_E20ds_v4",
+  "Standard_E32-8ds_v4",
+  "Standard_E32-16ds_v4",
+  "Standard_E32ds_v4",
+  "Standard_E48ds_v4",
+  "Standard_E64-16ds_v4",
+  "Standard_E64-32ds_v4",
+  "Standard_E64ds_v4",
+  "Standard_E80ids_v4",
+  "Standard_E2ds_v5",
+  "Standard_E4-2ds_v5",
+  "Standard_E4ds_v5",
+  "Standard_E8-2ds_v5",
+  "Standard_E8-4ds_v5",
+  "Standard_E8ds_v5",
+  "Standard_E16-4ds_v5",
+  "Standard_E16-8ds_v5",
+  "Standard_E16ds_v5",
+  "Standard_E20ds_v5",
+  "Standard_E32-8ds_v5",
+  "Standard_E32-16ds_v5",
+  "Standard_E32ds_v5",
+  "Standard_E48ds_v5",
+  "Standard_E64-16ds_v5",
+  "Standard_E64-32ds_v5",
+  "Standard_E64ds_v5",
+  "Standard_E96-24ds_v5",
+  "Standard_E96-48ds_v5",
+  "Standard_E96ds_v5",
+  "Standard_E104ids_v5",
+  "Standard_E2d_v4",
+  "Standard_E4d_v4",
+  "Standard_E8d_v4",
+  "Standard_E16d_v4",
+  "Standard_E20d_v4",
+  "Standard_E32d_v4",
+  "Standard_E48d_v4",
+  "Standard_E64d_v4",
+  "Standard_E2d_v5",
+  "Standard_E4d_v5",
+  "Standard_E8d_v5",
+  "Standard_E16d_v5",
+  "Standard_E20d_v5",
+  "Standard_E32d_v5",
+  "Standard_E48d_v5",
+  "Standard_E64d_v5",
+  "Standard_E96d_v5",
+  "Standard_E104id_v5",
+  "Standard_F2s_v2",
+  "Standard_F4s_v2",
+  "Standard_F8s_v2",
+  "Standard_F16s_v2",
+  "Standard_F32s_v2",
+  "Standard_F48s_v2",
+  "Standard_F64s_v2",
+  "Standard_F72s_v2",
+  "Standard_NC6s_v2",
+  "Standard_NC12s_v2",
+  "Standard_NC24rs_v2",
+  "Standard_NC24s_v2",
+  "Standard_NC6",
+  "Standard_NC12",
+  "Standard_NC24",
+  "Standard_NC24r",
+  "Standard_NC6_Promo",
+  "Standard_NC12_Promo",
+  "Standard_NC24_Promo",
+  "Standard_NC24r_Promo",
+  "Standard_DS1",
+  "Standard_DS2",
+  "Standard_DS3",
+  "Standard_DS4",
+  "Standard_DS11",
+  "Standard_DS12",
+  "Standard_DS13",
+  "Standard_DS14",
+  "Standard_L8s_v2",
+  "Standard_L16s_v2",
+  "Standard_L32s_v2",
+  "Standard_L48s_v2",
+  "Standard_L64s_v2",
+  "Standard_L80s_v2",
+  "Standard_M64",
+  "Standard_M64m",
+  "Standard_M128",
+  "Standard_M128m",
+  "Standard_M8-2ms",
+  "Standard_M8-4ms",
+  "Standard_M8ms",
+  "Standard_M16-4ms",
+  "Standard_M16-8ms",
+  "Standard_M16ms",
+  "Standard_M32-8ms",
+  "Standard_M32-16ms",
+  "Standard_M32ls",
+  "Standard_M32ms",
+  "Standard_M32ts",
+  "Standard_M64-16ms",
+  "Standard_M64-32ms",
+  "Standard_M64ls",
+  "Standard_M64ms",
+  "Standard_M64s",
+  "Standard_M128-32ms",
+  "Standard_M128-64ms",
+  "Standard_M128ms",
+  "Standard_M128s",
+  "Standard_M32dms_v2",
+  "Standard_M64dms_v2",
+  "Standard_M64ds_v2",
+  "Standard_M128dms_v2",
+  "Standard_M128ds_v2",
+  "Standard_M192idms_v2",
+  "Standard_M192ids_v2",
+  "Standard_DC8_v2",
+  "Standard_DC1s_v2",
+  "Standard_DC2s_v2",
+  "Standard_DC4s_v2",
+  "Standard_ND40rs_v2",
+  "Standard_FX4mds",
+  "Standard_FX12mds",
+  "Standard_FX24mds",
+  "Standard_FX36mds",
+  "Standard_FX48mds",
+  "Standard_NP10s",
+  "Standard_NP20s",
+  "Standard_NP40s",
+  "Standard_D2ads_v5",
+  "Standard_D4ads_v5",
+  "Standard_D8ads_v5",
+  "Standard_D16ads_v5",
+  "Standard_D32ads_v5",
+  "Standard_D48ads_v5",
+  "Standard_D64ads_v5",
+  "Standard_D96ads_v5",
+  "Standard_E2ads_v5",
+  "Standard_E4-2ads_v5",
+  "Standard_E4ads_v5",
+  "Standard_E8-2ads_v5",
+  "Standard_E8-4ads_v5",
+  "Standard_E8ads_v5",
+  "Standard_E16-4ads_v5",
+  "Standard_E16-8ads_v5",
+  "Standard_E16ads_v5",
+  "Standard_E20ads_v5",
+  "Standard_E32-8ads_v5",
+  "Standard_E32-16ads_v5",
+  "Standard_E32ads_v5",
+  "Standard_E48ads_v5",
+  "Standard_E64-16ads_v5",
+  "Standard_E64-32ads_v5",
+  "Standard_E64ads_v5",
+  "Standard_E96-24ads_v5",
+  "Standard_E96-48ads_v5",
+  "Standard_E96ads_v5",
+  "Standard_HC44rs",
+  "Standard_ND6s",
+  "Standard_ND12s",
+  "Standard_ND24rs",
+  "Standard_ND24s",
+  "Standard_DC2s",
+  "Standard_DC4s",
+  "Standard_HB120-16rs_v3",
+  "Standard_HB120-32rs_v3",
+  "Standard_HB120-64rs_v3",
+  "Standard_HB120-96rs_v3",
+  "Standard_HB120rs_v3",
+  "Standard_NV4as_v4",
+  "Standard_NV8as_v4",
+  "Standard_NV16as_v4",
+  "Standard_NV32as_v4",
+  "Standard_NC6s_v3",
+  "Standard_NC12s_v3",
+  "Standard_NC24rs_v3",
+  "Standard_NC24s_v3",
+  "Standard_PB6s",
+  "Standard_HB60rs",
+  "Standard_ND96asr_v4",
+  "Standard_ND40s_v3",
+  "Standard_ND96amsr_A100_v4"
+
+leena@Azure:~$ az vm resize --resource-group carolineVM --name carolineVM --size Standard_DS2_v2
+{
+  "additionalCapabilities": null,
+  "applicationProfile": null,
+  "availabilitySet": null,
+  "billingProfile": null,
+  "capacityReservation": null,
+  "diagnosticsProfile": null,
+  "evictionPolicy": null,
+  "extendedLocation": null,
+  "extensionsTimeBudget": null,
+  "hardwareProfile": {
+    "vmSize": "Standard_DS2_v2",
+    "vmSizeProperties": null
+  },
+  "host": null,
+  "hostGroup": null,
+  "id": "/subscriptions/c40f76f6-a340-40f3-930a-cdba85821538/resourceGroups/carolineVM/providers/Microsoft.Compute/virtualMachines/carolinevm",
+  "identity": null,
+  "instanceView": null,
+  "licenseType": null,
+  "location": "eastus",
+  "name": "carolinevm",
+  "networkProfile": {
+    "networkApiVersion": null,
+    "networkInterfaceConfigurations": null,
+    "networkInterfaces": [
+      {
+        "deleteOption": null,
+        "id": "/subscriptions/c40f76f6-a340-40f3-930a-cdba85821538/resourceGroups/carolinevm/providers/Microsoft.Network/networkInterfaces/carolinevmVMNic",
+        "primary": null,
+        "resourceGroup": "carolinevm"
+      }
+    ]
+  },
+  "osProfile": {
+    "adminPassword": null,
+    "adminUsername": "caroline",
+    "allowExtensionOperations": true,
+    "computerName": "carolinevm",
+    "customData": null,
+    "linuxConfiguration": {
+      "disablePasswordAuthentication": true,
+      "patchSettings": {
+        "assessmentMode": "ImageDefault",
+        "patchMode": "ImageDefault"
+      },
+      "provisionVmAgent": true,
+      "ssh": {
+        "publicKeys": [
+          {
+            "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCWtF4Y9cApvTPMkD7lMG4sTvG2TLSiD6yncHvhUCUMdfu2zaYE1JHpK4uijRqLginPcCvfHouVbGVsdgLukpfbxItJ37+4y6uY0xDALTwcrfYHXk7nkhYg3/UlVJ1sR8SJp49p/8ex8+/gCbOuIB5LwOVmGGGve5JXq8ZdRutvwAyKgg1eYx/CryHF2xOf0dYOk8q0AUikJygCf/4L3lSgXUOCp7AdIJDBIsI72sazvkaQzjRdSZGAOGPNWdnSkqLQQppFo0i71UfoTTJWZN4ivvQS7lVRASVg5t8sv8N+HvBlBzYeAalDS2n4dg3H4RM0MFuvcUWeVxtzOYUi8s+J",
+            "path": "/home/caroline/.ssh/authorized_keys"
+          }
+        ]
+      }
+    },
+    "requireGuestProvisionSignal": true,
+    "secrets": [],
+    "windowsConfiguration": null
+  },
+  "plan": null,
+  "platformFaultDomain": null,
+  "priority": null,
+  "provisioningState": "Succeeded",
+  "proximityPlacementGroup": null,
+  "resourceGroup": "carolineVM",
+  "resources": null,
+  "scheduledEventsProfile": null,
+  "securityProfile": null,
+  "storageProfile": {
+    "dataDisks": [],
+    "imageReference": {
+      "exactVersion": "18.04.202111080",
+      "id": null,
+      "offer": "UbuntuServer",
+      "publisher": "Canonical",
+      "sharedGalleryImageId": null,
+      "sku": "18.04-LTS",
+      "version": "latest"
+    },
+    "osDisk": {
+      "caching": "ReadWrite",
+      "createOption": "FromImage",
+      "deleteOption": "Detach",
+      "diffDiskSettings": null,
+      "diskSizeGb": null,
+      "encryptionSettings": null,
+      "image": null,
+      "managedDisk": {
+        "diskEncryptionSet": null,
+        "id": "/subscriptions/c40f76f6-a340-40f3-930a-cdba85821538/resourceGroups/carolinevm/providers/Microsoft.Compute/disks/carolinevm_disk1_d334330b30774788b048bd9b315a5c87",
+        "resourceGroup": "carolinevm",
+        "storageAccountType": null
+      },
+      "name": "carolinevm_disk1_d334330b30774788b048bd9b315a5c87",
+      "osType": "Linux",
+      "vhd": null,
+      "writeAcceleratorEnabled": null
+    }
+  },
+  "tags": {},
+  "type": "Microsoft.Compute/virtualMachines",
+  "userData": null,
+  "virtualMachineScaleSet": null,
+  "vmId": "b2ef7411-6f14-4a8c-b200-cbeeeee887d8",
+  "zones": null
+}
+
+
+VM POWER STATES
+FIND THE POWER STATE
+
+
+leena@Azure:~$ az vm get-instance-view     --name carolineVM     --resource-group carolineVM--query instanceView.statuses[1] --output table
+Code                Level    DisplayStatus
+------------------  -------  ---------------
+PowerState/running  Info     VM running
+
+
+
+MANAGEMENT TASKS
+GET IP ADDRESS
+
+leena@Azure:~$ az vm list-ip-addresses --resource-group carolineVM --name carolineVM --output table
+VirtualMachine    PublicIPAddresses    PrivateIPAddresses
+----------------  -------------------  --------------------
+carolinevm        13.82.107.112        10.0.0.4
+
+STOP VIRTUAL MACHINE
+leena@Azure:~$ az vm stop --resource-group carolineVM --name carolineVM
+About to power off the specified VM...
+It will continue to be billed. To deallocate a VM, run: az vm deallocate.
+
+
+
+START VIRTUAL MACHINE
+leena@Azure:~$ az vm start --resource-group carolineVM --name carolineVM
+
+DELETE RESOURCE GROUP
+leena@Azure:~$ az group delete --name carolineVM --no-wait --yes
+
