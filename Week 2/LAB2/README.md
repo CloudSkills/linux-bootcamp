@@ -43,4 +43,22 @@ Amazon Machine IMages arefer to snapshots of EC2 instances and their current con
 
 # 4. Understanding the EC2 sizes
 
+EC2 machines come in various sizes, and compute capacities.
+The instance size majorly used within the free tier is the T2 micro instance.
+
+For the instance performances, we have the following:
+1. compute optimized
+2. Memory Optimized
+3. Accelerated Computing 
+4. Instance Features
+5. Storage Optimized
+6. General Purpose.
+
 # 4. Understanding the EC2 Power States
+1. **Stopped state.**  Once an instance is stopped, you can still have EBS volumes attached to it, hence you can restart the instance again.  You are not charged for your instance once it is stopped. Once an instance is stopped, you can attach and detach EBS volumes, you can change the ram, disk space,etc,  You can also create an Amazon AMI from the instance.
+
+2. **Terminated State** Once an instance state is terminated, you **cannot*** start the instance again. Based on teh instances *deleteOnTermination* Seting, the root volumes can be deleted.  To prevent accidental termintion, you can ensure that the *disableAPITermination* is set to true. This is to make sure that you do not accidentally delete an instance.
+
+&#9888; Whenever you delete an instance, you cannot restart the instance again. it is lost for life
+
+3. **Running State** You are charged for your EC2 instances that are in their running state. DUring this state your instance and your server is running and users on the internet can access it normally.
