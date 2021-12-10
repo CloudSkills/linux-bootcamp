@@ -93,3 +93,10 @@ sudo apt-get install php libapache2-mod-php php-mysql php-curl php-gd php-json p
 This would install php and all the associated libraries along with it
 
 once php is installed , you would beed to restart apache
+
+to install php myadmin to your ubuntu server, you use 
+
+```
+sudo apt-get install phpmyadmin
+```
+IMPORTANT : Note that, space-bar needs to be pressed to select the option and tab key is used to move to the Ok button.
