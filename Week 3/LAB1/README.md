@@ -37,3 +37,20 @@ You can also add various resources you want, to be part of the Resource Group cr
 *Please note that the reouseces present in a particular resource group should have a similar life cycle*
 
 [Click here to view some of the learning resources consulted](https://www.alachisoft.com/resources/docs/ncache/containerization/azure/create-azure-resource-group.html)
+
+
+# 2. Creating a virtual machine
+A Virtual Machine is a single compute instance on the AZURE CLOUD. A virtual machine gives you hardware and Operating software resources to run your application.
+To create a VM you use the following command
+
+```
+az vm create \
+  --resource-group myResourceGroup \
+  --name myVM \
+  --image UbuntuLTS \
+  --admin-username azureuser \
+  --generate-ssh-keys
+```
+
+# 3. Opening port 80 for web traffic.
+Port 80 refers to the default port on the server uses for external web traffic connection By default, it is sclodes to prevent inbound traffic from the internet into your server. You can open the port to allow web traffic into the port.
