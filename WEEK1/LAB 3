@@ -1,0 +1,288 @@
+CREATE AND ATTACH DISK
+ATTACH DISK AT VM CREATION
+
+leena@Azure:~$ az group create --name carolineDisk --location eastus
+{
+  "id": "/subscriptions/c40f76f6-a340-40f3-930a-cdba85821538/resourceGroups/carolineDisk",
+  "location": "eastus",
+  "managedBy": null,
+  "name": "carolineDisk",
+  "properties": {
+    "provisioningState": "Succeeded"
+  },
+  "tags": null,
+  "type": "Microsoft.Resources/resourceGroups"
+  
+  
+  ATTACH DISK TO EXISTING VM
+  leena@Azure:~$ az vm create   --resource-group carolineDisk   --name carolineVM   --image UbuntuLTS   --size Standard_DS2_v2   --admin-username anintah   --generate-ssh-keys   --data-disk-sizes-gb 128 128
+It is recommended to use parameter "--public-ip-sku Standard" to create new VM with Standard public IP. Please note that the default public IP used for VM creation will be changed from Basic to Standard in the future.
+{
+  "fqdns": "",
+  "id": "/subscriptions/c40f76f6-a340-40f3-930a-cdba85821538/resourceGroups/carolineDisk/providers/Microsoft.Compute/virtualMachines/carolineVM",
+  "location": "eastus",
+  "macAddress": "00-0D-3A-11-96-57",
+  "powerState": "VM running",
+  "privateIpAddress": "10.0.0.4",
+  "publicIpAddress": "13.92.37.174",
+  "resourceGroup": "carolineDisk",
+  "zones": ""
+  
+  ATTACH DISK TO EXISTING VM
+  az vm disk attach     --resource-group carolineDisk     --vm-name carolineVM     --name carolineDataDisk     --size-gb 128     --sku Premium_LRS     --new
+  the following commznd didnt produce an output, after repeating the command it said the Disk already exist.
+  
+  
+  
+  PREPARE DATA DISK
+  leena@Azure:~$ ssh anintah@13.92.37.174
+The authenticity of host '13.92.37.174 (13.92.37.174)' can't be established.
+ECDSA key fingerprint is SHA256:LBjACtoqPHsHiR0U4OyljdpDRVKqJSpZldX2j+QO7Wk.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '13.92.37.174' (ECDSA) to the list of known hosts.
+Welcome to Ubuntu 18.04.6 LTS (GNU/Linux 5.4.0-1064-azure x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Thu Dec  9 14:14:32 UTC 2021
+
+  System load:  0.0               Processes:           117
+  Usage of /:   4.6% of 28.90GB   Users logged in:     0
+  Memory usage: 3%                IP address for eth0: 10.0.0.4
+  Swap usage:   0%
+
+0 updates can be applied immediately.
+
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+  ,
+  
+  
+anintah@carolineVM:~$ sudo parted /dev/sdc --script mklabel gpt mkpart xfspart xfs 0% 100%
+no output
+
+
+sudo mkfs.xfs /dev/sdc1
+meta-data=/dev/sdc1              isize=512    agcount=4, agsize=8388480 blks
+         =                       sectsz=4096  attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=0, rmapbt=0, reflink=0
+data     =                       bsize=4096   blocks=33553920, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=16383, version=2
+         =                       sectsz=4096  sunit=1 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+
+anintah@carolineVM:~$ sudo mkfs.xfs /dev/sdc1 sudo partrobe /dev/sdc1
+extra arguments
+Usage: mkfs.xfs
+/* blocksize */         [-b log=n|size=num]
+/* metadata */          [-m crc=0|1,finobt=0|1,uuid=xxx,rmapbt=0|1,reflink=0|1]
+/* data subvol */       [-d agcount=n,agsize=n,file,name=xxx,size=num,
+                            (sunit=value,swidth=value|su=num,sw=num|noalign),
+                            sectlog=n|sectsize=num
+/* force overwrite */   [-f]
+/* inode size */        [-i log=n|perblock=n|size=num,maxpct=n,attr=0|1|2,
+                            projid32bit=0|1,sparse=0|1]
+/* no discard */        [-K]
+/* log subvol */        [-l agnum=n,internal,size=num,logdev=xxx,version=n
+                            sunit=value|su=num,sectlog=n|sectsize=num,
+                            lazy-count=0|1]
+/* label */             [-L label (maximum 12 characters)]
+/* naming */            [-n log=n|size=num,version=2|ci,ftype=0|1]
+/* no-op info only */   [-N]
+/* prototype file */    [-p fname]
+/* quiet */             [-q]
+/* realtime subvol */   [-r extsize=num,size=num,rtdev=xxx]
+/* sectorsize */        [-s log=n|size=num]
+/* version */           [-V]
+                        devicename
+<devicename> is required unless -d name=xxx is given.
+<num> is xxx (bytes), xxxs (sectors), xxxb (fs blocks), xxxk (xxx KiB),
+      xxxm (xxx MiB), xxxg (xxx GiB), xxxt (xxx TiB) or xxxp (xxx PiB).
+<value> is xxx (512 byte blocks).
+
+anintah@carolineVM:~$ sudo mkdir /datadrive && sudo mount /dev/sdc1 /datadrive
+no output
+anintah@carolineVM:~$ sudo mkdir /datadrive && sudo mount /dev/sdc1 /datadrive
+mkdir: cannot create directory ‘/datadrive’: File exists
+
+
+anintah@carolineVM:~$ df -h | grep -i "sd"
+/dev/sdb1        29G  1.4G   28G   5% /
+/dev/sdb15      105M  4.4M  100M   5% /boot/efi
+/dev/sda1        14G   41M   13G   1% /mnt
+/dev/sdc1       128G  163M  128G   1% /datadrive
+
+
+
+anintah@carolineVM:~$ sudo -i blkid
+/dev/sda1: UUID="8f7299c4-c043-4bdd-8325-a9528834099d" TYPE="ext4" PARTUUID="694f0918-01"
+/dev/sdb1: LABEL="cloudimg-rootfs" UUID="8d5f53a6-b580-4a54-b4b2-e8bf23b9b891" TYPE="ext4" PARTUUID="cc806d4e-3987-4c4f-95c6-6a926377f1d5"
+/dev/sdb15: LABEL="UEFI" UUID="D09A-F73D" TYPE="vfat" PARTUUID="95b27e3c-b148-467b-b915-312cb0e5cea3"
+/dev/sdb14: PARTUUID="4579c2f5-1326-4d3e-9983-03ae081551b1"
+/dev/sdc1: UUID="005c4254-22ab-4d3c-b6e8-a7d9abe32526" TYPE="xfs" PARTLABEL="xfspart" PARTUUID="11f0a7eb-5d83-4796-aa04-89c77e46db62"
+
+CREATE SNAPSHOT
+leena@Azure:~$ osdiskid=$(az vm show --resource-group carolineDisk --name carolineVM --query "storageProfile.osDisk.managedDisk.id" -o tsv)
+no output
+
+leena@Azure:~$ az snapshot create --resource-group carolineDisk --source "$osdiskid" --name osDisk-backup --size-gb 10
+{
+  "completionPercent": null,
+  "creationData": {
+    "createOption": "Empty",
+    "galleryImageReference": null,
+    "imageReference": null,
+    "logicalSectorSize": null,
+    "sourceResourceId": null,
+    "sourceUniqueId": null,
+    "sourceUri": null,
+    "storageAccountId": null,
+    "uploadSizeBytes": null
+  },
+  "diskAccessId": null,
+  "diskSizeBytes": 10737418240,
+  "diskSizeGb": 10,
+  "diskState": "Unattached",
+  "encryption": {
+    "diskEncryptionSetId": null,
+    "type": "EncryptionAtRestWithPlatformKey"
+  },
+  "encryptionSettingsCollection": null,
+  "extendedLocation": null,
+  "hyperVGeneration": "V1",
+  "id": "/subscriptions/c40f76f6-a340-40f3-930a-cdba85821538/resourceGroups/carolineDisk/providers/Microsoft.Compute/snapshots/osDisk-backup",
+  "incremental": false,
+  "location": "eastus",
+  "managedBy": null,
+  "name": "osDisk-backup",
+  "networkAccessPolicy": "AllowAll",
+  "osType": null,
+  "provisioningState": "Succeeded",
+  "publicNetworkAccess": "Enabled",
+  "purchasePlan": null,
+  "resourceGroup": "carolineDisk",
+  "sku": {
+    "name": "Standard_LRS",
+    "tier": "Standard"
+  },
+  "supportedCapabilities": null,
+  "supportsHibernation": null,
+  "tags": {},
+  "timeCreated": "2021-12-09T15:09:17.793673+00:00",
+  "type": "Microsoft.Compute/snapshots",
+  "uniqueId": "641cac33-7a82-4acf-92c2-5aaf45a94fa2"
+}
+  
+  CREATE DISK FROM SNAPSHOT
+  
+  leena@Azure:~$ az disk create    --resource-group carolineDisk    --name carolinesnapshotDisk    --source osDisk-backup
+{
+  "burstingEnabled": null,
+  "creationData": {
+    "createOption": "Copy",
+    "galleryImageReference": null,
+    "imageReference": null,
+    "logicalSectorSize": null,
+    "sourceResourceId": "/subscriptions/c40f76f6-a340-40f3-930a-cdba85821538/resourceGroups/carolineDisk/providers/Microsoft.Compute/snapshots/osDisk-backup",
+    "sourceUniqueId": "641cac33-7a82-4acf-92c2-5aaf45a94fa2",
+    "sourceUri": null,
+    "storageAccountId": null,
+    "uploadSizeBytes": null
+  },
+  "diskAccessId": null,
+  "diskIopsReadOnly": null,
+  "diskIopsReadWrite": 120,
+  "diskMBpsReadOnly": null,
+  "diskMBpsReadWrite": 25,
+  "diskSizeBytes": 10737418240,
+  "diskSizeGb": 10,
+  "diskState": "Unattached",
+  "encryption": {
+    "diskEncryptionSetId": null,
+    "type": "EncryptionAtRestWithPlatformKey"
+  },
+  "encryptionSettingsCollection": null,
+  "extendedLocation": null,
+  "hyperVGeneration": "V1",
+  "id": "/subscriptions/c40f76f6-a340-40f3-930a-cdba85821538/resourceGroups/carolineDisk/providers/Microsoft.Compute/disks/carolinesnapshotDisk",
+  "location": "eastus",
+  "managedBy": null,
+  "managedByExtended": null,
+  "maxShares": null,
+  "name": "carolinesnapshotDisk",
+  "networkAccessPolicy": "AllowAll",
+  "osType": null,
+  "propertyUpdatesInProgress": null,
+  "provisioningState": "Succeeded",
+  "purchasePlan": null,
+  "resourceGroup": "carolineDisk",
+  "securityProfile": null,
+  "shareInfo": null,
+  "sku": {
+    "name": "Premium_LRS",
+    "tier": "Premium"
+  },
+  "supportsHibernation": null,
+  "tags": {},
+  "tier": "P3",
+  "timeCreated": "2021-12-09T16:26:06.854200+00:00",
+  "type": "Microsoft.Compute/disks",
+  "uniqueId": "d7557577-0c3f-4542-bb3c-8b1a7c1bbeef",
+  "zones": null
+  
+  
+  
+  RESTORE VIRTUAL MACHINE FROM SNAPSHOT
+  leena@Azure:~$ az vm delete --resource-group carolineDisk --name carolineVM
+Are you sure you want to perform this operation? (y/n): y
+  
+  
+  CREATE A NEW VIRTUAL MACHINE FROM SNAPSHOT DISC
+  az vm create --resource-group carolineDisk --name carolineVM --attach-os-disk carolinesnapshotDisk --os-type linux
+It is recommended to use parameter "--public-ip-sku Standard" to create new VM with Standard public IP. Please note that the default public IP used for VM creation will be changed from Basic to Standard in the future.
+{
+  "fqdns": "",
+  "id": "/subscriptions/c40f76f6-a340-40f3-930a-cdba85821538/resourceGroups/carolineDisk/providers/Microsoft.Compute/virtualMachines/carolineVM",
+  "location": "eastus",
+  "macAddress": "00-0D-3A-11-96-57",
+  "powerState": "VM running",
+  "privateIpAddress": "10.0.0.4",
+  "publicIpAddress": "20.124.107.186",
+  "resourceGroup": "carolineDisk",
+  
+  REATTACH DATA DISK
+  Find the data disk name using the az disk list command. This example places the name of the disk in a variable named datadisk, which is used in the next step.
+  leena@Azure:~$ datadisk=$(az disk list --resource-group carolineDisk --query "[?contains(name, 'carolineVM')].[id]" -o tsv)
+  no out put
+  
+  Use the az vm disk attach command to attach the disk
+  leena@Azure:~$  az vm disk attach --resource-group carolineDisk --vm-name carolineVM --name disk_anintah --new
+  leena@Azure:~$  az vm disk attach --resource-group carolineDisk --vm-name carolineVM --name disk_anintah 
+  no output
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+  
+  
+  
