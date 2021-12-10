@@ -54,3 +54,7 @@ az vm create \
 
 # 3. Opening port 80 for web traffic.
 Port 80 refers to the default port on the server uses for external web traffic connection By default, it is sclodes to prevent inbound traffic from the internet into your server. You can open the port to allow web traffic into the port.
+
+
+# 4. SSH into your VM.
+Usually, you can connect to your virtual machine using your local chell. This requires a Secure Shell Connection to an authorized port on your Virtual Box. For this, you usually need the SSH key and a local bash shell to connect to your VM securely
