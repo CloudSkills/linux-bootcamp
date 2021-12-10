@@ -58,3 +58,38 @@ Port 80 refers to the default port on the server uses for external web traffic c
 
 # 4. SSH into your VM.
 Usually, you can connect to your virtual machine using your local chell. This requires a Secure Shell Connection to an authorized port on your Virtual Box. For this, you usually need the SSH key and a local bash shell to connect to your VM securely
+
+# 5. Installing APACHE, MYSQL AND PHP.
+
+1. **Installing Apache:** To install apache on your Linux server, you would have to use the command:
+
+```
+sudo apt-get update
+sudo apt-get install apache2
+```
+2. **Installing MYSQL:**
+mysql will serve as the data base for our wordpress site. to install my sql, you can use the following command:
+
+```
+sudo apt-get install mysql-server
+```
+after that, you install what would help you securely connect with your sql database. which is secure connection.
+```
+sudo mysql_secure_installation
+```
+
+
+WARNINIG: make sure you remember your login credentials to your SQL database
+
+
+3. **Installing PHP My Admin:**
+To install php, you would have to run the command on your shell:
+
+```
+sudo apt-get install php libapache2-mod-php php-mysql php-curl php-gd php-json php-zip
+
+```
+
+This would install php and all the associated libraries along with it
+
+once php is installed , you would beed to restart apache
