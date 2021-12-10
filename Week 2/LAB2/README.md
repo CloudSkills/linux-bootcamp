@@ -59,7 +59,7 @@ For the instance performances, we have the following:
 5. Storage Optimized
 6. General Purpose.
 
-# 4. Understanding the EC2 Power States
+# 5. Understanding the EC2 Power States
 
 1. **Stopped state.** Once an instance is stopped, you can still have EBS volumes attached to it, hence you can restart the instance again. You are not charged for your instance once it is stopped. Once an instance is stopped, you can attach and detach EBS volumes, you can change the ram, disk space,etc, You can also create an Amazon AMI from the instance.
 
