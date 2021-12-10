@@ -23,7 +23,7 @@ Quickstart for AWS CloudShell
 AWS cloud shell is a free shell environment provided with 1gb free of storage, which can be used to communicatet with your AWS resources via your browser. You do not need special configurations as most of the things you need to communicate with the AWS resources already exist within cloud shell.
 
 # 2. Creating a Virtual Machine:
-You can create a virtual machine using the AWS CLI or using the AWS console.using the console is easier. Things to note while creating a VIrtual Machine:
+You can create a virtual machine using the AWS CLI or using the AWS console.using the console is easier. Things to note while creating a Virtual Machine:
 
 1. You need to save your ssh key as a .pem file. Without it, you cannot securely access your server at a later time.
 
