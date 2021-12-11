@@ -5,7 +5,7 @@
 
 
 
-![Tochi Nwachukwu](https://www.google.com/url?sa=i&url=https%3A%2F%2Fjovian.ai%2Ftochi-nwachukwu&psig=AOvVaw0eP1iPt5uCL3iPZxzHZVoj&ust=1639327944618000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCMjSytOa3PQCFQAAAAAdAAAAABAD)
+![Tochi Nwachukwu](https://qph.fs.quoracdn.net/main-thumb-363468156-200-bkuhczahdblibtryqswegieewlfptsdt.jpeg)
 
 
 The documentation and report was prepared by Tochi Nwachukwu. *(Cloud Engineer in training)* 
