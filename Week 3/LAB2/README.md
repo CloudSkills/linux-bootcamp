@@ -22,3 +22,5 @@ Sample Gist
 The LAMP server refers to a Linux, APACHE MYSQL and PHP server. This is a standard application stack for most resources.
 
 The LAMP server would be prapared using AWS.
+
+To install the LAMP serve on the AMAZON linux AMI 2

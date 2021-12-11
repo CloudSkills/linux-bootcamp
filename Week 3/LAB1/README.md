@@ -100,3 +100,10 @@ to install php myadmin to your ubuntu server, you use
 sudo apt-get install phpmyadmin
 ```
 IMPORTANT : Note that, space-bar needs to be pressed to select the option and tab key is used to move to the Ok button.
+
+# 6. Installing wordpress on the APACHE SERVER.
+The wordpress blog can be installed on the server by adding it to the host directory of your web server and installing it with your configurations. 
+
+the follosing resource could be used as a guide for installing wordpress on your server
+
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/hosting-wordpress.html
