@@ -71,7 +71,7 @@ SSH was used to connect to the virtual machine. This is like a Secure Shell.
 The SSH protocol makes use of the key file, to connect you remotely to the virtual box environment. Once you are in you can perform other configurations on the machine, without baing on the Azure portal. You can do this locally via your local shell.
 
 # 6. INSTALLING A WEB SERVER ON THE VIRTUAL MACHINE
-The virtual machine does not autonal=tically come with a server installed. To install a web server on the platform, you can run the command: **sudo apt-get -y install nginx**
+The virtual machine does not automatically come with a server installed. To install a web server on the platform, you can run the command: **sudo apt-get -y install nginx**
 
 This installs the latest version of NGINX server on your VM.
 
