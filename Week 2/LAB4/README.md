@@ -25,8 +25,8 @@ Create bootstrap actions to install additional software
 
 # Things Learnt from finishing Lab 4
 
-# 1. Creating a VM.
-A Virtual Machine is a single compute instance on the AZURE CLOUD. A virtual machine gives you hardware and Operating software resources to run your application.
+## 1. Creating a VM.
+A Virtual Machine is a single compute instance on the Azure Cloud. A virtual machine gives you hardware and Operating software resources to run your application.
 To create a VM you use the following command
 
 ```
@@ -38,40 +38,36 @@ az vm create \
   --generate-ssh-keys
 ```
 
-# 2. Installing the Apache webserver.
+## 2. Installing the Apache Webserver.
 The Apache web server can be installed using a remote SSH connection between your pc and your linux instance.
 
-You run the following lines of code:
-
+You run the following lines of code to install apache on the server:
 ```
 sudo apt-get update
 sudo apt-get install apache2
 ```
+Once these commands are done, you can paste the public IP address in your browser to see your VM instance.
 
-once these commands are done, you can paste the public IP address in your browser to see your VM instance.
-
-# 3. Starting the Azure VM command:
-To start the stopped Azure VM using Az CLI, we can use the az vm start command. 
+## 3. Starting the Azure VM Command:
+To start the stopped Azure VM using Azure CLI, we can use the az vm start command. 
 
 ```
  az vm start -n vmname -g RGname --verbose
 ```
 
-# 4. Investigate the service Status usng command line.
+## 4. Investigate the service status usng command line.
 
 To investigate the service status, we can use cloud shell. This tells us the state of all our VMs / resources which have been created.
 
-the following command can be used to get the service status
+The following command can be used to get the service status
 
 ```
 get-azvm -status
 
 ```
 
-# 5. To stop the service
-You can stop your virtual machine using the Azure cloud shell powershell command line.
-
-to stop your service you can run the command:
+## 5. To stop the service
+You can stop your virtual machine using the Azure cloud shell powershell command line. To stop your service you can run the command:
 
 ```
 az vm stop -n cloudskillsserver -g cloudskillsRG --verbose

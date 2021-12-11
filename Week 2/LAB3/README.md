@@ -230,3 +230,10 @@ gcloud compute instances stop web-instance-01
 [The gcloud cheat sheet](https://cloud.google.com/sdk/docs/cheatsheet "The gcloud cheat sheet")
 
 [The gcloud cheat sheet: Understanding commands](https://cloud.google.com/sdk/docs/cheatsheet#understanding_commands "The gcloud cheat sheet: Understanding commands")
+
+
+# Things learnt from Completing Lab 3
+
+## 1.  Overview of GCP:
+Google Cloud Platform is Google's Virtual Cloud service. Google owns about 30% of the market share and has carved a niche for themselves in the cloud computing indutry with several proprietary services such as Kubernetes.
+
