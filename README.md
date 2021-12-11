@@ -20,8 +20,6 @@ The documentation and report was prepared by Tochi Nwachukwu. *(Cloud Engineer i
 |  | Lab 4 |
 | **Week Three** | Lab 1  |
 |  | Lab 2 |
-|  | Lab 3 |
-|  | Lab 4 |
 | **Week Four** | Lab 1  |
 |  | Lab 2 |
 |  | Lab 3 |
