@@ -52,6 +52,8 @@ ssh -i "cloudskillsserver_key.pem" ec2-user@ec2-13-40-48-132.eu-west-2.compute.a
 
 Amazon Machine Images refer to snapshots of EC2 instances and their current configurations. They are used to quickly spin up EC2 instances of the same hardware and software configurations, without any customization. They can be applied in AWS autoscaling groups to create a seamsless deployment of a new EC2 instance once the load from the Elastic Load balancer gets too much.
 
+
+
 ## 4. Understanding the EC2 sizes
 
 EC2 machines come in various sizes, and compute capacities.
@@ -66,6 +68,9 @@ For the instance performances, we have the following:
 5. Storage Optimized
 6. General Purpose.
 
+*Image showing EC2 image sizes*
+
+![image showing EC2 instance sizes](../../Week3/LAB1/images/instance-sizes.png)
 ## 5. Understanding the EC2 Power States
 
 1. **Stopped state:** Once an instance is stopped, you can still have EBS volumes attached to it, hence you can restart the instance again. You are not charged for your instance once it is stopped. Once an instance is stopped, you can attach and detach EBS volumes, you can change the ram, disk space,etc, You can also create an Amazon AMI from the instance.

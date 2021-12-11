@@ -110,9 +110,18 @@ sudo apt-get install phpmyadmin
 ```
 &#x26A0;  Note that space-bar needs to be pressed to select the option and tab key is used to move to the Ok button.
 
+![image showing the success installation of phpmyadmin](..\LAB1\images\php-myadmin.png)
+
 ## 6. Installing wordpress on the APACHE Server.
 The Wordpress blog can be installed on the server by adding it to the host directory of your web server and installing it with your configurations. 
 
 The following resource could be used as a guide for installing wordpress on your server.
 
 https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/hosting-wordpress.html
+
+*image showing the successful installation of wordpress on the server*
+![image showing the success installation of phpmyadmin](..\LAB1\images\wordpress-working.png)
+
+
+*image showing the wordpress dashboard*
+![image showing the success installation of phpmyadmin](..\LAB1\images\wordpress-dashboard.png)

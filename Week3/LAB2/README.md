@@ -59,3 +59,7 @@ To install php myadmin, you can run hte following lines of code:
 sudo yum install php-mbstring php-xml -y
 ```
 This installs PHP myAdmin and its required dependencies.
+
+*here is a screenshot showing the successful installation of php my admin*
+
+![image showing the final installation screen for phpmyAdmin](..\LAB1\images\php-myadmin.png)
