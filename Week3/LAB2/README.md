@@ -62,4 +62,4 @@ This installs PHP myAdmin and its required dependencies.
 
 *here is a screenshot showing the successful installation of php my admin*
 
-![image showing the final installation screen for phpmyAdmin](..\LAB1\images\php-myadmin.png)
+![image showing the final installation screen for phpmyAdmin](../LAB1/images/php-myadmin.png)
