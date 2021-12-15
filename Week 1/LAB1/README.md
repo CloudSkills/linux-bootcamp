@@ -16,7 +16,7 @@ Quickstart: Create a Linux VM
 Quickstart for Bash in Azure Cloud Shell
 * https://docs.microsoft.com/en-us/azure/cloud-shell/quickstar
 
- Create a Linux virtual machine with the Azure CLI
+ **Create a Linux virtual machine with the Azure CLI**
 
 I created a new folder on my desktop named: GITHUB_LOCAL_REPO
 I downloaded Git bash on my desktop through google engine
