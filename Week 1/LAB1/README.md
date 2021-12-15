@@ -28,4 +28,20 @@ it display Reinitialized existing Git repository in C:/Users/Ismail-Schull tech/
 
 Then I input git clone and copy mikeplifer's code on his github platform in front it 
 And 
-display 
+display $ git clone https://github.com/CloudSkills/linux-bootcamp.git
+fatal: destination path 'linux-bootcamp' already exists and is not an empty directory.
+I have all the weeks assignment in my personal folder now.
+
+I forked mikeplifer's to my own github account.
+Thank you.
+
+
+
+
+FOR LAB1 ASSIGNMENT
+I tried to sign up for azure microsoft free account
+It keeps rejecting my credit card 
+i tried using another credit card 
+It rejected it.
+That is why i was unable to practice the assignment using Azure Platform
+I am making use of AWS for now.
