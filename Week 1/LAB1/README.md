@@ -40,6 +40,9 @@ Thank you.
 
 
 FOR LAB1 ASSIGNMENT
+
+
+
 I tried to sign up for azure microsoft free account
 It keeps rejecting my credit card 
 i tried using another credit card 
