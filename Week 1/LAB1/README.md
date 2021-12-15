@@ -18,3 +18,14 @@ Quickstart for Bash in Azure Cloud Shell
 
  Create a Linux virtual machine with the Azure CLI
 
+I created a new folder on my desktop named: GITHUB_LOCAL_REPO
+I downloaded Git bash on my desktop through google engine
+I opened the Git Bash by right clicking on my mouse to click on GIT BASH HERE
+GIT BASH TERMINAL will display Ismail-Schull tech@DESKTOP-3Q4EMU4 MINGW64 ~/Desktop/SCHULL TECH/GITHUB_LOCAL_ REPO/linux-bootcamp/linux-bootcamp (main)
+
+And I input git init
+it display Reinitialized existing Git repository in C:/Users/Ismail-Schull tech/Desktop/SCHULL TECH/GITHUB_LOCAL_ REPO/linux-bootcamp/linux-bootcamp/.git/
+
+Then I input git clone and copy mikeplifer's code on his github platform in front it 
+And 
+display 
