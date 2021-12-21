@@ -23,5 +23,6 @@ Quickstart for AWS CloudShell
  
  
  I search for aws cloudshell on the search engine.
- I clicked on Cloudshell
+ I clicked on Cloudshell and
+ 
  It display the aws environment.
