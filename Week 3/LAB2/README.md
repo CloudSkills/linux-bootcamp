@@ -1,4 +1,4 @@
-# Lab 2: Install a LAMP stack on an Azure Linux VM
+# Lab 2: Install a LAMP stack on an Amazon Linux VM
 
 1. Prepare the LAMP server
 2. Test your Lamp server
