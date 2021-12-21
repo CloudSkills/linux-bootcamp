@@ -3,7 +3,7 @@
 1. Prepare the LAMP server
 2. Test your Lamp server
 3. Secure the database server
-4. (Optional) Install phpMyAdmin
+4. (Optional) Install phpMyAdmin.
 
 ### Notes:
 
