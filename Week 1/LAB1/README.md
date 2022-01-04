@@ -40,13 +40,20 @@ Thank you.
 
 
 FOR LAB1 ASSIGNMENT
+**1. Launch Azure Cloud Shell**
+
+I log into portal.azure.com
+
+and it load the azure microsoft page
+I clicked on the Cloudshell icon by the top right hand side
+
+and it displayed Cloudshell terminal. I clicked on the BASH icon and the terminal was displayed successfully.
 
 
+**2. Create a resource group**
 
-I tried to sign up for azure microsoft free account
-It keeps rejecting my credit card 
-i tried using another credit card 
-It rejected it.
-That is why i was unable to practice the assignment using Azure Platform
-I am making use of AWS for now.
+I type into the bash cloudshell az group create --resource-group abiodexlab1 --location eastus
+
+the resource group was successfully created.
+
 
