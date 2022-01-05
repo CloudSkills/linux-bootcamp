@@ -40,6 +40,8 @@ Thank you.
 
 
 FOR LAB1 ASSIGNMENT
+
+
 **1. Launch Azure Cloud Shell**
 
 I log into portal.azure.com
@@ -55,5 +57,41 @@ and it displayed Cloudshell terminal. I clicked on the BASH icon and the termina
 I type into the bash cloudshell az group create --resource-group abiodexlab1 --location eastus
 
 the resource group was successfully created.
+
+
+**3. Create virtual machine**
+
+I typed az vm create --resource-group abiodexlab1 --name abioweb --image ununtults --generate-ssh-keys --admin username ismail
+
+and it load successfully.
+
+
+
+
+**4. Open port 80 for web traffic**
+
+I typed az vm open port --port 80 --resource-group abiodexlab1 --name abioweb
+
+and it loaded successfully. 
+
+
+**5. Connect to virtual machine**
+
+
+I typed ssh ismail@20.102.72.223 and it was connected to the virtual machine
+
+
+**6. Install web server**
+I typed sudo apt-get -y update and it was updated
+
+
+then, i typed sudo apt-get -y install nginx and ngnix was installed.
+
+
+**7. View the web server in action**
+
+I copied my pubic Ip address 20.102.72.223 and it displayed that my nginx was successfully installed.
+
+Thank you.
 
 
