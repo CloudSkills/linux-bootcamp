@@ -61,7 +61,7 @@ the resource group was successfully created.
 
 **3. Create virtual machine**
 
-I typed az vm create --resource-group abiodexlab1 --name abioweb --image ununtults --generate-ssh-keys --admin username ismail
+I typed az vm create --resource-group abiodexlab1 --name abioweb --image unbuntults --generate-ssh-keys --admin username ismail
 
 and it load successfully.
 
